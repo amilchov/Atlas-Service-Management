@@ -9,8 +9,8 @@ Hello! Currently, there are only two of us in our team who support the applicati
 
 # Supervisor
 
-**Lyudmil Lyubomirov** - Senior Teacher in Theoretical Training at Professional High School of Economics - Pernik
-**Ivan Glushkov** - ATLAS Distributed Production and Analysis Coordinator && Bulgarian Representative in the Advisory Committee of CERN Users
+ 1. **Lyudmil Lyubomirov** - Senior Teacher in Theoretical Training at Professional High School of Economics - Pernik
+ 2. **Ivan Glushkov** - ATLAS Distributed Production and Analysis Coordinator && Bulgarian Representative in the Advisory Committee of CERN Users
 
 ## Summary
 

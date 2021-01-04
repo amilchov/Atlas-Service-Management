@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from 'vuex'
 import VueRouter from "vue-router";
+import VueFormulate from '@braid/vue-formulate'
 
 // styles
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -87,7 +88,8 @@ const routes = [
 Vue.config.productionTip = false;
 
 Vue.use(VueRouter);
-Vue.use(Vuex)
+Vue.use(Vuex);
+Vue.use(VueFormulate);
 
 const router = new VueRouter({
   routes,

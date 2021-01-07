@@ -1,14 +1,21 @@
 import Vue from "vue";
-import Vuex from 'vuex'
+import Vuex from "vuex";
 import VueRouter from "vue-router";
-import VueFormulate from '@braid/vue-formulate'
+import VueFormulate from "@braid/vue-formulate";
+import axios from "axios";
+import VueAxios from "vue-axios";
 
 // styles
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@/assets/styles/tailwind.css";
+import "@/assets/styles/formulate.css";
+import api from "./auth/api";
 
 // mouting point for the whole app
 import App from "@/App.vue";
+
+//vuex main store
+import store from "./store";
 
 // layouts
 import Admin from "@/layouts/Admin.vue";
@@ -86,16 +93,21 @@ const routes = [
 
 // app config
 Vue.config.productionTip = false;
+Vue.prototype.$http = api;
+api.defaults.timeout = 10000;
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueFormulate);
+Vue.use(VueAxios, axios);
 
 const router = new VueRouter({
+  mode: "history",
   routes,
 });
 
 new Vue({
   router,
+  store,
   render: (h) => h(App),
 }).$mount("#app");

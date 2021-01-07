@@ -23,7 +23,7 @@
                 input-class="border border-gray-400 rounded px-3 py-2 leading-none focus:border-green-500 outline-none border-box w-full mb-1"
                 label-class="block uppercase text-gray-700 text-xs font-bold mb-2"
                 help-class="text-xs mb-1 text-gray-600"
-                error-class="text-red-700 bg-red-700 text-xs mb-1"
+                error-class="text-red-700 text-xs mb-1"
               />
               <FormulateInput
                 type="text"
@@ -85,7 +85,17 @@
                 error-class="text-red-700 text-xs mb-1"
               />
               <FormulateInput
-                input-class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-700"
+                type="image"
+                name="headshot"
+                label-class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                help-class="text-xs mb-1 text-gray-600"
+                label="Select an image to upload"
+                help="Select a png or jpg to upload."
+                validation="mime:image/jpeg,image/png"
+              />
+              <FormulateInput
+                style="margin-top:30px;"
+                input-class="px-4 py-2 w-full rounded bg-blue-500 text-white hover:bg-blue-700"
                 type="submit"
               />
             </FormulateForm>

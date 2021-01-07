@@ -17,14 +17,14 @@
     "@fortawesome/fontawesome-free": "5.14.0",
     "@popperjs/core": "2.5.1",
     "@tailwindcss/custom-forms": "0.2.1",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "chart.js": "2.9.3",
     "core-js": "3.6.5",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8",
     "tailwindcss": "1.8.10",
     "vue": "2.6.12",
-    "vue-axios": "^3.2.0",
+    "vue-axios": "^3.2.1",
     "vue-router": "3.4.3",
     "vuex": "^3.6.0"
   },
@@ -46,7 +46,10 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console": "off",
+      "no-unused-vars": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

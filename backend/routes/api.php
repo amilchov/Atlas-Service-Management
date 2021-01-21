@@ -18,8 +18,4 @@ Route::group(['namespace' => 'Api'], function() {
 
     // Chart Routes
     Route::post('/charts', [ChartController::class, 'charts']);
-
-    Route::get('/roles', function () {
-        return response()->json(\Spatie\Permission\Models\Role::all());
-    });
 });

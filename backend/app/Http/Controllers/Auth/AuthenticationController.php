@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginUserRequest;
-use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\Auth\LoginUserRequest;
+use App\Http\Requests\Auth\RegisterUserRequest;
+use App\Http\Requests\Auth\UpdateUserRequest;
+use App\Repositories\Auth\UserRepository;
 use App\Services\Auth\AuthenticationService;
 use Illuminate\Http\JsonResponse;
 
@@ -57,5 +59,17 @@ class AuthenticationController extends Controller
     public function register(RegisterUserRequest $request): JsonResponse
     {
         return $this->authenticationService->register($request);
+    }
+
+    /**
+     * Call the method for update from the service class.
+     *
+     * @param UserRepository $userRepository
+     * @param UpdateUserRequest $request
+     * @return JsonResponse
+     */
+    public function update(UserRepository $userRepository, UpdateUserRequest $request): JsonResponse
+    {
+        return $this->authenticationService->update($userRepository, $request);
     }
 }

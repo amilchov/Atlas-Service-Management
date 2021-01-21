@@ -2,10 +2,12 @@
 
 namespace App\Services\Auth;
 
-use App\Http\Requests\LoginUserRequest;
-use App\Http\Requests\RegisterUserRequest;
-use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\Http\Requests\Auth\LoginUserRequest;
+use App\Http\Requests\Auth\RegisterUserRequest;
+use App\Http\Requests\Auth\UpdateUserRequest;
+use App\Http\Resources\Auth\UserResource;
+use App\Models\Auth\User;
+use App\Repositories\Auth\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 
@@ -61,6 +63,39 @@ class AuthenticationService
             'token' => Str::random(255),
         ]);
 
+        $this->checkForAvatar($request, $user);
+
+        $user->assignRole(User::EMPLOYEE_SELF_SERVICE_ROLE);
+
+        return response()->json(new UserResource($user));
+    }
+
+    /**
+     * Update the user with new credentials.
+     *
+     * @param UserRepository $userRepository
+     * @param UpdateUserRequest $request
+     * @return JsonResponse
+     */
+    public function update(UserRepository $userRepository, UpdateUserRequest $request): JsonResponse
+    {
+        $user = $userRepository->getUserByToken($request);
+
+        $user->fill($request->validated());
+
+        $this->checkForAvatar($request, $user);
+
+        return response()->json(new UserResource($user));
+    }
+
+    /**
+     * Check if in the request is set avatar.
+     *
+     * @param RegisterUserRequest|UpdateUserRequest $request
+     * @param $user
+     */
+    private function checkForAvatar($request, $user): void
+    {
         if ($request->hasFile('avatar'))
         {
             $avatar = $request->file('avatar');
@@ -71,9 +106,5 @@ class AuthenticationService
 
             $user->save();
         }
-
-        $user->assignRole(User::EMPLOYEE_SELF_SERVICE_ROLE);
-
-        return response()->json(new UserResource($user));
     }
 }

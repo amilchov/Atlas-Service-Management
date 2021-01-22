@@ -6,6 +6,16 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
+/**
+|--------------------------------------------------------------------------
+| Role Seeder
+|--------------------------------------------------------------------------
+|
+| This class is a type of database seeder, which includes
+| the ability to seed our roles data in database.
+|
+| @author David Ivanov <david4obgg1@gmail.com>
+ */
 class RoleSeeder extends Seeder
 {
     /**

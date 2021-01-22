@@ -2,6 +2,7 @@
 
 namespace App\Services\Auth;
 
+use App\Constants\Roles;
 use App\Http\Requests\Auth\LoginUserRequest;
 use App\Http\Requests\Auth\RegisterUserRequest;
 use App\Http\Requests\Auth\UpdateUserRequest;
@@ -65,7 +66,7 @@ class AuthenticationService
 
         $this->checkForAvatar($request, $user);
 
-        $user->assignRole(User::EMPLOYEE_SELF_SERVICE_ROLE);
+        $user->assignRole(Roles::EMPLOYEE_SELF_SERVICE_ROLE);
 
         return response()->json(new UserResource($user));
     }
@@ -81,7 +82,7 @@ class AuthenticationService
     {
         $user = $userRepository->getUserByToken($request);
 
-        $user->fill($request->validated());
+        $user->update($request->validated());
 
         $this->checkForAvatar($request, $user);
 

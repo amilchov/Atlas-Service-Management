@@ -24,20 +24,6 @@ class User extends Authenticatable
     use HasFactory, Notifiable, HasRoles;
 
     /**
-     * Employee Self Service is a role, which is set on the default user.
-     *
-     * @var string
-     */
-    public const EMPLOYEE_SELF_SERVICE_ROLE = 'ess';
-
-    /**
-     * Admin is a role, which is set on the main user. He has all permissions and can manage anything.
-     *
-     * @var string
-     */
-    public const ADMIN_ROLE = 'admin';
-
-    /**
      * User's default avatar path and name.
      *
      * @var string

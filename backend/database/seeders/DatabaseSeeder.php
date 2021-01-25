@@ -4,6 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
+use App\Http\Api\Chart\Seeders\ChartSeeder;
+use App\Http\Api\Role\Seeders\RoleSeeder;
+use App\Http\Api\User\Seeders\UserSeeder;
+
 class DatabaseSeeder extends Seeder
 {
     /**

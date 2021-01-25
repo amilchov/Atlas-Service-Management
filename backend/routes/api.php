@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticationController;
-use App\Http\Controllers\Chart\ChartController;
+use App\Http\Api\Auth\Controllers\AuthenticationController;
+use App\Http\Api\Chart\Controllers\ChartController;
+use App\Http\Api\Role\Controllers\RoleController;
+use App\Http\Api\User\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Application Programming Interface (API) routes
@@ -17,5 +19,11 @@ Route::group(['namespace' => 'Api'], function() {
     });
 
     // Chart Routes
-    Route::post('/charts', [ChartController::class, 'charts']);
+    Route::get('/charts', [ChartController::class, 'charts']);
+
+    // Users Routes
+    Route::get('/users', [UserController::class, 'users']);
+
+    // Roles Routes
+    Route::get('/roles', [RoleController::class, 'roles']);
 });

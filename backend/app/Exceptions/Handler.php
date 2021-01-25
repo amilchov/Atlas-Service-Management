@@ -52,7 +52,7 @@ class Handler extends ExceptionHandler
      *
      * @throws Throwable
      */
-    public function render($request, Throwable $exception)
+    public function render($request, Throwable $exception): Response
     {
         if ($exception instanceof ModelNotFoundException)
         {

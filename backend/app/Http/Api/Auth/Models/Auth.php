@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Api\Auth\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,30 +9,33 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+/**
+|--------------------------------------------------------------------------
+| Auth Model
+|--------------------------------------------------------------------------
+|
+| This class is a type of model, in whose we have
+| the auth model which is used to interact with table "users".
+|
+| @author David Ivanov <david4obgg1@gmail.com>
+ */
+class Auth extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;
 
     /**
-     * Employee Self Service is a role, which is set on the default user.
-     *
-     * @var string
-     */
-    public const EMPLOYEE_SELF_SERVICE_ROLE = 'ess';
-
-    /**
-     * Admin is a role, which is set on the main user. He has all permissions and can manage anything.
-     *
-     * @var string
-     */
-    public const ADMIN_ROLE = 'admin';
-
-    /**
-     * User's default avatar path and name.
+     * Auth's default avatar path and name.
      *
      * @var string
      */
     public const DEFAULT_AVATAR = 'avatars/default.png';
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.

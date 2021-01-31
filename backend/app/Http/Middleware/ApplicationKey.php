@@ -28,7 +28,7 @@ class ApplicationKey
     {
         $token = $request->header('Application');
 
-        if ($token != config('app.api_key'))
+        if ($token !== config('app.api_key'))
         {
             return response()->json(['message' => 'Application key not found.'], 401);
         }

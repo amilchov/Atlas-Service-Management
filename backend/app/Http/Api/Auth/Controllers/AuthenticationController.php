@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Api\Auth\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginUserRequest;
-use App\Http\Requests\RegisterUserRequest;
-use App\Services\Auth\AuthenticationService;
+use App\Http\Api\Auth\Requests\LoginRequest;
+use App\Http\Api\Auth\Requests\RegisterRequest;
+use App\Http\Api\Auth\Requests\UpdateRequest;
+use App\Http\Api\Auth\Repositories\AuthenticationRepository;
+use App\Http\Api\Auth\Services\AuthenticationService;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -40,10 +42,10 @@ class AuthenticationController extends Controller
     /**
      * Call the method for login from the service class.
      *
-     * @param LoginUserRequest $request
+     * @param LoginRequest $request
      * @return JsonResponse
      */
-    public function login(LoginUserRequest  $request): JsonResponse
+    public function login(LoginRequest  $request): JsonResponse
     {
         return $this->authenticationService->login($request);
     }
@@ -51,11 +53,23 @@ class AuthenticationController extends Controller
     /**
      * Call the method for register from the service class.
      *
-     * @param RegisterUserRequest $request
+     * @param RegisterRequest $request
      * @return JsonResponse
      */
-    public function register(RegisterUserRequest $request): JsonResponse
+    public function register(RegisterRequest $request): JsonResponse
     {
         return $this->authenticationService->register($request);
+    }
+
+    /**
+     * Call the method for update from the service class.
+     *
+     * @param AuthenticationRepository $authenticationRepository
+     * @param UpdateRequest $request
+     * @return JsonResponse
+     */
+    public function update(AuthenticationRepository $authenticationRepository, UpdateRequest $request): JsonResponse
+    {
+        return $this->authenticationService->update($authenticationRepository, $request);
     }
 }

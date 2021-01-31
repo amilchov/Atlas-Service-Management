@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Api\Auth\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
 |--------------------------------------------------------------------------
-| Login UserResource Request
+| Login Request
 |--------------------------------------------------------------------------
 |
 | This class is a type of form request, in whose we check
@@ -14,7 +14,7 @@ use Illuminate\Foundation\Http\FormRequest;
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
-class LoginUserRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     public function authorize(): bool
     {

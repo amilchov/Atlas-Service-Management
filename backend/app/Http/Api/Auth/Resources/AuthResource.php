@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Api\Auth\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
 |--------------------------------------------------------------------------
-| User Resource
+| Auth Resource
 |--------------------------------------------------------------------------
 |
 | This class is a type of resource, in whose we return
@@ -15,7 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
-class UserResource extends JsonResource
+class AuthResource extends JsonResource
 {
     /**
      * @param Request $request
@@ -29,11 +29,12 @@ class UserResource extends JsonResource
             'middle_name' => $this->middle_name,
             'last_name' => $this->last_name,
             'email' => $this->email,
+            'password' => $this->password,
             'avatar' => $this->avatar,
             'token' => $this->token,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'roles' => $this->roles,
+            'created_at' => $this->created_at->toDateTimeString(),
+            'updated_at' => $this->updated_at->toDateTimeString(),
+            'roles' => $this->roles
         ];
     }
 }

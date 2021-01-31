@@ -7,12 +7,12 @@
       class="w-full mx-autp items-center flex justify-between md:flex-no-wrap flex-wrap md:px-10 px-4"
     >
       <!-- Brand -->
-      <a
+      <p
         class="text-white text-sm uppercase hidden lg:inline-block font-semibold"
         href="javascript:void(0)"
       >
-        Dashboard
-      </a>
+        {{currentUser.first_name + " " + currentUser.last_name + " - Dashboard"}}
+      </p>
       <!-- Form -->
       <form
         class="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3"
@@ -45,6 +45,18 @@ import UserDropdown from "@/components/Dropdowns/UserDropdown.vue";
 export default {
   components: {
     UserDropdown,
+  },
+
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
+
+  mounted() {
+    if (!this.currentUser) {
+      this.$router.push("/login");
+    }
   },
 };
 </script>

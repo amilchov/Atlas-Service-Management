@@ -24,9 +24,11 @@
                   ATLAS Experiment
                 </h1>
                 <p class="mt-4 text-lg text-gray-300">
-                  Project aim is to monitor the distribution of the calculations of the experimental ATLAS in the CENTER 
-                  and reviewing the current state and load of the computer resources, 
-                  how many CPUs are currently available. The whole process is visualized through interactive diagrams.
+                  Project aim is to monitor the distribution of the calculations
+                  of the experimental ATLAS in the CENTER and reviewing the
+                  current state and load of the computer resources, how many
+                  CPUs are currently available. The whole process is visualized
+                  through interactive diagrams.
                 </p>
               </div>
             </div>
@@ -68,7 +70,8 @@
                   </div>
                   <h6 class="text-xl font-semibold">"What is ADC?</h6>
                   <p class="mt-2 mb-4 text-gray-600">
-                    ADC is ATLAS Distributed Computing - the distributed computation system of the ATLAS experiment.
+                    ADC is ATLAS Distributed Computing - the distributed
+                    computation system of the ATLAS experiment.
                   </p>
                 </div>
               </div>
@@ -86,9 +89,10 @@
                   </div>
                   <h6 class="text-xl font-semibold">What is CERN?</h6>
                   <p class="mt-2 mb-4 text-gray-600">
-                    CERN is the world's largest particle physics laboratory. 
-                    It is one of the most respected centres for scientific research. 
-                    Its business is fundamental physics: finding out what the universe is made of and how it works.
+                    CERN is the world's largest particle physics laboratory. It
+                    is one of the most respected centres for scientific
+                    research. Its business is fundamental physics: finding out
+                    what the universe is made of and how it works.
                   </p>
                 </div>
               </div>
@@ -106,8 +110,10 @@
                   </div>
                   <h6 class="text-xl font-semibold">What is BigPanDA?</h6>
                   <p class="mt-2 mb-4 text-gray-600">
-                     BigPanDA is a an IT systems management platform that aggregates and correlates IT alerts to 
-                     create high-level IT incidents. BigPanDA is monitoring the current status of tasks in ATLAS.
+                    BigPanDA is a an IT systems management platform that
+                    aggregates and correlates IT alerts to create high-level IT
+                    incidents. BigPanDA is monitoring the current status of
+                    tasks in ATLAS.
                   </p>
                 </div>
               </div>
@@ -127,23 +133,25 @@
               <p
                 class="text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700"
               >
-                PanDA was designed to have the flexibility to adapt to emerging computing 
-                technologies in processing, storage, networking and distributed computing 
-                middleware. 
+                PanDA was designed to have the flexibility to adapt to emerging
+                computing technologies in processing, storage, networking and
+                distributed computing middleware.
               </p>
               <p
                 class="text-lg font-light leading-relaxed mt-0 mb-4 text-gray-700"
               >
-                The interest in PanDA by other big data sciences brought the primary motivation to 
-                generalize PanDA, aka the BigPanDA project, providing location transparency of 
-                processing and data management, for High Energy Physics community and other 
-                data-intensive sciences, and a wider exascale community. The BigPanDA project 
-                has been active since September 2012.
+                The interest in PanDA by other big data sciences brought the
+                primary motivation to generalize PanDA, aka the BigPanDA
+                project, providing location transparency of processing and data
+                management, for High Energy Physics community and other
+                data-intensive sciences, and a wider exascale community. The
+                BigPanDA project has been active since September 2012.
               </p>
-              <a 
-              href="https://atlas.cern/" 
-              class="font-bold text-gray-800 mt-8"
-              target="_blank">
+              <a
+                href="https://atlas.cern/"
+                class="font-bold text-gray-800 mt-8"
+                target="_blank"
+              >
                 Check Atlas Experiment!
               </a>
             </div>
@@ -173,9 +181,11 @@
                     About the ATLAS Experiment
                   </h4>
                   <p class="text-md font-light mt-2 text-white">
-                    ATLAS is one of the four major experiments at the Large Hadron Collider (LHC) at CERN. 
-                    It is a general-purpose particle physics experiment run by an international collaboration and,
-                    together with CMS, is designed to exploit the full discovery potential and the huge range of physics 
+                    ATLAS is one of the four major experiments at the Large
+                    Hadron Collider (LHC) at CERN. It is a general-purpose
+                    particle physics experiment run by an international
+                    collaboration and, together with CMS, is designed to exploit
+                    the full discovery potential and the huge range of physics
                     opportunities that the LHC provides.
                   </p>
                 </blockquote>
@@ -213,7 +223,8 @@
             <div class="w-full lg:w-6/12 px-4">
               <h2 class="text-4xl font-semibold">Here are our heroes</h2>
               <p class="text-lg leading-relaxed m-4 text-gray-600">
-                The people who developed the system for analyzing and visualizing the calculations from the ATLAS experiment.
+                The people who developed the system for analyzing and
+                visualizing the calculations from the ATLAS experiment.
               </p>
             </div>
           </div>
@@ -232,22 +243,28 @@
                   </p>
                   <div class="mt-6">
                     <button
-                      class="bg-blue-400 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                      class="bg-black text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
                     >
-                      <i class="fab fa-twitter"></i>
+                      <a href="https://github.com/amilchov" target="_blank">
+                        <i class="fab fa-github"></i>
+                      </a>
                     </button>
                     <button
                       class="bg-blue-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
                     >
-                      <i class="fab fa-facebook-f"></i>
+                      <a href="https://www.facebook.com/alex.milchov/" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
+                      </a>
                     </button>
                     <button
                       class="bg-pink-500 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
                     >
-                      <i class="fab fa-dribbble"></i>
+                      <a href="https://www.instagram.com/amilchov" ta>
+                        <i class="fab fa-instagram"></i>
+                      </a>
                     </button>
                   </div>
                 </div>
@@ -267,16 +284,24 @@
                   </p>
                   <div class="mt-6">
                     <button
-                      class="bg-red-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                      class="bg-black text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
                     >
-                      <i class="fab fa-google"></i>
+                      <i class="fab fa-github"></i>
                     </button>
                     <button
                       class="bg-blue-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
                     >
                       <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button
+                      class="bg-pink-500 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                      type="button"
+                    >
+                      <a href="https://www.instagram.com/david_ivanovv" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                      </a>
                     </button>
                   </div>
                 </div>
@@ -314,12 +339,11 @@
                 Do you have any questions?
               </h2>
               <p class="text-lg leading-relaxed mt-4 mb-4 text-gray-500">
-                Don't hesitate to contact us when you have 
-                any questions related to our web application!
+                Don't hesitate to contact us when you have any questions related
+                to our web application!
               </p>
             </div>
           </div>
-          
         </div>
       </section>
       <section class="relative block py-24 lg:pt-0 bg-gray-900">

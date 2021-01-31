@@ -11,11 +11,11 @@
                 Sign in
               </h6>
             </div>
-            <FormulateForm v-model="form" @submit="submit">
+            <FormulateForm @submit="handleLogin">
               <FormulateInput
                 type="email"
                 name="email"
-                v-model="form.email"
+                v-model="user.email"
                 label="Enter your Email address"
                 validation="email"
                 outer-class="mb-4"
@@ -28,7 +28,7 @@
               <FormulateInput
                 type="password"
                 name="password"
-                v-model="form.password"
+                v-model="user.password"
                 label="Password"
                 validation="^required|min:5,"
                 outer-class="mb-4"
@@ -76,25 +76,41 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import User from "../../models/user";
 
 export default {
+  name: "Login",
   data() {
     return {
-      form: {
-        email: "",
-        password: "",
-      },
+      user: new User("", ""),
+      loading: false,
+      message: "",
     };
   },
-
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+  },
+  created() {
+    if (this.loggedIn) {
+      this.$router.push("/admin");
+    }
+  },
   methods: {
-    ...mapActions({
-      signIn: "auth/signIn",
-    }),
-
-    submit() {
-      this.signIn(this.form);
+    handleLogin() {
+      this.$store.dispatch("auth/login", this.user).then(
+        () => {
+          this.$router.push("/admin");
+        },
+        (error) => {
+          this.message =
+            (error.response && error.response.data) ||
+            error.message ||
+            error.toString();
+          alert(this.message);
+        }
+      );
     },
   },
 };

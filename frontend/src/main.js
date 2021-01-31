@@ -9,7 +9,7 @@ import VueAxios from "vue-axios";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@/assets/styles/tailwind.css";
 import "@/assets/styles/formulate.css";
-import api from "./auth/api";
+import api from "./api/api";
 
 // mouting point for the whole app
 import App from "@/App.vue";

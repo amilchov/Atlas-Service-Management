@@ -13,7 +13,7 @@
           <img
             alt="..."
             class="w-full rounded-full align-middle border-none shadow-lg"
-            :src="image"
+            :src="currentUser.avatar"
           />
         </span>
       </div>
@@ -67,8 +67,21 @@ export default {
       image: image,
     };
   },
+
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
+
+  mounted() {
+    if (!this.currentUser) {
+      this.$router.push("/login");
+    }
+  },
+
   methods: {
-    toggleDropdown: function (event) {
+    toggleDropdown: function(event) {
       event.preventDefault();
       if (this.dropdownPopoverShow) {
         this.dropdownPopoverShow = false;

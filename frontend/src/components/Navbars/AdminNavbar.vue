@@ -7,12 +7,12 @@
       class="w-full mx-autp items-center flex justify-between md:flex-no-wrap flex-wrap md:px-10 px-4"
     >
       <!-- Brand -->
-      <p
+      <a
         class="text-white text-sm uppercase hidden lg:inline-block font-semibold"
         href="javascript:void(0)"
       >
-        {{currentUser.first_name + " " + currentUser.last_name + " - Dashboard"}}
-      </p>
+        {{user.first_name}}
+      </a>
       <!-- Form -->
       <form
         class="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3"
@@ -41,21 +41,23 @@
 
 <script>
 import UserDropdown from "@/components/Dropdowns/UserDropdown.vue";
+import { mapGetters } from 'vuex'
+
 
 export default {
   components: {
     UserDropdown,
   },
-
+  
   computed: {
-    currentUser() {
-      return this.$store.state.auth.user;
-    },
-  },
+    ...mapGetters({
+        user: 'auth/user'
+    }),
 
-  mounted() {
-    if (!this.currentUser) {
-      this.$router.push("/login");
+    yourProperty() {
+      const user = this.$store.getters.user;
+      console.log('user: ', user);
+      return user;
     }
   },
 };

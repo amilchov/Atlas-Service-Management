@@ -1,61 +1,52 @@
-import AuthService from "../services/auth.service";
+import axios from "../api/api";
+import router from "../main";
 
-const user = JSON.parse(localStorage.getItem("user"));
-const initialState = user
-  ? { status: { loggedIn: true }, user }
-  : { status: { loggedIn: false }, user: null };
-
-export const auth = {
+export default {
   namespaced: true,
-  state: initialState,
-  actions: {
-    login({ commit }, user) {
-      return AuthService.login(user).then(
-        (user) => {
-          commit("loginSuccess", user);
-          return Promise.resolve(user);
-        },
-        (error) => {
-          commit("loginFailure");
-          return Promise.reject(error);
-        }
-      );
-    },
-    logout({ commit }) {
-      AuthService.logout();
-      commit("logout");
-    },
-    register({ commit }, user) {
-      return AuthService.register(user).then(
-        (response) => {
-          commit("registerSuccess");
-          return Promise.resolve(response.data);
-        },
-        (error) => {
-          commit("registerFailure");
-          return Promise.reject(error);
-        }
-      );
+  state: {
+    user: null,
+  },
+
+  getters: {
+    user(state) {
+      return state.user;
     },
   },
+
+  modules: {},
+
   mutations: {
-    loginSuccess(state, user) {
-      state.status.loggedIn = true;
+    SET_USER(state, user) {
       state.user = user;
     },
-    loginFailure(state) {
-      state.status.loggedIn = false;
-      state.user = null;
+  },
+
+  actions: {
+    async signUp(_, credetials) {
+      axios
+        .post("api/auth/register", credetials)
+        .then((response) => {
+          console.log(response.data);
+          // alert("Successful registration with your data!");
+          if (confirm("Successful registration with your data! \nSend to login form?")) {
+            router.push('/admin');
+          }
+        })
+        .catch((error) => {
+          alert(error.response.data.errors.email.toString());
+          console.log(error.response.data.errors);
+        });
     },
-    logout(state) {
-      state.status.loggedIn = false;
-      state.user = null;
+
+    async signIn({ dispatch }, credentials) {
+      let response = await axios.post("api/auth/login", credentials);
+
+      dispatch("attempt", response.data);
     },
-    registerSuccess(state) {
-      state.status.loggedIn = false;
-    },
-    registerFailure(state) {
-      state.status.loggedIn = false;
+
+    async attempt({ commit }, user) {
+      console.log(user.token);
+      commit("SET_USER", user);
     },
   },
 };

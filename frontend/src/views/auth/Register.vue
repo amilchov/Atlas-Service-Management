@@ -13,17 +13,16 @@
             </div>
           </div>
           <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-            <FormulateForm @submit="handleRegister">
+            <FormulateForm v-model="form" @submit="submit">
               <FormulateInput
                 type="text"
                 name="first name"
-                v-model="user.first_name"
+                v-model="form.first_name"
                 label="Enter your First name"
                 validation="^required|min:5|max:50|matches:/^[a-zA-Z\s]+$/"
                 outer-class="mb-4"
                 :validation-messages="{
-                  matches:
-                    'First name must contain only English letters and must not contain numbers!',
+                  matches: 'First name must contain only English letters and must not contain numbers!',
                 }"
                 input-class="border border-gray-400 rounded px-3 py-2 leading-none focus:border-green-500 outline-none border-box w-full mb-1"
                 label-class="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -33,13 +32,12 @@
               <FormulateInput
                 type="text"
                 name="middle name"
-                v-model="user.middle_name"
+                v-model="form.middle_name"
                 label="Enter your Middle name"
                 validation="^required|min:5|max:50|matches:/^[a-zA-Z\s]+$/"
                 outer-class="mb-4"
                 :validation-messages="{
-                  matches:
-                    'Middle name must contain only English letters and must not contain numbers!',
+                  matches: 'Middle name must contain only English letters and must not contain numbers!',
                 }"
                 input-class="border border-gray-400 rounded px-3 py-2 leading-none focus:border-green-500 outline-none border-box w-full mb-1"
                 label-class="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -49,13 +47,12 @@
               <FormulateInput
                 type="text"
                 name="last name"
-                v-model="user.last_name"
+                v-model="form.last_name"
                 label="Enter your Last name"
                 validation="^required|min:5|max:50|matches:/^[a-zA-Z\s]+$/"
                 outer-class="mb-4"
                 :validation-messages="{
-                  matches:
-                    'Last name must contain only English letters and must not contain numbers!.',
+                  matches: 'Last name must contain only English letters and must not contain numbers!.',
                 }"
                 input-class="border border-gray-400 rounded px-3 py-2 leading-none focus:border-green-500 outline-none border-box w-full mb-1"
                 label-class="block uppercase text-gray-700 text-xs font-bold mb-2"
@@ -65,7 +62,7 @@
               <FormulateInput
                 type="email"
                 name="email"
-                v-model="user.email"
+                v-model="form.email"
                 label="Enter your Email address"
                 validation="email"
                 outer-class="mb-4"
@@ -77,7 +74,7 @@
               <FormulateInput
                 type="password"
                 name="password"
-                v-model="user.password"
+                v-model="form.password"
                 label="Password"
                 validation="^required|min:5,length|matches:/[0-9]/"
                 :validation-messages="{
@@ -92,7 +89,7 @@
               <FormulateInput
                 type="password"
                 name="password_confirm"
-                v-model="user.password_confirm"
+                v-model="form.password_confirm"
                 label="Confirm password"
                 validation="^required|confirm"
                 validation-name="Password confirmation"
@@ -125,93 +122,46 @@
   </div>
 </template>
 <script>
-import User from "../../models/user";
+import { mapActions } from "vuex";
 
 export default {
-  name: "Register",
   data() {
     return {
-      user: new User("", "", "", "", ""),
-      submitted: false,
-      successful: false,
-      message: "",
+      form: {
+        first_name: "",
+        middle_name: "",
+        last_name: "",
+        email: "",
+        password: "",
+      },
+      avatar: null,
     };
   },
-  computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    },
-  },
-  mounted() {
-    if (this.loggedIn) {
-      this.$router.push("/admin");
-    }
-  },
-  methods: {
-    handleRegister() {
-      this.message = "";
-      this.submitted = true;
 
-      this.$store.dispatch("auth/register", this.user).then(
-        (data) => {
-          this.message = data.message;
-          this.successful = true;
-          alert(data.data);
-          this.$router.push("/auth/login");
-        },
-        (error) => {
-          this.message =
-            (error.response && error.response.data) ||
-            error.message ||
-            error.toString();
-          this.successful = false;
-          alert(this.message);
-        }
-      );
+  methods: {
+    onChangeFileUpload(event) {
+      this.avatar = event.target.files[0];
+    },
+
+    ...mapActions({
+      signUp: "auth/signUp",
+    }),
+
+    async submit() {
+      const formData = new FormData();
+      formData.append("first_name", this.form.first_name);
+      formData.append("middle_name", this.form.middle_name);
+      formData.append("last_name", this.form.last_name);
+      formData.append("email", this.form.email);
+      formData.append("password", this.form.password);
+
+      if (this.avatar != null) {
+        formData.append("avatar", this.avatar);
+      }
+
+      this.signUp(formData);
+
     },
   },
 };
-
-// import { mapActions } from "vuex";
-
-// export default {
-//   data() {
-//     return {
-//       form: {
-//         first_name: "",
-//         middle_name: "",
-//         last_name: "",
-//         email: "",
-//         password: "",
-//       },
-//       avatar: null,
-//     };
-//   },
-
-//   methods: {
-//     onChangeFileUpload(event) {
-//       this.avatar = event.target.files[0];
-//     },
-
-//     ...mapActions({
-//       signUp: "auth/signUp",
-//     }),
-
-//     async submit() {
-//       const formData = new FormData();
-//       formData.append("first_name", this.form.first_name);
-//       formData.append("middle_name", this.form.middle_name);
-//       formData.append("last_name", this.form.last_name);
-//       formData.append("email", this.form.email);
-//       formData.append("password", this.form.password);
-
-//       if (this.avatar != null) {
-//         formData.append("avatar", this.avatar);
-//       }
-
-//       this.signUp(formData);
-
-//     },
-//   },
-// };
 </script>

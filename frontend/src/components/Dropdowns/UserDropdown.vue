@@ -13,7 +13,7 @@
           <img
             alt="..."
             class="w-full rounded-full align-middle border-none shadow-lg"
-            :src="currentUser.avatar"
+            :src="image"
           />
         </span>
       </div>
@@ -59,6 +59,7 @@
 import { createPopper } from "@popperjs/core";
 
 import image from "@/assets/img/team-1-800x800.jpg";
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
@@ -69,19 +70,13 @@ export default {
   },
 
   computed: {
-    currentUser() {
-      return this.$store.state.auth.user;
-    },
-  },
-
-  mounted() {
-    if (!this.currentUser) {
-      this.$router.push("/login");
-    }
+    ...mapGetters({
+        user: 'auth/user'
+    })
   },
 
   methods: {
-    toggleDropdown: function(event) {
+    toggleDropdown: function (event) {
       event.preventDefault();
       if (this.dropdownPopoverShow) {
         this.dropdownPopoverShow = false;

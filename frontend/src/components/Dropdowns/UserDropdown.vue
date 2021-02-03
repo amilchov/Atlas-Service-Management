@@ -13,7 +13,7 @@
           <img
             alt="..."
             class="w-full rounded-full align-middle border-none shadow-lg"
-            :src="image"
+            :src="currentUser.avatar"
           />
         </span>
       </div>
@@ -46,10 +46,11 @@
       </a>
       <div class="h-0 my-2 border border-solid border-gray-200" />
       <a
+        @click.prevent="logOut"
         href="javascript:void(0);"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
       >
-        Seprated link
+        Log out
       </a>
     </div>
   </div>
@@ -58,25 +59,32 @@
 <script>
 import { createPopper } from "@popperjs/core";
 
-import image from "@/assets/img/team-1-800x800.jpg";
-import { mapGetters } from 'vuex'
-
 export default {
   data() {
     return {
       dropdownPopoverShow: false,
-      image: image,
     };
   },
 
   computed: {
-    ...mapGetters({
-        user: 'auth/user'
-    })
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
+
+  mounted() {
+    if (!this.currentUser) {
+      this.$router.push("/login");
+    }
   },
 
   methods: {
-    toggleDropdown: function (event) {
+    logOut() {
+      this.$store.dispatch("auth/logout");
+      this.$router.push("/login");
+    },
+
+    toggleDropdown: function(event) {
       event.preventDefault();
       if (this.dropdownPopoverShow) {
         this.dropdownPopoverShow = false;

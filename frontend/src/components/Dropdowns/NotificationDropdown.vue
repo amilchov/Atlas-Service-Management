@@ -3,6 +3,7 @@
     <a
       class="text-gray-600 block py-1 px-3"
       ref="btnDropdownRef"
+      href="#pablo"
       v-on:click="toggleDropdown($event)"
     >
       <i class="fas fa-bell"></i>
@@ -53,7 +54,7 @@ export default {
     };
   },
   methods: {
-    toggleDropdown: function (event) {
+    toggleDropdown: function(event) {
       event.preventDefault();
       if (this.dropdownPopoverShow) {
         this.dropdownPopoverShow = false;

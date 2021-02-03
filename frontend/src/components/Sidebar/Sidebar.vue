@@ -18,7 +18,7 @@
         class="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-no-wrap text-sm uppercase font-bold p-4 px-0"
         to="/"
       >
-        Vue Notus
+        Hello, {{ currentUser.first_name }}!
       </router-link>
       <!-- User -->
       <ul class="md:hidden items-center flex flex-wrap list-none">
@@ -44,7 +44,7 @@
                 class="md:block text-left md:pb-2 text-gray-700 mr-0 inline-block whitespace-no-wrap text-sm uppercase font-bold p-4 px-0"
                 to="/"
               >
-                Vue Notus
+                Your role is: "{{ currentUser.roles[0].name }}"
               </router-link>
             </div>
             <div class="w-6/12 flex justify-end">
@@ -356,9 +356,20 @@ export default {
     };
   },
   methods: {
-    toggleCollapseShow: function (classes) {
+    toggleCollapseShow: function(classes) {
       this.collapseShow = classes;
     },
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
+
+  mounted() {
+    if (!this.currentUser) {
+      this.$router.push("/login");
+    }
   },
   components: {
     NotificationDropdown,

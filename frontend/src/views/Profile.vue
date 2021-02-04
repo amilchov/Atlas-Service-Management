@@ -6,17 +6,17 @@
         <div
           class="absolute top-0 w-full h-full bg-center bg-cover"
           style="
-            background-image: url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2710&q=80');
+            background-image: url('https://i0.wp.com/www.hisour.com/wp-content/uploads/2019/04/ATLAS-experiment-CERN-Geneva-Switzerland.jpg?fit=960%2C640&ssl=1&resize=1280%2C720');
           "
         >
           <span
             id="blackOverlay"
-            class="w-full h-full absolute opacity-50 bg-black"
+            class="w-full h-full absolute opacity-75 bg-black"
           ></span>
         </div>
         <div
           class="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
-          style="transform: translateZ(0);"
+          style="transform: translateZ(0)"
         >
           <svg
             class="absolute bottom-0 overflow-hidden"
@@ -47,7 +47,7 @@
                   <div class="relative">
                     <img
                       alt="..."
-                      :src="team2"
+                      :src="currentUser.avatar"
                       class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
                     />
                   </div>
@@ -57,10 +57,10 @@
                 >
                   <div class="py-6 px-3 mt-32 sm:mt-0">
                     <button
-                      class="bg-green-500 active:bg-green-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
+                      class="bg-blue-500 active:bg-green-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
                       type="button"
                     >
-                      Connect
+                      <router-link to="/"> Settings </router-link>
                     </button>
                   </div>
                 </div>
@@ -70,9 +70,9 @@
                       <span
                         class="text-xl font-bold block uppercase tracking-wide text-gray-700"
                       >
-                        22
+                        {{ currentUser.roles.length }}
                       </span>
-                      <span class="text-sm text-gray-500">Friends</span>
+                      <span class="text-sm text-gray-500">Roles</span>
                     </div>
                     <div class="mr-4 p-3 text-center">
                       <span
@@ -80,7 +80,7 @@
                       >
                         10
                       </span>
-                      <span class="text-sm text-gray-500">Photos</span>
+                      <span class="text-sm text-gray-500">Incidents</span>
                     </div>
                     <div class="lg:mr-4 p-3 text-center">
                       <span
@@ -88,50 +88,43 @@
                       >
                         89
                       </span>
-                      <span class="text-sm text-gray-500">Comments</span>
+                      <span class="text-sm text-gray-500">Groups</span>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="text-center mt-12">
+              <div class="text-center">
                 <h3
-                  class="text-4xl font-semibold leading-normal mb-2 text-gray-800 mb-2"
+                  class="text-4xl font-semibold leading-normal mb-6 text-gray-800"
                 >
-                  Jenna Stones
+                  {{ currentUser.first_name }} {{ currentUser.last_name }}
                 </h3>
                 <div
-                  class="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase"
+                  class="mb-2 text-gray-700 mt-12"
+                  v-for="role in currentUser.roles"
+                  :key="role.name"
                 >
+                  <i class="fas fa-user-tag mr-2 text-lg text-gray-500"></i>
+                  Roles: {{ role.name }}
+                </div>
+                <div class="mb-2 text-gray-700">
                   <i
                     class="fas fa-map-marker-alt mr-2 text-lg text-gray-500"
                   ></i>
-                  Los Angeles, California
-                </div>
-                <div class="mb-2 text-gray-700 mt-10">
-                  <i class="fas fa-briefcase mr-2 text-lg text-gray-500"></i>
-                  Solution Manager - Creative Tim Officer
-                </div>
-                <div class="mb-2 text-gray-700">
-                  <i class="fas fa-university mr-2 text-lg text-gray-500"></i>
-                  University of Computer Science
+                  {{ location == null ? "no location" : currentUser.location }}
                 </div>
               </div>
-              <div class="mt-10 py-10 border-t border-gray-300 text-center">
+              <!-- <border-t border-gray-300 text-center" -->
+              <div class="border-t border-gray-300 text-center mt-5 py-5">
                 <div class="flex flex-wrap justify-center">
                   <div class="w-full lg:w-9/12 px-4">
                     <p class="mb-4 text-lg leading-relaxed text-gray-800">
-                      An artist of considerable range, Jenna the name taken by
-                      Melbourne-raised, Brooklyn-based Nick Murphy writes,
-                      performs and records all of his own music, giving it a
-                      warm, intimate feel with a solid groove structure. An
-                      artist of considerable range.
+                      {{
+                        currentUser.description == null
+                          ? "no description"
+                          : currentUser.description
+                      }}
                     </p>
-                    <a
-                      href="javascript:void(0)"
-                      class="font-normal text-green-500"
-                    >
-                      Show more
-                    </a>
                   </div>
                 </div>
               </div>
@@ -140,24 +133,33 @@
         </div>
       </section>
     </main>
-    <footer-component />
   </div>
 </template>
 <script>
 import Navbar from "@/components/Navbars/AuthNavbar.vue";
-import FooterComponent from "@/components/Footers/Footer.vue";
-
-import team2 from "@/assets/img/team-2-800x800.jpg";
 
 export default {
   data() {
     return {
-      team2,
+      // roles: this.currentUser.
     };
   },
+
   components: {
     Navbar,
-    FooterComponent,
+  },
+
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
+
+  mounted() {
+    console.log(this.currentUser);
+    if (!this.currentUser) {
+      this.$router.push("/login");
+    }
   },
 };
 </script>

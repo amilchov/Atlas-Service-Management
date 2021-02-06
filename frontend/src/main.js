@@ -26,6 +26,7 @@ import Dashboard from "@/views/admin/Dashboard.vue";
 import Settings from "@/views/admin/Settings.vue";
 import Tables from "@/views/admin/Tables.vue";
 import Maps from "@/views/admin/Maps.vue";
+import UsersTable from "@/views/admin/UsersTable.vue";
 
 // views for Auth layout
 import Login from "@/views/auth/Login.vue";
@@ -35,6 +36,7 @@ import Register from "@/views/auth/Register.vue";
 import Landing from "@/views/Landing.vue";
 import Profile from "@/views/Profile.vue";
 import Index from "@/views/Index.vue";
+// import { component } from "vue/types/umd";
 
 // routes
 const routes = [
@@ -59,7 +61,12 @@ const routes = [
         path: "/admin/maps",
         component: Maps,
       },
+      {
+        path: "/admin/tables/users",
+        component: UsersTable,
+      }
     ],
+    beforeEnter: ifAuthenticated
   },
   {
     path: "/auth",
@@ -81,8 +88,11 @@ const routes = [
     component: Landing,
   },
   {
-    path: "/profile",
+    path: '/profile',
+    name: 'Profile',
     component: Profile,
+    props: true
+
   },
   {
     path: "/Landing",
@@ -90,6 +100,15 @@ const routes = [
   },
   { path: "*", redirect: "/" },
 ];
+
+const ifAuthenticated = (to, from, next) => {
+  const loggedIn = localStorage.getItem('user');
+  if (!loggedIn) {
+    next('/auth/login');
+  } else {
+    next();
+  }
+}
 
 // app config
 Vue.config.productionTip = false;

@@ -70,7 +70,7 @@
                       <span
                         class="text-xl font-bold block uppercase tracking-wide text-gray-700"
                       >
-                        {{ currentUser.roles.length }}
+                        <!-- {{ roles.length }} -->
                       </span>
                       <span class="text-sm text-gray-500">Roles</span>
                     </div>
@@ -97,15 +97,11 @@
                 <h3
                   class="text-4xl font-semibold leading-normal mb-6 text-gray-800"
                 >
-                  {{ currentUser.first_name }} {{ currentUser.last_name }}
+                  <!-- {{ first_name }} {{ last_name }} -->
                 </h3>
-                <div
-                  class="mb-2 text-gray-700 mt-12"
-                  v-for="role in currentUser.roles"
-                  :key="role.name"
-                >
+                <div class="mb-2 text-gray-700 mt-12">
                   <i class="fas fa-user-tag mr-2 text-lg text-gray-500"></i>
-                  Roles: {{ role.name }}
+                  {{showRoles}}
                 </div>
                 <div class="mb-2 text-gray-700">
                   <i
@@ -141,7 +137,7 @@ import Navbar from "@/components/Navbars/AuthNavbar.vue";
 export default {
   data() {
     return {
-      // roles: this.currentUser.
+      data: this.first_name,
     };
   },
 
@@ -153,13 +149,36 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     },
+
+    routerData() {
+      return this.$route.params.id;
+    },
   },
 
   mounted() {
+    console.log(this.id);
     console.log(this.currentUser);
     if (!this.currentUser) {
       this.$router.push("/login");
     }
+  },
+
+  methods: {
+    showRoles () {
+      this.roles.array.forEach(role => {
+        console.log(role)
+      });
+    }
+  },
+
+  props: {
+    id: null,
+    avatar: null,
+    first_name: null,
+    last_name: null,
+    city: null,
+    country: null,
+    roles: null,
   },
 };
 </script>

@@ -39,7 +39,10 @@
         User Settings
       </router-link>
       <router-link
-        to="/profile"
+        :to="{
+          name: 'Profile',
+          params: { id: 123, first_name: 'pepi', last_name: 'pepiii', city: 'Pernik', country: 'BG', roles: ['ess', 'admin', 'chart', 'hi'] },
+        }"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
       >
         User Profile
@@ -84,7 +87,7 @@ export default {
       this.$router.push("/login");
     },
 
-    toggleDropdown: function(event) {
+    toggleDropdown: function (event) {
       event.preventDefault();
       if (this.dropdownPopoverShow) {
         this.dropdownPopoverShow = false;

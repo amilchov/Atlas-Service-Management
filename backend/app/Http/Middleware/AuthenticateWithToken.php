@@ -8,30 +8,28 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
 |--------------------------------------------------------------------------
-| Application Key
+| Authenticate With Token
 |--------------------------------------------------------------------------
 |
 | This class is a type of middleware, which prevents from
-| access to different urls or different data.
+| access to different urls or different data for certain user.
 |
 | @author David Ivanov <david4obgg1@gmail.com>
-*/
-class ApplicationKey
+ */
+class AuthenticateWithToken
 {
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @param Closure $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next) : Response
+    public function handle(Request $request, Closure $next)
     {
-        $token = $request->header('Application');
-
-        if ($token !== config('app.api_key'))
+        if (!$request->header('Authorization'))
         {
-            return response()->json(['message' => 'Application key not found.'], RESPONSE::HTTP_UNAUTHORIZED);
+            return response()->json(['message' => 'Not a valid API request.'],RESPONSE::HTTP_UNAUTHORIZED);
         }
 
         return $next($request);

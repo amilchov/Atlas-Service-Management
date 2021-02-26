@@ -26,6 +26,7 @@
         class="lg:flex flex-grow items-center bg-white lg:bg-transparent lg:shadow-none"
         :class="[navbarOpen ? 'block rounded shadow-lg' : 'hidden']"
         id="example-navbar-warning"
+        v-if="!this.loggedIn"
       >
         <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
           <li class="flex items-center">
@@ -51,21 +52,43 @@
           </li>
         </ul>
       </div>
+      <div v-else>
+        <ul class="flex-col md:flex-row list-none items-center hidden md:flex">
+          <div class="bg-white m-2 rounded-full h-24 w-24 flex shadow-xl">
+            <notification-dropdown />
+          </div>
+          <user-dropdown />
+        </ul>
+      </div>
     </div>
   </nav>
 </template>
 <script>
+import UserDropdown from "@/components/Dropdowns/UserDropdown.vue";
+import NotificationDropdown from "@/components/Dropdowns/NotificationDropdown.vue";
+
 export default {
+  components: {
+    UserDropdown,
+    NotificationDropdown,
+  },
+
   data() {
     return {
       navbarOpen: false,
     };
   },
+
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+  },
+
   methods: {
-    setNavbarOpen: function() {
+    setNavbarOpen: function () {
       this.navbarOpen = !this.navbarOpen;
     },
   },
-  components: {},
 };
 </script>

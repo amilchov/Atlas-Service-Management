@@ -2,11 +2,14 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import { auth } from './auth.module';
+import { profile } from './profile.module';
+import { userTable } from './user_table.module';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    auth
+    auth, 
+    userTable,
   }
 });

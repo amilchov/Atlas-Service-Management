@@ -8,7 +8,7 @@
           <div class="relative">
             <img
               alt="..."
-              :src="team2"
+              :src="currentUser.avatar"
               class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
             />
           </div>
@@ -19,9 +19,9 @@
               <span
                 class="text-xl font-bold block uppercase tracking-wide text-gray-700"
               >
-                22
+                {{ currentUser.roles.length }}
               </span>
-              <span class="text-sm text-gray-500">Friends</span>
+              <span class="text-sm text-gray-500">Roles</span>
             </div>
             <div class="mr-4 p-3 text-center">
               <span
@@ -29,7 +29,7 @@
               >
                 10
               </span>
-              <span class="text-sm text-gray-500">Photos</span>
+              <span class="text-sm text-gray-500">Incidents</span>
             </div>
             <div class="lg:mr-4 p-3 text-center">
               <span
@@ -37,7 +37,7 @@
               >
                 89
               </span>
-              <span class="text-sm text-gray-500">Comments</span>
+              <span class="text-sm text-gray-500">Groups</span>
             </div>
           </div>
         </div>
@@ -46,17 +46,21 @@
         <h3
           class="text-xl font-semibold leading-normal mb-2 text-gray-800 mb-2"
         >
-          Jenna Stones
+          {{ currentUser.first_name }} {{ currentUser.last_name }}
         </h3>
         <div
           class="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase"
         >
           <i class="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>
-          Los Angeles, California
+          {{ location == null ? "no location" : currentUser.location }}
         </div>
-        <div class="mb-2 text-gray-700 mt-10">
-          <i class="fas fa-briefcase mr-2 text-lg text-gray-500"></i>
-          Solution Manager - Creative Tim Officer
+        <div
+          class="mb-2 text-gray-700 mt-10"
+          v-for="role in currentUser.roles"
+          :key="role.name"
+        >
+          <i class="fas fa-user-tag mr-2 text-lg text-gray-500"></i>
+          Roles: {{ role.name }}
         </div>
         <div class="mb-2 text-gray-700">
           <i class="fas fa-university mr-2 text-lg text-gray-500"></i>
@@ -67,14 +71,12 @@
         <div class="flex flex-wrap justify-center">
           <div class="w-full lg:w-9/12 px-4">
             <p class="mb-4 text-lg leading-relaxed text-gray-800">
-              An artist of considerable range, Jenna the name taken by
-              Melbourne-raised, Brooklyn-based Nick Murphy writes, performs and
-              records all of his own music, giving it a warm, intimate feel with
-              a solid groove structure. An artist of considerable range.
+              {{ description == null ? "no description" : currentUser.description }}
+
             </p>
-            <a href="javascript:void(0);" class="font-normal text-green-500">
+            <!-- <a href="javascript:void(0);" class="font-normal text-green-500">
               Show more
-            </a>
+            </a> -->
           </div>
         </div>
       </div>
@@ -82,13 +84,18 @@
   </div>
 </template>
 <script>
-import team2 from "@/assets/img/team-2-800x800.jpg";
-
 export default {
-  data() {
-    return {
-      team2,
-    };
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
+
+  mounted() {
+    console.log(this.currentUser);
+    if (!this.currentUser) {
+      this.$router.push("/login");
+    }
   },
 };
 </script>

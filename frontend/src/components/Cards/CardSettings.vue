@@ -9,73 +9,88 @@
           class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
           type="button"
         >
-          Settings
+          Update
         </button>
       </div>
     </div>
     <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-      <form>
+      <FormulateForm @submit="handleRegister">
         <h6 class="text-gray-500 text-sm mt-3 mb-6 font-bold uppercase">
           User Information
         </h6>
         <div class="flex flex-wrap">
-          <div class="w-full lg:w-6/12 px-4">
+          <div class="w-full lg:w-4/12 px-4">
             <div class="relative w-full mb-3">
-              <label
-                class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Username
-              </label>
-              <input
+              <FormulateInput
                 type="text"
-                class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                value="lucky.jesse"
+                name="first name"
+                v-model="currentUser.first_name"
+                label="First name"
+                validation="^required|min:5|max:50|matches:/^[a-zA-Z\s]+$/"
+                :validation-messages="{
+                  matches:
+                    'First name must contain only English letters and must not contain numbers!',
+                }"
+                input-class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                label-class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                help-class="text-xs mb-1 text-gray-600"
+                error-class="text-red-700 text-xs mb-1"
               />
             </div>
           </div>
-          <div class="w-full lg:w-6/12 px-4">
+          <div class="w-full lg:w-4/12 px-4">
             <div class="relative w-full mb-3">
-              <label
-                class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Email address
-              </label>
-              <input
+              <FormulateInput
+                type="text"
+                name="middle name"
+                v-model="currentUser.middle_name"
+                label="Middle name"
+                validation="^required|min:5|max:50|matches:/^[a-zA-Z\s]+$/"
+                outer-class="mb-4"
+                :validation-messages="{
+                  matches:
+                    'Middle name must contain only English letters and must not contain numbers!',
+                }"
+                input-class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                label-class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                help-class="text-xs mb-1 text-gray-600"
+                error-class="text-red-700 text-xs mb-1"
+              />
+            </div>
+          </div>
+          <div class="w-full lg:w-4/12 px-4">
+            <div class="relative w-full mb-3">
+              <FormulateInput
+                type="text"
+                name="last name"
+                v-model="currentUser.last_name"
+                label="Last name"
+                validation="^required|min:5|max:50|matches:/^[a-zA-Z\s]+$/"
+                outer-class="mb-4"
+                :validation-messages="{
+                  matches:
+                    'Last name must contain only English letters and must not contain numbers!.',
+                }"
+                input-class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                label-class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                help-class="text-xs mb-1 text-gray-600"
+                error-class="text-red-700 text-xs mb-1"
+              />
+            </div>
+          </div>
+          <div class="w-full lg:w-12/12 px-4">
+            <div class="relative w-full mb-3">
+              <FormulateInput
                 type="email"
-                class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                value="jesse@example.com"
-              />
-            </div>
-          </div>
-          <div class="w-full lg:w-6/12 px-4">
-            <div class="relative w-full mb-3">
-              <label
-                class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                First Name
-              </label>
-              <input
-                type="text"
-                class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                value="Lucky"
-              />
-            </div>
-          </div>
-          <div class="w-full lg:w-6/12 px-4">
-            <div class="relative w-full mb-3">
-              <label
-                class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Last Name
-              </label>
-              <input
-                type="text"
-                class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                value="Jesse"
+                name="email"
+                v-model="currentUser.email"
+                label="Email address"
+                validation="email"
+                outer-class="mb-4"
+                input-class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                label-class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                help-class="text-xs mb-1 text-gray-600"
+                error-class="text-red-700 text-xs mb-1"
               />
             </div>
           </div>
@@ -87,63 +102,35 @@
           Contact Information
         </h6>
         <div class="flex flex-wrap">
-          <div class="w-full lg:w-12/12 px-4">
+          <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
-              <label
-                class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Address
-              </label>
-              <input
+              <FormulateInput
                 type="text"
-                class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                name="city"
+                v-model="currentUser.city"
+                label="City"
+                validation="max:50|matches:/^[a-zA-Z\s]+$/"
+                outer-class="mb-4"
+                input-class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                label-class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                help-class="text-xs mb-1 text-gray-600"
+                error-class="text-red-700 text-xs mb-1"
               />
             </div>
           </div>
-          <div class="w-full lg:w-4/12 px-4">
+          <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
-              <label
-                class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                City
-              </label>
-              <input
-                type="email"
-                class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                value="New York"
-              />
-            </div>
-          </div>
-          <div class="w-full lg:w-4/12 px-4">
-            <div class="relative w-full mb-3">
-              <label
-                class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Country
-              </label>
-              <input
+              <FormulateInput
                 type="text"
-                class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                value="United States"
-              />
-            </div>
-          </div>
-          <div class="w-full lg:w-4/12 px-4">
-            <div class="relative w-full mb-3">
-              <label
-                class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                Postal Code
-              </label>
-              <input
-                type="text"
-                class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                value="Postal Code"
+                name="country"
+                v-model="currentUser.country"
+                label="Country"
+                validation="max:50|matches:/^[a-zA-Z\s]+$/"
+                outer-class="mb-4"
+                input-class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                label-class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                help-class="text-xs mb-1 text-gray-600"
+                error-class="text-red-700 text-xs mb-1"
               />
             </div>
           </div>
@@ -157,25 +144,60 @@
         <div class="flex flex-wrap">
           <div class="w-full lg:w-12/12 px-4">
             <div class="relative w-full mb-3">
-              <label
-                class="block uppercase text-gray-700 text-xs font-bold mb-2"
-                htmlFor="grid-password"
-              >
-                About me
-              </label>
-              <textarea
+              <FormulateInput
+                type="textarea"
+                name="About me"
+                value="HI"
+                v-if="currentUser.description == null"
+                v-model="description"
+                label="About me"
+                validation="min:|matches:/^[a-zA-Z\s]+$/"
+                outer-class="mb-4"
+                input-class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                label-class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                help-class="text-xs mb-1 text-gray-600"
+                error-class="text-red-700 text-xs mb-1"
+              />
+
+              <FormulateInput
                 type="text"
-                class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                rows="4"
-              >
-                    A beautiful UI Kit and Admin for VueJS & Tailwind CSS. It is Free
-                    and Open Source.
-                  </textarea
-              >
+                name="About me"
+                v-else
+                v-model="currentUser.description"
+                label="About me"
+                validation="min:|matches:/^[a-zA-Z\s]+$/"
+                outer-class="mb-4"
+                input-class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+                label-class="block uppercase text-gray-700 text-xs font-bold mb-2"
+                help-class="text-xs mb-1 text-gray-600"
+                error-class="text-red-700 text-xs mb-1"
+              />
             </div>
           </div>
         </div>
-      </form>
+      </FormulateForm>
     </div>
   </div>
 </template>
+<script>
+export default {
+   data () {
+    return {
+      description: 'Honda'
+    }
+  },
+
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
+
+  mounted() {
+    console.log(this.currentUser);
+    if (!this.currentUser) {
+      this.$router.push("/login");
+    }
+  },
+};
+</script>

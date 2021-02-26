@@ -3,7 +3,7 @@
 namespace App\Http\Api\User\Seeders;
 
 use App\Http\Api\Role\Constants\Roles;
-use App\Http\Api\Auth\Models\Auth;
+use App\Http\Api\User\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -24,15 +24,15 @@ class UserSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        $administrator = Auth::create([
+        $administrator = User::create([
             'first_name' => 'Admin',
             'middle_name' => 'Admin',
             'last_name' => 'Admin',
             'email' => 'admin@admin.com',
             'password' => 'asmadminalexdavid',
-            'avatar' => Auth::DEFAULT_AVATAR,
+            'avatar' => User::DEFAULT_PICTURE,
             'token' => Str::random(255),
             'created_at' => now(),
             'updated_at' => now(),

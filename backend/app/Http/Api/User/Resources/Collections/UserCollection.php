@@ -10,14 +10,16 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 | User Collection
 |--------------------------------------------------------------------------
 |
-| This class is a type of resource collection, in whose we return
-| the whole data about users.
+| This class is a type of resource collection, in which
+| we return the whole data about the users.
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
 class UserCollection extends ResourceCollection
 {
     /**
+     * Transform the resource collection into an array.
+     *
      * @param Request $request
      * @return array
      */

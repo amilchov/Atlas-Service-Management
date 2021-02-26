@@ -2,30 +2,103 @@
 
 namespace App\Http\Api\User\Controllers;
 
-use App\Http\Controllers\Controller;
+use Exception;
+use App\Http\Api\User\Requests\UpdateRequest;
+use App\Http\Api\User\Resources\UserResource;
+use App\Http\Api\User\Repositories\UserRepository;
 use App\Http\Api\User\Services\UserService;
+use App\Http\Api\User\Resources\Collections\UserCollection;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
 /**
 |--------------------------------------------------------------------------
-| Chart Controller
+| User Controller
 |--------------------------------------------------------------------------
 |
-| This class is a type of controller, in whose we have
-| the basic user data from the Auth Service.
+| This class is a type of controller, in which we have
+| the basic user data from the User Service class.
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
 class UserController extends Controller
 {
     /**
-     * Call the method for users from the service class.
+     * Initializing the instance of User Service class.
      *
+     * @var UserService
+     */
+    private UserService $userService;
+
+    /**
+     * Initializing the instance of User Repository class.
+     *
+     * @var UserRepository
+     */
+    private UserRepository $userRepository;
+
+    /**
+     * UserController constructor.
+     *
+     * @param UserRepository $userRepository
      * @param UserService $userService
+     */
+    public function __construct(UserRepository $userRepository, UserService $userService)
+    {
+        $this->userRepository = $userRepository;
+        $this->userService = $userService;
+    }
+
+    /**
+     * Call the method for get all users from the user repository class.
+     *
      * @return JsonResponse
      */
-    public function users(UserService $userService): JsonResponse
+    public function index(): JsonResponse
     {
-        return $userService->all();
+        $users = $this->userRepository->all();
+
+        return response()->json(new UserCollection($users));
+    }
+
+    /**
+     * Call the method for desired user from the user repository class.
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function show(int $id): JsonResponse
+    {
+        $user = $this->userRepository->findById($id);
+
+        return response()->json(new UserResource($user));
+    }
+
+    /**
+     * Call the method for update from the service class.
+     *
+     * @param UpdateRequest $request
+     * @return JsonResponse
+     */
+    public function update(UpdateRequest $request): JsonResponse
+    {
+        $user = $this->userRepository->findByToken($request);
+
+        return $this->userService->update($user, $request);
+    }
+
+    /**
+     * Call the method for delete from the service class.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function destroy(Request $request): JsonResponse
+    {
+        $user = $this->userRepository->findByToken($request);
+
+        return $this->userService->delete($user);
     }
 }

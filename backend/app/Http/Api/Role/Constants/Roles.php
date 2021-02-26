@@ -7,7 +7,7 @@ namespace App\Http\Api\Role\Constants;
 | Roles
 |--------------------------------------------------------------------------
 |
-| This class is a type of constants, in whose we have
+| This class is a type of constants, in which we have
 | access to all roles with their names and descriptions.
 |
 | @author David Ivanov <david4obgg1@gmail.com>

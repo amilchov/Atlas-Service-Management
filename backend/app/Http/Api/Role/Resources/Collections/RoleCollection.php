@@ -11,14 +11,16 @@ use Illuminate\Support\Collection;
 | Role Collection
 |--------------------------------------------------------------------------
 |
-| This class is a type of resource collection, in whose we return
-| the whole data about the roles.
+| This class is a type of resource collection, in which
+| we return the whole data about the roles.
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
 class RoleCollection extends ResourceCollection
 {
     /**
+     * Transform the resource collection into an array.
+     *
      * @param Request $request
      * @return Collection
      */

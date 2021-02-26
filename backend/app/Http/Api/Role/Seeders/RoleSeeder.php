@@ -2,8 +2,8 @@
 
 namespace App\Http\Api\Role\Seeders;
 
+use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 /**
@@ -23,7 +23,7 @@ class RoleSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $json = File::get('database/data/roles.json');
 
@@ -31,7 +31,7 @@ class RoleSeeder extends Seeder
 
         foreach ($roles as $role)
         {
-            DB::table('roles')->insert([
+            Role::insert([
                 'name' => $role->name,
                 'description' => $role->description,
                 'guard_name' => $role->guard_name,

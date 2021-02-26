@@ -2,8 +2,8 @@
 
 namespace App\Http\Api\Chart\Seeders;
 
+use App\Http\Api\Chart\Models\Chart;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 /**
@@ -24,7 +24,7 @@ class ChartSeeder extends Seeder
      * @return void
      * @throws JsonException
      */
-    public function run()
+    public function run(): void
     {
         $json = File::get('database/data/charts.json');
 
@@ -32,7 +32,7 @@ class ChartSeeder extends Seeder
 
         foreach ($charts as $chart)
         {
-            DB::table('charts')->insert([
+            Chart::insert([
                 'name' => $chart->name,
                 'description' => $chart->description,
                 'tag' => $chart->tag,

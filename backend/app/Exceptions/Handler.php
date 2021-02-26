@@ -3,11 +3,11 @@
 namespace App\Exceptions;
 
 use Throwable;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -49,7 +49,6 @@ class Handler extends ExceptionHandler
      * @param  Request  $request
      * @param Throwable $exception
      * @return Response
-     *
      * @throws Throwable
      */
     public function render($request, Throwable $exception): Response
@@ -61,9 +60,9 @@ class Handler extends ExceptionHandler
 
         if ($this->isHttpException($exception))
         {
-            if ($exception->getStatusCode() === 404 || $exception->getStatusCode() === 405)
+            if ($exception->getStatusCode() === RESPONSE::HTTP_NOT_FOUND)
             {
-                return response()->json(['message' => 'Page not found'], 404);
+                return response()->json(['message' => 'Page not found'], RESPONSE::HTTP_NOT_FOUND);
             }
 
             return $this->renderHttpException($exception);

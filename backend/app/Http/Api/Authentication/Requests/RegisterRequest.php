@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Api\Auth\Requests;
+namespace App\Http\Api\Authentication\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -10,17 +10,27 @@ use Illuminate\Foundation\Http\FormRequest;
 |--------------------------------------------------------------------------
 |
 | This class is a type of form request, in whose we check
-| and validate the register auth data from the external source.
+| and validate the register auth data from the external source (request).
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
 class RegisterRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
     public function authorize(): bool
     {
         return true;
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return string[]
+     */
     public function rules(): array
     {
         return [

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Api\Auth\Requests;
+namespace App\Http\Api\Authentication\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -9,18 +9,28 @@ use Illuminate\Foundation\Http\FormRequest;
 | Login Request
 |--------------------------------------------------------------------------
 |
-| This class is a type of form request, in whose we check
-| and validate the login auth data from the external source.
+| This class is a type of form request, in which we check
+| and validate the login auth data from the external source (request).
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
 class LoginRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
     public function authorize(): bool
     {
         return true;
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return string[]
+     */
     public function rules(): array
     {
         return [

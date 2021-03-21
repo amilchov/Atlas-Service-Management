@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIncidentUserTable extends Migration
+class CreateTeamIncidentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateIncidentUserTable extends Migration
      */
     public function up(): void
     {
-        Schema::create('incident_user', function (Blueprint $table) {
+        Schema::create('team_incident', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('team_id')->constrained()->cascadeOnDelete();
             $table->foreignId('incident_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('caller_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('executor_id')->constrained('users')->cascadeOnDelete();
-            $table->string('model_from');
-            $table->unique(['incident_id', 'caller_id', 'executor_id', 'model_from'], 'incident_caller_executor_model_unique');
             $table->timestamps();
+            $table->unique(['team_id', 'incident_id']);
         });
     }
 
@@ -31,6 +29,6 @@ class CreateIncidentUserTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('incident_user');
+        Schema::dropIfExists('team_incident');
     }
 }

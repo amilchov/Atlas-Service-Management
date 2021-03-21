@@ -7,8 +7,8 @@ use App\Http\Api\Incident\Requests\StoreRequest;
 use App\Http\Api\Incident\Requests\UpdateRequest;
 use App\Http\Api\Incident\Resources\Collections\IncidentCollection;
 use App\Http\Api\Incident\Resources\IncidentResource;
-use App\Http\Api\User\Repositories\UserRepository;
-use App\Http\Api\Incident\Repositories\IncidentRepository;
+use App\Http\Api\User\Interfaces\UserRepositoryInterface;
+use App\Http\Api\Incident\Interfaces\IncidentRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -25,26 +25,26 @@ use Illuminate\Http\Request;
 class IncidentService
 {
     /**
-     * Initializing the instance of User Repository class.
+     * Initializing the instance of User Repository interface.
      *
-     * @var UserRepository
+     * @var UserRepositoryInterface
      */
-    private UserRepository $userRepository;
+    private UserRepositoryInterface $userRepository;
 
     /**
-     * Initializing the instance of Incident Repository class.
+     * Initializing the instance of Incident Repository interface.
      *
-     * @var IncidentRepository
+     * @var IncidentRepositoryInterface
      */
-    private IncidentRepository $incidentRepository;
+    private IncidentRepositoryInterface $incidentRepository;
 
     /**
      * IncidentService constructor.
      *
-     * @param UserRepository $userRepository
-     * @param IncidentRepository $incidentRepository
+     * @param UserRepositoryInterface $userRepository
+     * @param IncidentRepositoryInterface $incidentRepository
      */
-    public function __construct(UserRepository $userRepository, IncidentRepository $incidentRepository)
+    public function __construct(UserRepositoryInterface $userRepository, IncidentRepositoryInterface $incidentRepository)
     {
         $this->userRepository = $userRepository;
         $this->incidentRepository = $incidentRepository;
@@ -72,7 +72,7 @@ class IncidentService
     {
         $user = $this->userRepository->findByToken($request);
 
-        $incidents = $user->incidents()->get();
+        $incidents = $user->executors()->get();
 
         return response()->json(new IncidentCollection($incidents));
     }
@@ -87,12 +87,10 @@ class IncidentService
     {
         $validated = $request->validated();
 
-        $user = $this->userRepository->findByToken($request);
-
-        $number = Incident::latest()->value('number');
+        $number = $this->incidentRepository->findLatestNumber();
 
         $incident = Incident::create([
-            'number' => $number ? $number + 1 : 10000,
+            'number' => $number ? $number + 1 : Incident::DEFAULT_NUMBER,
             'category_id' => $validated['category_id'],
             'state' => $validated['state'],
             'impact' => $validated['impact'],
@@ -104,8 +102,9 @@ class IncidentService
 
         $incident->execute()->create([
             'incident_id' => $incident->id,
-            'caller_id' => $user->id,
-            'executor_id' => $validated['executor_id']
+            'caller_id' => $validated['caller_id'],
+            'executor_id' => $validated['executor_id'],
+            'model_from' => Incident::class
         ]);
 
         return response()->json(new IncidentResource($incident));
@@ -136,6 +135,9 @@ class IncidentService
         $user = $this->userRepository->findByToken($request);
         $incident = $this->incidentRepository->findById($id);
 
+        $caller_token = "";
+        $executor_token = "";
+
         foreach ($incident->caller as $caller)
         {
             $caller_token = $caller->token;
@@ -146,7 +148,7 @@ class IncidentService
             $executor_token = $executor->token;
         }
 
-        if ($user->token == $caller_token || $user->token == $executor_token)
+        if ($user->token === $caller_token || $user->token === $executor_token)
         {
             $incident->update($request->validated());
 
@@ -166,7 +168,6 @@ class IncidentService
     {
         $incident = $this->incidentRepository->findById($id);
 
-        $incident->execute()->delete();
         $incident->delete();
 
         return response()->json(['message' => 'The incident was successfully deleted.']);

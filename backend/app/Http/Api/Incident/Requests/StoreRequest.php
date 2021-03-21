@@ -41,6 +41,7 @@ class StoreRequest extends FormRequest
             'priority' => 'required|string|max:50',
             'short_description' => 'required',
             'description' => 'sometimes|string',
+            'caller_id' => 'required|integer|exists:users,id',
             'executor_id' => 'required|integer|exists:users,id'
         ];
     }

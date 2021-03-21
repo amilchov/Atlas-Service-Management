@@ -3,8 +3,9 @@
 namespace App\Http\Api\Incident\Models;
 
 use App\Http\Api\Chart\Models\Chart;
+use App\Http\Api\Team\Models\Team;
 use App\Http\Api\User\Models\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -23,7 +24,12 @@ use Illuminate\Support\Carbon;
 
 class Incident extends Model
 {
-    use HasFactory;
+    /**
+     * Default incident number.
+     *
+     * @var string
+     */
+    public const DEFAULT_NUMBER = 10000;
 
     /**
      * Default date format.
@@ -45,7 +51,16 @@ class Incident extends Model
         'urgency',
         'priority',
         'short_description',
-        'description'
+        'description',
+    ];
+
+    /**
+     * The attributes that are hidden.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'pivot'
     ];
 
     /**
@@ -71,11 +86,21 @@ class Incident extends Model
     /**
      * The accessor associate the incident's category_id with chart_id in charts table.
      *
-     * @return mixed
+     * @return array|Collection
      */
-    public function getCategoryIdAttribute()
+    public function getCategoryIdAttribute(): array|Collection
     {
         return Chart::where('id', $this->attributes['category_id'])->get();
+    }
+
+    /**
+     * The executed incidents that belong to the user.
+     *
+     * @return HasMany
+     */
+    public function execute(): HasMany
+    {
+        return $this->hasMany(Executing::class);
     }
 
     /**
@@ -99,12 +124,12 @@ class Incident extends Model
     }
 
     /**
-     * The executed incidents that belong to the user.
+     * The teams that belong to the incident.
      *
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function execute(): HasMany
+    public function teams(): BelongsToMany
     {
-        return $this->hasMany(Executing::class);
+        return $this->belongsToMany(Team::class, 'team_user', 'incident_id', 'team_id')->withTimestamps();
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Api\Incident\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -17,8 +16,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Executing extends Model
 {
-    use HasFactory;
-
     /**
      * The table associated with the pivot model.
      *
@@ -34,6 +31,7 @@ class Executing extends Model
     protected $fillable = [
         'incident_id',
         'caller_id',
-        'executor_id'
+        'executor_id',
+        'model_from'
     ];
 }

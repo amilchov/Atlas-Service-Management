@@ -2,7 +2,11 @@
 
 namespace App\Http\Api\Incident\Repositories;
 
+use App\Http\Api\Incident\Interfaces\IncidentRepositoryInterface;
 use App\Http\Api\Incident\Models\Incident;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 /**
 |--------------------------------------------------------------------------
@@ -14,36 +18,23 @@ use App\Http\Api\Incident\Models\Incident;
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
-class IncidentRepository
+class IncidentRepository implements IncidentRepositoryInterface
 {
-    /**
-     * Obtain all incidents, also their callers and executors.
-     *
-     * @return mixed
-     */
-    private function incidents()
+    /** @inheritDoc */
+    public function all(): array|Collection
     {
-        return Incident::with(['caller', 'executor']);
+        return Incident::with(['caller', 'executor'])->orderBy('id')->get();
     }
 
-    /**
-     * Get incidents and sort them.
-     *
-     * @return mixed
-     */
-    public function all()
+    /** @inheritDoc */
+    public function findById(int $id): array|null|Collection|Model|Builder
     {
-        return $this->incidents()->orderBy('id')->get();
+        return Incident::with(['caller', 'executor'])->findOrFail($id);
     }
 
-    /**
-     * Get incident by the specific id.
-     *
-     * @param int $id
-     * @return mixed
-     */
-    public function findById(int $id)
+    /** @inheritDoc */
+    public function findLatestNumber(): mixed
     {
-        return $this->incidents()->findOrFail($id);
+        return Incident::latest()->value('number');
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Api\Incident\Resources\Collections;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Collection;
 
 /**
 |--------------------------------------------------------------------------
@@ -21,10 +20,12 @@ class IncidentCollection extends ResourceCollection
      * Transform the resource collection into an array.
      *
      * @param $request
-     * @return Collection
+     * @return array
      */
-    public function toArray($request): Collection
+    public function toArray($request) : array
     {
-        return $this->collection;
+        return [
+            'incidents' => $this->collection
+        ];
     }
 }

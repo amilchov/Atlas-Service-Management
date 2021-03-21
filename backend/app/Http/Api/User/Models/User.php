@@ -4,9 +4,10 @@ namespace App\Http\Api\User\Models;
 
 use App\Http\Api\Incident\Models\Incident;
 use App\Http\Api\Incident\Models\Executing;
+use App\Http\Api\Role\Models\ModelHasRoles;
 use App\Http\Api\Team\Models\Team;
 use App\Http\Traits\HasPicture;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -28,7 +29,7 @@ use Illuminate\Support\Carbon;
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles, HasPicture;
+    use Notifiable, HasRoles, HasPicture;
 
     /**
      * User's default avatar path and name.
@@ -151,8 +152,26 @@ class User extends Authenticatable
     /**
      * @return BelongsToMany
      */
-    public function incidents(): BelongsToMany
+    public function callers(): BelongsToMany
+    {
+        return $this->belongsToMany(Incident::class, 'incident_user', 'caller_id', 'incident_id');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function executors(): BelongsToMany
     {
         return $this->belongsToMany(Incident::class, 'incident_user', 'executor_id', 'incident_id');
+    }
+
+    /**
+     * Get the members of the team.
+     *
+     * @return BelongsTo
+     */
+    public function assignRole(): BelongsTo
+    {
+        return $this->belongsTo(ModelHasRoles::class);
     }
 }

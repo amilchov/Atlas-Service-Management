@@ -5,9 +5,9 @@ namespace App\Http\Api\User\Controllers;
 use Exception;
 use App\Http\Api\User\Requests\UpdateRequest;
 use App\Http\Api\User\Resources\UserResource;
-use App\Http\Api\User\Repositories\UserRepository;
 use App\Http\Api\User\Services\UserService;
 use App\Http\Api\User\Resources\Collections\UserCollection;
+use App\Http\Api\User\Interfaces\UserRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -25,6 +25,13 @@ use Illuminate\Http\JsonResponse;
 class UserController extends Controller
 {
     /**
+     * Initializing the instance of User Repository Interface.
+     *
+     * @var UserRepositoryInterface
+     */
+    private UserRepositoryInterface $userRepository;
+
+    /**
      * Initializing the instance of User Service class.
      *
      * @var UserService
@@ -32,19 +39,12 @@ class UserController extends Controller
     private UserService $userService;
 
     /**
-     * Initializing the instance of User Repository class.
-     *
-     * @var UserRepository
-     */
-    private UserRepository $userRepository;
-
-    /**
      * UserController constructor.
      *
-     * @param UserRepository $userRepository
+     * @param UserRepositoryInterface $userRepository
      * @param UserService $userService
      */
-    public function __construct(UserRepository $userRepository, UserService $userService)
+    public function __construct(UserRepositoryInterface $userRepository, UserService $userService)
     {
         $this->userRepository = $userRepository;
         $this->userService = $userService;

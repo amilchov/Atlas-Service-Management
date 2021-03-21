@@ -3,6 +3,10 @@
 namespace App\Http\Api\User\Repositories;
 
 use App\Http\Api\User\Models\User;
+use App\Http\Api\User\Interfaces\UserRepositoryInterface;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 /**
@@ -15,38 +19,24 @@ use Illuminate\Http\Request;
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
-class UserRepository
+class UserRepository implements UserRepositoryInterface
 {
-    /**
-     * Get all users with their roles.
-     *
-     * @return mixed
-     */
-    public function all()
+    /** @inheritDoc */
+    public function all(): array|Collection
     {
         return User::with('roles')->get();
     }
 
-    /**
-     * Find user by the specific token.
-     *
-     * @param Request $request
-     * @return mixed
-     */
-    public function findByToken(Request $request)
+    /** @inheritDoc */
+    public function findByToken(Request $request): Model|User|Builder
     {
         $token = $request->header('Authorization');
 
         return User::where('token', $token)->firstOrFail();
     }
 
-    /**
-     * Get user by the specific id.
-     *
-     * @param int $id
-     * @return mixed
-     */
-    public function findById(int $id)
+    /** @inheritDoc */
+    public function findById(int $id): array|Collection|Model|User
     {
         return User::findOrFail($id);
     }

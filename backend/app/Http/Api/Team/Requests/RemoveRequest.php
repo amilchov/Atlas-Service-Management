@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
 |--------------------------------------------------------------------------
-| Invite Request
+| Remove Request
 |--------------------------------------------------------------------------
 |
 | This class is a type of form request, in which we check
@@ -14,7 +14,7 @@ use Illuminate\Foundation\Http\FormRequest;
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
-class InviteRequest extends FormRequest
+class RemoveRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

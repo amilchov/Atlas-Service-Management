@@ -2,18 +2,25 @@
 
 namespace App\Http\Api\Team\Services;
 
-use App\Http\Api\Team\Models\Invitation;
-use App\Http\Api\Team\Repositories\TeamRepository;
+use App\Http\Api\Incident\Models\Executing;
+use App\Http\Api\Role\Models\ModelHasRoles;
+use App\Http\Api\Team\Models\Membership;
 use App\Http\Api\Team\Requests\AssignRequest;
 use App\Http\Api\Team\Requests\InviteRequest;
+use App\Http\Api\Team\Requests\RemoveRequest;
 use App\Http\Api\Team\Requests\StoreRequest;
+use App\Http\Api\Team\Requests\IncidentRequest;
 use App\Http\Api\Team\Requests\UpdateRequest;
 use App\Http\Api\Team\Resources\Collections\TeamCollection;
 use App\Http\Api\Team\Resources\TeamResource;
 use App\Http\Api\Team\Models\Team;
-use App\Http\Api\Team\Models\Membership;
-use App\Http\Api\User\Repositories\UserRepository;
+use App\Http\Api\Team\Interfaces\TeamRepositoryInterface;
+use App\Http\Api\User\Models\User;
+use App\Http\Api\User\Interfaces\UserRepositoryInterface;
+use App\Http\Api\Incident\Interfaces\IncidentRepositoryInterface;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
+use Exception;
 
 /**
 |--------------------------------------------------------------------------
@@ -28,29 +35,55 @@ use Illuminate\Http\JsonResponse;
 class TeamService
 {
     /**
-     * Initializing the instance of Team Repository class.
+     * Initializing the instance of User class.
      *
-     * @var TeamRepository
+     * @var string
      */
-    private TeamRepository $teamRepository;
+    private string $userClass = User::class;
 
     /**
-     * Initializing the instance of User Repository class.
+     * Initializing the instance of Team class.
      *
-     * @var UserRepository
+     * @var string
      */
-    private UserRepository $userRepository;
+    private string $teamClass = Team::class;
+
+    /**
+     * Initializing the instance of Team Repository interface.
+     *
+     * @var TeamRepositoryInterface
+     */
+    private TeamRepositoryInterface $teamRepository;
+
+    /**
+     * Initializing the instance of User Repository interface.
+     *
+     * @var UserRepositoryInterface
+     */
+    private UserRepositoryInterface $userRepository;
+
+    /**
+     * Initializing the instance of Incident Repository interface.
+     *
+     * @var IncidentRepositoryInterface
+     */
+    private IncidentRepositoryInterface $incidentRepository;
 
     /**
      * TeamService constructor.
      *
-     * @param TeamRepository $teamRepository
-     * @param UserRepository $userRepository
+     * @param TeamRepositoryInterface $teamRepository
+     * @param UserRepositoryInterface $userRepository
+     * @param IncidentRepositoryInterface $incidentRepository
      */
-    public function __construct(TeamRepository $teamRepository, UserRepository $userRepository)
+    public function __construct(
+        TeamRepositoryInterface $teamRepository,
+        UserRepositoryInterface $userRepository,
+        IncidentRepositoryInterface $incidentRepository)
     {
         $this->teamRepository = $teamRepository;
         $this->userRepository = $userRepository;
+        $this->incidentRepository = $incidentRepository;
     }
 
     /**
@@ -66,6 +99,19 @@ class TeamService
     }
 
     /**
+     * Call the method for get all team incidents from the repository class.
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function incidents(int $id): JsonResponse
+    {
+        $incidents = $this->teamRepository->findIncidents($id);
+
+        return response()->json($incidents);
+    }
+
+    /**
      * Create the team with the desired data.
      *
      * @param StoreRequest $request
@@ -75,30 +121,20 @@ class TeamService
     {
         $user = $this->userRepository->findByToken($request);
 
-        $roles = $request->input('roles');
-
         $validated = $request->validated();
 
         $team = Team::create([
             'owner_id' => $user->id,
             'name' => $validated['name'],
             'description' => $validated['description'],
-            'image' => $validated['image'] ?? Team::DEFAULT_PICTURE,
+            'image' => $validated['image'] ?? Team::DEFAULT_PICTURE
         ]);
 
         $team->checkForPicture($request, 'image', 'teams', $team);
 
         $user->teams()->attach($team);
 
-        if ($request->has('roles'))
-        {
-            foreach($roles as $role)
-            {
-                $team->roles()->attach($team, ['role_id' => $role]);
-
-                $user->assignRole($role);
-            }
-        }
+        $this->attachRole($request, $team, $user);
 
         return response()->json(new TeamResource($team));
     }
@@ -127,7 +163,7 @@ class TeamService
     {
         $team = $this->teamRepository->findById($id);
 
-        $team->deletePicture(Team::class, $team, 'image');
+        $team->deletePicture($this->teamClass, $team, 'image');
 
         $team->update($request->validated());
 
@@ -141,14 +177,16 @@ class TeamService
      *
      * @param int $id
      * @return JsonResponse
+     * @throws Exception
      */
     public function delete(int $id): JsonResponse
     {
         $team = $this->teamRepository->findById($id);
 
-        $team->deletePicture(Team::class, $team, 'image');
+        $team->deletePicture($this->teamClass, $team, 'image');
 
-        $team->members()->delete();
+        $this->removeRelations($id);
+
         $team->delete();
 
         return response()->json(['message' => 'The team was successfully deleted.']);
@@ -157,36 +195,39 @@ class TeamService
     /**
      * Invite user/users with role/roles to the desired team.
      *
-     * @param InviteRequest $request
      * @param int $id
+     * @param InviteRequest $request
      * @return JsonResponse
      */
-    public function invite(InviteRequest $request, int $id): JsonResponse
+    public function inviteMember(int $id, InviteRequest $request): JsonResponse
     {
-        $user = $this->userRepository->findByToken($request);
         $team = $this->teamRepository->findById($id);
+        $members = $this->teamRepository->findMembers($team->id)->pluck('user_id');
 
-        $owner = $team->owner->id;
-        $roles = $team->roles()->get();
+        $roles = $team->roles;
+        $incidents = $team->incidents;
 
-        if ($user->id == $owner)
+        $users = $request->input('users');
+
+        foreach ($users as $user)
         {
-            $validated = $request->validated();
-
-            $users = $validated['users'];
-
-            if (in_array($owner, $users, false))
+            if ($members->contains($user))
             {
-                return response()->json(['message' => 'The team owner cannot add himself as member.']);
+                return response()->json(['message' => 'The member is already in that team.']);
             }
 
-            foreach ($users as $user)
+            foreach ($roles as $role)
             {
-                $this->userRepository->findById($user)->assignRole($roles);
+                $this->userRepository->findById($user)->assignRole()->create([
+                    'role_id' => $role->id,
+                    'model_type' => $this->userClass,
+                    'model_id' => (int) $user,
+                    'model_from' => Team::modelTypePath($id)
+                ]);
 
-                $members = Membership::where(['team_id' => $team->id, 'user_id' => $user])->get();
+                $existingMembers = $this->teamRepository->findMembersByUser($team->id, $user);
 
-                if ($members->isEmpty())
+                if ($existingMembers->isEmpty())
                 {
                     $team->members()->create([
                         "team_id" => $team->id,
@@ -195,51 +236,169 @@ class TeamService
                 }
             }
 
-            return response()->json(['message' => 'Members were added successfully for this team.']);
+            foreach ($incidents as $incident)
+            {
+                $caller = Executing::where('incident_id', $incident->id)
+                    ->pluck('caller_id')
+                    ->first();
+
+                $incident->execute()->create([
+                    'incident_id' => $incident->id,
+                    'caller_id' => $caller,
+                    'executor_id' => (int) $user,
+                    'model_from' => Team::modelTypePath($id),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
         }
 
-        return response()->json(['message' => 'This user is not the owner of the team and cannot add members.']);
+        return response()->json(['message' => 'Members were added successfully for this team.']);
+    }
+
+    /**
+     * Remove user/users from the desired team.
+     *
+     * @param int $id
+     * @param RemoveRequest $request
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function removeMember(int $id, RemoveRequest $request): JsonResponse
+    {
+        $team = $this->teamRepository->findById($id);
+
+        $users = $request->input('users');
+
+        foreach ($users as $user)
+        {
+            $user = (int) $user;
+
+            Membership::where(['user_id' => $user, 'team_id' => $team->id])->delete();
+            Executing::where(['executor_id' => $user, 'model_from' => Team::modelTypePath($id)])->delete();
+            ModelHasRoles::where(['model_id' => $user,'model_from' => Team::modelTypePath($id)])->delete();
+        }
+
+        return response()->json(['message' => 'The member was successfully removed from the team.']);
     }
 
     /**
      * Add role/roles to the desired team.
      *
-     * @param AssignRequest $request
      * @param int $id
+     * @param AssignRequest $request
      * @return JsonResponse
      */
-    public function assignRoles(AssignRequest $request, int $id): JsonResponse
+    public function assignRoles(int $id, AssignRequest $request): JsonResponse
     {
-        $user = $this->userRepository->findByToken($request);
         $team = $this->teamRepository->findById($id);
+        $members = $this->teamRepository->findMembers($team->id)->pluck('user_id');
 
-        $owner = $team->owner->id;
-        $members = Membership::where('team_id', $team->id)->pluck('user_id');
+        $roles = $request->input('roles');
 
-        if ($user->id == $owner)
+        foreach ($roles as $role)
         {
-            $validated = $request->validated();
-
-            $roles = $validated['roles'];
-
-            foreach ($roles as $role)
+            if ($team->roles->contains($role))
             {
-                if ($team->roles->contains($role))
-                {
-                    return response()->json(['message' => 'The team already has this role.']);
-                }
-
-                $team->roles()->attach(["role_id" => $role]);
+                return response()->json(['message' => 'The team already has that role.']);
             }
+
+            $team->roles()->attach(["role_id" => $role]);
 
             foreach ($members as $member)
             {
-                $this->userRepository->findById($member)->assignRole($roles);
+                $this->userRepository->findById($member)->assignRole()->create([
+                    'role_id' => $role,
+                    'model_type' => $this->userClass,
+                    'model_id' => $member,
+                    'model_from' => Team::modelTypePath($id)
+                ]);
             }
-
-            return response()->json(['message' => 'Roles were added successfully for this team.']);
         }
 
-        return response()->json(['message' => 'This user is not the owner of the team and cannot add members.']);
+        return response()->json(['message' => 'Roles were added successfully for this team.']);
+    }
+
+    /**
+     * Assign an incident to the team with the desired data.
+     *
+     * @param int $id
+     * @param IncidentRequest $request
+     * @return JsonResponse
+     */
+    public function assignIncidents(int $id, IncidentRequest $request): JsonResponse
+    {
+        $team = $this->teamRepository->findById($id);
+
+        $incidents = $request->input('incidents');
+
+        foreach ($incidents as $incident)
+        {
+            if ($team->incidents->contains($incident))
+            {
+                return response()->json(['message' => 'This incident has already been assigned to this team.']);
+            }
+
+            $team->incidents()->attach(['incident_id' => $incident]);
+
+            $teamIncident = $this->incidentRepository->findById($incident);
+
+            $caller = Executing::where('incident_id', $teamIncident->id)
+                ->pluck('caller_id')
+                ->first();
+
+            $members = $this->teamRepository->findMembers($id)->pluck('user_id');
+
+            foreach ($members as $member)
+            {
+                $teamIncident->execute()->create([
+                    'incident_id' => $incident,
+                    'caller_id' => $caller,
+                    'executor_id' => $member,
+                    'model_from' => Team::modelTypePath($id)
+                ]);
+            }
+        }
+
+        return response()->json(['message' => 'The incident has been successfully assigned to that team and team members.']);
+    }
+
+    /**
+     * Attach role/roles from the request input to the user.
+     *
+     * @param StoreRequest $request
+     * @param Model|Team $team
+     * @param mixed $user
+     */
+    private function attachRole(StoreRequest $request, Model|Team $team, mixed $user): void
+    {
+        $roles = $request->input('roles');
+
+        if ($request->has('roles'))
+        {
+            foreach ($roles as $role)
+            {
+                $team->roles()->attach($team, ['role_id' => $role]);
+
+                $user->assignRole()->create([
+                    'role_id' => $role,
+                    'model_type' => $this->userClass,
+                    'model_id' => $user->id,
+                    'model_from' => Team::modelTypePath($team->id)
+                ]);
+            }
+        }
+    }
+
+    /**
+     * Remove related records in 'incident_user' and 'model_has_roles' tables.
+     *
+     * @param int $id
+     * @throws Exception
+     */
+    private function removeRelations(int $id): void
+    {
+        Executing::where('model_from', Team::modelTypePath($id))->delete();
+        ModelHasRoles::where('model_from', Team::modelTypePath($id))->delete();
     }
 }

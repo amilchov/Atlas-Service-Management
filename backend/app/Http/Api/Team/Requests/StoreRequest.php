@@ -37,7 +37,7 @@ class StoreRequest extends FormRequest
             'name' => 'required|string|max:50|unique:teams',
             'description' => 'required',
             'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'roles' => 'sometimes|array'
+            'roles' => 'sometimes|array|exists:roles,id'
         ];
     }
 }

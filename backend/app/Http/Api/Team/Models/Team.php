@@ -2,15 +2,15 @@
 
 namespace App\Http\Api\Team\Models;
 
+use App\Http\Api\Incident\Models\Incident;
+use App\Http\Api\User\Models\User;
 use App\Http\Traits\HasPicture;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
-use App\Http\Api\User\Models\User;
 
 /**
 |--------------------------------------------------------------------------
@@ -24,7 +24,7 @@ use App\Http\Api\User\Models\User;
  */
 class Team extends Model
 {
-    use HasFactory, HasPicture;
+    use HasPicture;
 
     /**
      * Team's default image path and name.
@@ -83,6 +83,17 @@ class Team extends Model
     }
 
     /**
+     * Set the model type path in pivot table `incident_user` with the certain team id.
+     *
+     * @param int $id
+     * @return string
+     */
+    public static function modelTypePath(int $id): string
+    {
+        return self::class . "\\" . $id;
+    }
+
+    /**
      * Get the owner of the team.
      *
      * @return BelongsTo
@@ -120,5 +131,15 @@ class Team extends Model
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'team_role', 'team_id', 'role_id')->withTimestamps();
+    }
+
+    /**
+     * The incidents that belong to the team.
+     *
+     * @return BelongsToMany
+     */
+    public function incidents(): BelongsToMany
+    {
+        return $this->belongsToMany(Incident::class, 'team_incident', 'team_id', 'incident_id')->withTimestamps();
     }
 }

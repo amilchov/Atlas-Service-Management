@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 | Membership Model
 |--------------------------------------------------------------------------
 |
-| This class is a type of model, in which we store the team and user models,
-| which are used to interact with the corresponding table "team_user".
+| This class is a type of model, in which we have
+| the team model and user model which are used to interact with the corresponding table "team_user".
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */

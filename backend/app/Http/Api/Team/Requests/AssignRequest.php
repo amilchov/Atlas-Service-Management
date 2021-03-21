@@ -34,7 +34,7 @@ class AssignRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'roles' => 'required|array'
+            'roles' => 'required|array|exists:roles,id'
         ];
     }
 }

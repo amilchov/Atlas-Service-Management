@@ -4,10 +4,10 @@ namespace App\Http\Api\Authentication\Services;
 
 use App\Http\Api\Authentication\Requests\LoginRequest;
 use App\Http\Api\Authentication\Requests\RegisterRequest;
+use App\Http\Api\Role\Constants\Roles;
 use App\Http\Api\User\Resources\UserResource;
 use App\Http\Api\User\Models\User;
-use App\Http\Api\User\Repositories\UserRepository;
-use App\Http\Api\Role\Constants\Roles;
+use App\Http\Api\User\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 
@@ -24,18 +24,18 @@ use Illuminate\Support\Str;
 class AuthenticationService
 {
     /**
-     * Initializing the instance of User Repository class.
+     * Initializing the instance of User Repository interface.
      *
-     * @var UserRepository
+     * @var UserRepositoryInterface
      */
-    private UserRepository $userRepository;
+    private UserRepositoryInterface $userRepository;
 
     /**
      * AuthenticationService constructor.
      *
-     * @param UserRepository $userRepository
+     * @param UserRepositoryInterface $userRepository
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
     }
@@ -52,7 +52,7 @@ class AuthenticationService
 
         if (!auth()->attempt($validated))
         {
-            return response()->json(['message' => 'Email address or and password are incorrect.'], 401);
+            return response()->json(['message' => 'Email address or/and password are incorrect.'], 401);
         }
 
         $user = $this->userRepository->findById(auth()->user()->id);
@@ -70,6 +70,8 @@ class AuthenticationService
     {
         $validated = $request->validated();
 
+        $userClass = User::class;
+
         $user = User::create([
             'first_name' => $validated['first_name'],
             'middle_name' => $validated['middle_name'],
@@ -77,12 +79,17 @@ class AuthenticationService
             'email' => $validated['email'],
             'password' => $validated['password'],
             'avatar' => $validated['avatar'] ?? User::DEFAULT_PICTURE,
-            'token' => Str::random(255),
+            'token' => Str::random(255)
         ]);
 
         $user->checkForPicture($request, 'avatar', 'avatars', $user);
 
-        $user->assignRole(Roles::EMPLOYEE_SELF_SERVICE_ROLE);
+        $user->assignRole()->create([
+            'role_id' => Roles::EMPLOYEE_SELF_SERVICE_ROLE,
+            'model_type' => $userClass,
+            'model_id' => $user->id,
+            'model_from' => $userClass
+        ]);
 
         return response()->json(new UserResource($user));
     }

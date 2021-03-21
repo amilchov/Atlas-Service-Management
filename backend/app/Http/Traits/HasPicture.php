@@ -21,37 +21,37 @@ trait HasPicture
      * Check if in the request is set picture.
      *
      * @param Request $request
-     * @param string $fieldName
+     * @param string $property
      * @param string $folder
-     * @param object $property
+     * @param object $object
      */
-    public function checkForPicture(Request $request, string $fieldName, string $folder, object $property): void
+    public function checkForPicture(Request $request, string $property, string $folder, object $object): void
     {
-        if ($request->hasFile($fieldName))
+        if ($request->hasFile($property))
         {
-            $picture = $request->file($fieldName);
+            $picture = $request->file($property);
 
-            $filename = $property->id . '.' . time() . $picture->getClientOriginalName();
+            $filename = $object->id . '.' . time() . $picture->getClientOriginalName();
 
-            $property->$fieldName = $picture->storeAs($folder, $filename, 'public');
+            $object->$property = $picture->storeAs($folder, $filename, 'public');
 
-            $property->save();
+            $object->save();
         }
     }
 
     /**
      * Delete picture on the certain property.
      *
-     * @param string $model
-     * @param object $property
-     * @param string $fieldName
+     * @param string $class
+     * @param object $object
+     * @param string $property
      * @return bool
      */
-    public function deletePicture(string $model, object $property, string $fieldName): bool
+    public function deletePicture(string $class, object $object, string $property): bool
     {
-        $picture = str_replace(config('app.url') . Storage::url(''), '', $property->$fieldName);
+        $picture = str_replace(config('app.url') . Storage::url(''), '', $object->$property);
 
-        if ($picture != $model::DEFAULT_PICTURE)
+        if ($picture !== $class::DEFAULT_PICTURE)
         {
             return Storage::delete('public/' . $picture);
         }

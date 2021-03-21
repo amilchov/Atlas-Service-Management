@@ -2,8 +2,8 @@
 
 namespace App\Http\Api\Permission\Services;
 
-use App\Http\Api\Role\Repositories\RoleRepository;
-use App\Http\Api\User\Repositories\UserRepository;
+use App\Http\Api\User\Interfaces\UserRepositoryInterface;
+use App\Http\Api\Role\Interfaces\RoleRepositoryInterface;
 use App\Http\Api\Permission\Requests\AssignRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,11 +24,11 @@ class PermissionService
     /**
      * Obtain data for specific user, roles and permissions.
      *
-     * @param UserRepository $userRepository
+     * @param UserRepositoryInterface $userRepository
      * @param Request $request
      * @return JsonResponse
      */
-    public function permissions(UserRepository $userRepository, Request $request): JsonResponse
+    public function permissions(UserRepositoryInterface $userRepository, Request $request): JsonResponse
     {
         $user = $userRepository->findByToken($request);
 
@@ -51,10 +51,10 @@ class PermissionService
      * Assign role to user with admin authentication.
      *
      * @param AssignRequest $request
-     * @param RoleRepository $roleRepository
+     * @param RoleRepositoryInterface $roleRepository
      * @return JsonResponse
      */
-    public function assignPermissionToUser(AssignRequest $request, RoleRepository $roleRepository): JsonResponse
+    public function assignPermissionToUser(AssignRequest $request, RoleRepositoryInterface $roleRepository): JsonResponse
     {
         $validated = $request->validated();
 

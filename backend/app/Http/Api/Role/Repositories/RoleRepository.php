@@ -2,8 +2,9 @@
 
 namespace App\Http\Api\Role\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
+use App\Http\Api\Role\Interfaces\RoleRepositoryInterface;
 use Spatie\Permission\Models\Role;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
 |--------------------------------------------------------------------------
@@ -15,25 +16,16 @@ use Spatie\Permission\Models\Role;
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
-class RoleRepository
+class RoleRepository implements RoleRepositoryInterface
 {
-    /**
-     * Get all roles.
-     *
-     * @return Collection|Role[]
-     */
-    public function all()
+    /** @inheritDoc */
+    public function all(): array|Collection
     {
         return Role::all();
     }
 
-    /**
-     * Get role by the specific id.
-     *
-     * @param int $id
-     * @return mixed
-     */
-    public function findById(int $id)
+    /** @inheritDoc */
+    public function findById(int $id): mixed
     {
         return Role::findOrFail($id);
     }

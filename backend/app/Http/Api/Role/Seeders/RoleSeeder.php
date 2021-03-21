@@ -36,7 +36,7 @@ class RoleSeeder extends Seeder
                 'description' => $role->description,
                 'guard_name' => $role->guard_name,
                 'created_at' => now(),
-                'updated_at' => now(),
+                'updated_at' => now()
             ]);
         }
     }

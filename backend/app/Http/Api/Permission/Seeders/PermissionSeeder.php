@@ -36,7 +36,7 @@ class PermissionSeeder extends Seeder
                 'description' => $permission->description,
                 'guard_name' => $permission->guard_name,
                 'created_at' => now(),
-                'updated_at' => now(),
+                'updated_at' => now()
             ]);
         }
     }

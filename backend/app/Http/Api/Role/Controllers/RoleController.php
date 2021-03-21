@@ -2,9 +2,7 @@
 
 namespace App\Http\Api\Role\Controllers;
 
-use App\Http\Api\Role\Repositories\RoleRepository;
 use App\Http\Api\Role\Requests\AssignRequest;
-use App\Http\Api\Role\Resources\Collections\RoleCollection;
 use App\Http\Api\User\Repositories\UserRepository;
 use App\Http\Controllers\Controller;
 use App\Http\Api\Role\Services\RoleService;
@@ -30,21 +28,12 @@ class RoleController extends Controller
     private RoleService $roleService;
 
     /**
-     * Initializing the instance of Role Repository class.
-     *
-     * @var RoleRepository
-     */
-    private RoleRepository $roleRepository;
-
-    /**
      * RoleController constructor.
      *
-     * @param RoleRepository $roleRepository
      * @param RoleService $roleService
      */
-    public function __construct(RoleRepository $roleRepository, RoleService $roleService)
+    public function __construct(RoleService $roleService)
     {
-        $this->roleRepository = $roleRepository;
         $this->roleService = $roleService;
     }
 
@@ -55,9 +44,18 @@ class RoleController extends Controller
      */
     public function index(): JsonResponse
     {
-        $roles = $this->roleRepository->all();
+        return $this->roleService->all();
+    }
 
-        return response()->json(new RoleCollection($roles));
+    /**
+     * Call the method for show a role from the service class.
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function show(int $id): JsonResponse
+    {
+        return $this->roleService->show($id);
     }
 
     /**

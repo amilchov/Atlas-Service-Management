@@ -2,7 +2,10 @@
 
 namespace App\Http\Api\Chart\Repositories;
 
+use App\Http\Api\Chart\Interfaces\ChartRepositoryInterface;
 use App\Http\Api\Chart\Models\Chart;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 /**
 |--------------------------------------------------------------------------
@@ -14,25 +17,16 @@ use App\Http\Api\Chart\Models\Chart;
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
-class ChartRepository
+class ChartRepository implements ChartRepositoryInterface
 {
-    /**
-     * Get all charts.
-     *
-     * @return mixed
-     */
-    public function all()
+    /** @inheritDoc */
+    public function all(): array|Collection
     {
         return Chart::with('roles')->get();
     }
 
-    /**
-     * Find chart by specific id.
-     *
-     * @param int $id
-     * @return mixed
-     */
-    public function findById(int $id)
+    /** @inheritDoc */
+    public function findById(int $id): array|Collection|Model|Chart
     {
         return Chart::findOrFail($id);
     }

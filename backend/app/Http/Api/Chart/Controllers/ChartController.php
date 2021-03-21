@@ -2,9 +2,7 @@
 
 namespace App\Http\Api\Chart\Controllers;
 
-use App\Http\Api\Chart\Repositories\ChartRepository;
-use App\Http\Api\Chart\Resources\Collections\ChartCollection;
-use App\Http\Api\Chart\Resources\ChartResource;
+use App\Http\Api\Chart\Services\ChartService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 
@@ -21,44 +19,51 @@ use Illuminate\Http\JsonResponse;
 class ChartController extends Controller
 {
     /**
-     * Initializing the instance of Chart Repository class.
+     * Initializing the instance of Chart Service class.
      *
-     * @var ChartRepository
+     * @var ChartService
      */
-    private ChartRepository $chartRepository;
+    private ChartService $chartService;
 
     /**
      * ChartController constructor.
      *
-     * @param ChartRepository $chartRepository
+     * @param ChartService $chartService
      */
-    public function __construct(ChartRepository $chartRepository)
+    public function __construct(ChartService $chartService)
     {
-        $this->chartRepository = $chartRepository;
+        $this->chartService = $chartService;
     }
 
     /**
-     * Call the method for charts from the repository class.
+     * Call the method for charts from the service class.
      *
      * @return JsonResponse
      */
     public function index(): JsonResponse
     {
-        $charts = $this->chartRepository->all();
-
-        return response()->json(new ChartCollection($charts));
+        return $this->chartService->all();
     }
 
     /**
-     * Call the method for desired chart from the chart repository.
+     * Call the method for desired chart from the service class.
      *
      * @param int $id
      * @return JsonResponse
      */
     public function show(int $id): JsonResponse
     {
-        $chart = $this->chartRepository->findById($id);
+        return $this->chartService->show($id);
+    }
 
-        return response()->json(new ChartResource($chart));
+    /**
+     * Call the method for desired chart data from the service class.
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function data(int $id): JsonResponse
+    {
+        return $this->chartService->showData($id);
     }
 }

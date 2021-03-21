@@ -32,7 +32,7 @@ class ChartResource extends JsonResource
             'tag' => $this->tag,
             'data_link' => $this->data_link,
             'image_link' => $this->image_link,
-            'roles' => $this->roles,
+            'roles' => $this->roles
         ];
     }
 }

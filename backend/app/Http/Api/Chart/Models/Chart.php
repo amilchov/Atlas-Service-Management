@@ -2,7 +2,6 @@
 
 namespace App\Http\Api\Chart\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -18,8 +17,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Chart extends Model
 {
-    use HasFactory;
-
     /**
      * The roles that belong to the chart.
      *

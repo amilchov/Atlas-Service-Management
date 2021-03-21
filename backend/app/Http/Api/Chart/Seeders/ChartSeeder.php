@@ -22,7 +22,6 @@ class ChartSeeder extends Seeder
      * Run the database seeds.
      *
      * @return void
-     * @throws JsonException
      */
     public function run(): void
     {
@@ -37,7 +36,7 @@ class ChartSeeder extends Seeder
                 'description' => $chart->description,
                 'tag' => $chart->tag,
                 'data_link' => $chart->data_link,
-                'image_link' => $chart->image_link,
+                'image_link' => $chart->image_link
             ]);
         }
     }

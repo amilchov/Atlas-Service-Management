@@ -14,7 +14,7 @@ Hello! Currently, there are only two of us in our team who support the applicati
 
 ## Summary
 
-Project aim is to monitor the distribution of the calculations of the experimental ATLAS in the CENTER and reviewing the current state and load of the computer resources, how many CPUs are currently available. The whole process is visualized through interactive diagrams.
+Project aim is to monitor the distribution of the calculations of the experimental ATLAS in the CERN and reviewing the current state and load of the computer resources, how many CPUs are currently available. The whole process is visualized through interactive diagrams.
 
 ## Level of complexity
 

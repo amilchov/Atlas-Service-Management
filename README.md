@@ -1,4 +1,4 @@
-![LOGO](https://cds.cern.ch/record/1170735/files/ATLAS-Logo-Blue-transparent.png)
+![LOGO](https://github.com/amilchov/Atlas-Service-Management/blob/main/asm_logo_administrative.png)
 # Welcome to Atlas Service Managment!
 
 Hello! Currently, there are only two of us in our team who support the application:

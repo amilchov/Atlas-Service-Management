@@ -1,24 +1,25 @@
-import ProfileServices from "@/services/profile.service";
+import RolesService from "@/services/roles.service";
 
 
-export const profile = {
+export const rolesTable = {
     namespaced: true,
     state: {
-        usersData: null
+        rolesData: null,
     },
     actions: {
-        getUser({ commit }, id) {
-            return ProfileServices.getUser(id).then(
+        getAllRoles({ commit }) {
+            return RolesService.getAllRoles().then(
                 (response) => {
                     commit("dataSuccess", response);
                     return Promise.resolve(response);
                 }
             )
         },
+
     },
     mutations: {
-        dataSuccess(state, usersData) {
-            state.usersData = usersData;
+        dataSuccess(state, rolesData) {
+            state.rolesData = rolesData;
         },
     },
 };

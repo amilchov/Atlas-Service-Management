@@ -38,7 +38,7 @@
       >
         User Settings
       </router-link>
-      <router-link
+      <!-- <router-link
         :to="{
           name: 'Profile',
           params: { id: 123, first_name: 'pepi', last_name: 'pepiii', city: 'Pernik', country: 'BG', roles: ['ess', 'admin', 'chart', 'hi'] },
@@ -46,7 +46,7 @@
         class="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
       >
         User Profile
-      </router-link>
+      </router-link> -->
       <div class="h-0 my-2 border border-solid border-gray-200" />
       <a
         @click.prevent="logOut"

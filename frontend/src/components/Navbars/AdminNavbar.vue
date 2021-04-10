@@ -12,7 +12,7 @@
         href="javascript:void(0)"
       >
         {{
-          currentUser.first_name + " " + currentUser.last_name + " - Dashboard"
+          currentUser.first_name + " " + currentUser.last_name + " - " + this.$route.name
         }}
       </p>
       <!-- Form -->
@@ -36,7 +36,7 @@
       <!-- User -->
       <ul class="flex-col md:flex-row list-none items-center hidden md:flex">
         <div class="bg-white m-2 rounded-full h-24 w-24 flex shadow-xl">
-          <notification-dropdown />
+          <!-- <notification-dropdown /> -->
         </div>
         <user-dropdown />
       </ul>
@@ -47,12 +47,12 @@
 
 <script>
 import UserDropdown from "@/components/Dropdowns/UserDropdown.vue";
-import NotificationDropdown from "@/components/Dropdowns/NotificationDropdown.vue";
+// import NotificationDropdown from "@/components/Dropdowns/NotificationDropdown.vue";
 
 export default {
   components: {
     UserDropdown,
-    NotificationDropdown,
+    // NotificationDropdown,
   },
 
   computed: {

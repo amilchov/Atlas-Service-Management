@@ -47,7 +47,7 @@
                   <div class="relative">
                     <img
                       alt="..."
-                      :src="currentUser.avatar"
+                      :src="avatar"
                       class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
                     />
                   </div>
@@ -70,7 +70,7 @@
                       <span
                         class="text-xl font-bold block uppercase tracking-wide text-gray-700"
                       >
-                        <!-- {{ roles.length }} -->
+                        {{ roles.length }}
                       </span>
                       <span class="text-sm text-gray-500">Roles</span>
                     </div>
@@ -97,17 +97,21 @@
                 <h3
                   class="text-4xl font-semibold leading-normal mb-6 text-gray-800"
                 >
-                  <!-- {{ first_name }} {{ last_name }} -->
+                  {{ first_name }} {{ last_name }}
                 </h3>
                 <div class="mb-2 text-gray-700 mt-12">
-                  <i class="fas fa-user-tag mr-2 text-lg text-gray-500"></i>
-                  {{showRoles}}
+                  <i class="fas fa-user-tag mr-2 text-gray-500"> </i>
+                  {{ showRoles(this.roles) }}
                 </div>
                 <div class="mb-2 text-gray-700">
                   <i
                     class="fas fa-map-marker-alt mr-2 text-lg text-gray-500"
                   ></i>
-                  {{ location == null ? "no location" : currentUser.location }}
+                  {{
+                    this.city || this.country == null
+                      ? "no location"
+                      : this.city + ", " + this.country
+                  }}
                 </div>
               </div>
               <!-- <border-t border-gray-300 text-center" -->
@@ -116,9 +120,9 @@
                   <div class="w-full lg:w-9/12 px-4">
                     <p class="mb-4 text-lg leading-relaxed text-gray-800">
                       {{
-                        currentUser.description == null
+                        this.description == null
                           ? "no description"
-                          : currentUser.description
+                          : this.description
                       }}
                     </p>
                   </div>
@@ -133,6 +137,7 @@
 </template>
 <script>
 import Navbar from "@/components/Navbars/AuthNavbar.vue";
+import Profile from "@/services/profile.service.js";
 
 export default {
   data() {
@@ -145,40 +150,33 @@ export default {
     Navbar,
   },
 
-  computed: {
-    currentUser() {
-      return this.$store.state.auth.user;
-    },
-
-    routerData() {
-      return this.$route.params.id;
-    },
+  userId() {
+    return this.$store.state.userTable.usersData;
   },
 
   mounted() {
-    console.log(this.id);
-    console.log(this.currentUser);
-    if (!this.currentUser) {
-      this.$router.push("/login");
-    }
+    Profile.getUser(this.$route.params.id).then((response) => {
+      this.avatar = response.avatar;
+      this.first_name = response.first_name;
+      this.last_name = response.last_name;
+      this.city = response.city;
+      this.description = response.description;
+      this.roles = response.roles;
+      console.log(response);
+    });
   },
 
-  methods: {
-    showRoles () {
-      this.roles.array.forEach(role => {
-        console.log(role)
-      });
-    }
-  },
+  methods: {},
 
   props: {
-    id: null,
     avatar: null,
     first_name: null,
     last_name: null,
     city: null,
     country: null,
+    description: null,
     roles: null,
+    roleArr: null,
   },
 };
 </script>

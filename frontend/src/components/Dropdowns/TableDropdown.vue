@@ -20,25 +20,30 @@
         href="javascript:void(0);"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
       >
-        Action
+        <!-- <modal></modal> -->
+        <button @click="show()">Home</button>
+        <modal name="my-first-modal">
+          This is my first modal
+        </modal>
       </a>
       <a
         href="javascript:void(0);"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
       >
-        Another action
+        User Settings
       </a>
-      <a
-        href="javascript:void(0);"
+      <router-link
+        v-bind:to="'/profile/' + this.id"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-gray-800"
       >
-        Something else here
-      </a>
+        User Profile
+      </router-link>
     </div>
   </div>
 </template>
 <script>
 import { createPopper } from "@popperjs/core";
+// import Modal from "@/components/Modals/Modal.vue"
 
 export default {
   data() {
@@ -46,8 +51,18 @@ export default {
       dropdownPopoverShow: false,
     };
   },
+
+  components: {
+    // Modal
+  },
+
+  mounted() {
+    // this.$store.dispatch("userTable/setId", this.id);
+    // console.log(this.$store.state.userTable.id);
+  },
+
   methods: {
-    toggleDropdown: function (event) {
+    toggleDropdown: function(event) {
       event.preventDefault();
       if (this.dropdownPopoverShow) {
         this.dropdownPopoverShow = false;
@@ -58,6 +73,19 @@ export default {
         });
       }
     },
+    show() {
+      this.$modal.show("my-first-modal");
+    },
+    hide() {
+      this.$modal.hide("my-first-modal");
+    },
+  },
+  mount() {
+    this.show();
+  },
+
+  props: {
+    id: null,
   },
 };
 </script>

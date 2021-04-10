@@ -55,7 +55,6 @@
       <div v-else>
         <ul class="flex-col md:flex-row list-none items-center hidden md:flex">
           <div class="bg-white m-2 rounded-full h-24 w-24 flex shadow-xl">
-            <notification-dropdown />
           </div>
           <user-dropdown />
         </ul>
@@ -65,12 +64,10 @@
 </template>
 <script>
 import UserDropdown from "@/components/Dropdowns/UserDropdown.vue";
-import NotificationDropdown from "@/components/Dropdowns/NotificationDropdown.vue";
 
 export default {
   components: {
     UserDropdown,
-    NotificationDropdown,
   },
 
   data() {

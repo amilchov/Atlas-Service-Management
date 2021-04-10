@@ -1,3 +1,4 @@
+
 <template>
   <div
     class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded"
@@ -494,10 +495,16 @@ export default {
   components: {
     TableDropdown,
   },
+
+  mounted() {
+    const loggedIn = JSON.parse(localStorage.getItem("user"));
+    console.log(loggedIn);
+  },
+
   props: {
     color: {
       default: "light",
-      validator: function (value) {
+      validator: function(value) {
         // The value must match one of these strings
         return ["light", "dark"].indexOf(value) !== -1;
       },

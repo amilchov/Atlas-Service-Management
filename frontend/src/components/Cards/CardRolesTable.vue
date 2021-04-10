@@ -1,6 +1,7 @@
 <template>
   <div>
-    <modal-user :data="this.data_row" />
+    <modal-role :data="this.data_row" />
+    <!-- <modal-incident-create /> -->
     <div
       class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded"
     >
@@ -11,7 +12,7 @@
               Overview
             </h6>
             <h2 class="text-black text-xl font-semibold">
-              Users - Data Table
+              Roles - Data Table
             </h2>
           </div>
         </div>
@@ -22,7 +23,7 @@
           <vue-good-table
             :columns="columns"
             :lineNumbers="true"
-            :rows="dataUser"
+            :rows="dataRoles"
             @on-row-click="onRowClick"
             :search-options="{
               enabled: true,
@@ -34,14 +35,19 @@
             <div slot="table-actions">
               <download-csv
                 class="bg-blue-600 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1"
-                :data="dataUser.email"
+                :data="dataRoles"
                 type="button"
-                name="data_user_table.csv"
+                name="data_roles_table.csv"
               >
                 <i class="fas fa-download"></i>
                 Download CSV
               </download-csv>
+
+              <!-- <button class="" type="button" style="transition: all .15s ease">
+                <download-csv :data="data_table" />
+              </button></div -->
             </div>
+            <!-- <span v-else> {{ props.formattedRow[props.column.field] }} </span> -->
           </vue-good-table>
         </div>
       </div>
@@ -49,55 +55,38 @@
   </div>
 </template>
 <script>
-import ModalUser from "@/components/Modals/ModalUser.vue";
+// import TableDropdown from "@/components/Dropdowns/TableDropdown.vue";
+// import RolesDropdown from "../Dropdowns/RolesDropdown.vue";
+// import CardProfile from "@/components/Cards/CardProfile.vue";
+// import ModalIncident from "@/components/Modals/ModalIncident.vue";
+import ModalRole from "@/components/Modals/ModalRole.vue";
 
 export default {
   data() {
     return {
-      //Object with dataUser state. dataUser store First Name, Last name, Middle Name and etc. of the choosen user.
-      dataUser: null,
-
-      //data_row is state for user that is choose from table.
+      dataRoles: null,
       data_row: null,
-
-      avatars: [],
-      roles: [],
-      index: [],
-
       columns: [
         {
-          label: "First Name",
-          field: "first_name",
+          label: "Name",
+          field: "name",
           filterable: true,
         },
         {
-          label: "Middle Name",
-          field: "middle_name",
-          filterable: true,
-        },
-        {
-          label: "Last Name",
-          field: "last_name",
-          filterable: true,
-        },
-        {
-          label: "Created",
-          field: "created_at",
+          label: "Description",
+          field: "description",
           filterable: true,
         },
       ],
-      rows: this.dataUser,
+      rows: this.dataRoles,
     };
   },
-  components: { ModalUser },
-
-  /**
-   *   Get all User with vuex custom state management system.
-   */
-  mounted() {
-    this.$store.dispatch("userTable/getAllUsers").then(() => {
-      this.dataUser = this.$store.state.userTable.usersData; //Store result from api request in state
-    });
+  components: {
+    // TableDropdown,
+    // RolesDropdown,
+    // ModalIncident,
+    // ModalIncidentCreate,
+    ModalRole,
   },
 
   methods: {
@@ -107,11 +96,18 @@ export default {
       // params.selected - if selection is enabled this argument
       // indicates selected or not
       // params.event - click event
+      // this.$modal.show(ModalIncident);
       this.data_row = params.row;
-
-      //
-      this.$modal.show("user");
+      console.log(this.data_row);
+      this.$modal.show("roles");
     },
+  },
+
+  mounted() {
+    this.$store.dispatch("rolesTable/getAllRoles").then(() => {
+      this.dataRoles = this.$store.state.rolesTable.rolesData;
+      console.log(this.dataRoles);
+    });
   },
 
   props: {

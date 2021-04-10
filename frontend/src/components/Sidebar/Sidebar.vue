@@ -69,125 +69,32 @@
           </div>
         </form> -->
 
-        <!-- Divider -->
-        <!-- <hr class="my-4 md:min-w-full" /> -->
-        <!-- Heading -->
-        <h6
-          class="md:min-w-full text-gray-600 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
-        >
-          Admin Layout Pages
-        </h6>
-        <!-- Navigation -->
+        
 
-        <ul class="md:flex-col md:min-w-full flex flex-col list-none">
-          <li class="items-center">
-            <router-link
-              to="/admin/dashboard"
-              v-slot="{ href, route, navigate, isActive }"
-            >
-              <a
-                :href="href"
-                @click="navigate"
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-green-500 hover:text-green-600'
-                    : 'text-gray-800 hover:text-gray-600',
-                ]"
-              >
-                <i
-                  class="fas fa-tv mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
-                ></i>
-                Dashboard
-              </a>
-            </router-link>
-          </li>
+        <div>
+          <sidebar-basic />
+        </div>
 
-          <li class="items-center">
-            <router-link
-              to="/admin/settings"
-              v-slot="{ href, route, navigate, isActive }"
-            >
-              <a
-                :href="href"
-                @click="navigate"
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-green-500 hover:text-green-600'
-                    : 'text-gray-800 hover:text-gray-600',
-                ]"
-              >
-                <i
-                  class="fas fa-tools mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
-                ></i>
-                Settings
-              </a>
-            </router-link>
-          </li>
+        <div v-if="showRoles().includes('admin')">
+          <sidebar-admin />
+        </div>
 
-          <li class="items-center">
-            <router-link
-              to="/admin/tables"
-              v-slot="{ href, route, navigate, isActive }"
-            >
-              <a
-                :href="href"
-                @click="navigate"
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-green-500 hover:text-green-600'
-                    : 'text-gray-800 hover:text-gray-600',
-                ]"
-              >
-                <i
-                  class="fas fa-table mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
-                ></i>
-                Tables
-              </a>
-            </router-link>
-          </li>
+        <div v-if="!showRoles().includes('ess')">
+          <sidebar-charts />
+        </div>
 
-          <li class="items-center">
-            <router-link
-              to="/admin/maps"
-              v-slot="{ href, route, navigate, isActive }"
-            >
-              <a
-                :href="href"
-                @click="navigate"
-                class="text-xs uppercase py-3 font-bold block"
-                :class="[
-                  isActive
-                    ? 'text-green-500 hover:text-green-600'
-                    : 'text-gray-800 hover:text-gray-600',
-                ]"
-              >
-                <i
-                  class="fas fa-map-marked mr-2 text-sm"
-                  :class="[isActive ? 'opacity-75' : 'text-gray-400']"
-                ></i>
-                Maps
-              </a>
-            </router-link>
-          </li>
-        </ul>
-
-        <!-- Divider -->
-        <!-- Heading -->
       </div>
     </div>
   </nav>
 </template>
-); }
 
 <script>
 import NotificationDropdown from "@/components/Dropdowns/NotificationDropdown.vue";
 import UserDropdown from "@/components/Dropdowns/UserDropdown.vue";
+
+import SidebarAdmin from "./SidebarAdmin.vue";
+import SidebarBasic from './SidebarBasic.vue';
+import SidebarCharts from './SidebarCharts.vue';
 
 export default {
   data() {
@@ -198,6 +105,20 @@ export default {
   methods: {
     toggleCollapseShow: function(classes) {
       this.collapseShow = classes;
+    },
+
+    showRoles() {
+      var rolesData = "";
+      var data = this.currentUser.roles;
+      console.log("data" + data)
+      try {
+        for (var i = 0; i < data.length; i++) {
+          rolesData += data[i].name + ", ";
+        }
+        return rolesData.slice(0, -2);
+      } finally {
+        rolesData = null;
+      }
     },
   },
   computed: {
@@ -210,10 +131,15 @@ export default {
     if (!this.currentUser) {
       this.$router.push("/login");
     }
+    console.log(this.currentUser.roles[0]);
   },
+
   components: {
     NotificationDropdown,
     UserDropdown,
+    SidebarAdmin,
+    SidebarBasic,
+    SidebarCharts
   },
 };
 </script>

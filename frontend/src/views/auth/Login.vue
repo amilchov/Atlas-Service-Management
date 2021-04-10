@@ -38,7 +38,7 @@
                 error-class="text-red-700 text-xs mb-1"
               />
 
-              <div>
+              <!-- <div>
                 <label class="inline-flex items-center cursor-pointer">
                   <input
                     id="customCheckLogin"
@@ -49,9 +49,9 @@
                     Remember me
                   </span>
                 </label>
-              </div>
+              </div> -->
 
-              <FormulateInput
+               <FormulateInput
                 style="margin-top:30px;"
                 input-class="px-4 py-2 w-full rounded bg-blue-500 text-white hover:bg-blue-700"
                 type="submit"
@@ -108,7 +108,7 @@ export default {
             (error.response && error.response.data) ||
             error.message ||
             error.toString();
-          alert(this.message);
+          alert("ERROR in data!!!");
         }
       );
     },

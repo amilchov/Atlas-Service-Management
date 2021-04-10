@@ -25,7 +25,7 @@
                 </h1>
                 <p class="mt-4 text-lg text-gray-300">
                   Project aim is to monitor the distribution of the calculations
-                  of the experimental ATLAS in the CENTER and reviewing the
+                  of the experimental ATLAS in CERN and reviewing the
                   current state and load of the computer resources, how many
                   CPUs are currently available. The whole process is visualized
                   through interactive diagrams.
@@ -162,6 +162,7 @@
               >
                 <img
                   alt="..."
+                  v-img
                   src="https://physicsmasterclasses.org/exercises/hands-on-cern/images/atlas_big.jpg"
                   class="w-full align-middle rounded-t-lg"
                 />
@@ -233,13 +234,14 @@
               <div class="px-6">
                 <img
                   alt="..."
+                  v-img
                   :src="team1"
                   class="shadow-lg rounded-full mx-auto max-w-120-px"
                 />
                 <div class="pt-6 text-center">
                   <h5 class="text-xl font-bold">Aleks Milchov</h5>
                   <p class="mt-1 text-sm text-gray-500 uppercase font-semibold">
-                    Web Developer
+                    Frontend Web Developer
                   </p>
                   <div class="mt-6">
                     <button
@@ -254,7 +256,10 @@
                       class="bg-blue-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
                     >
-                      <a href="https://www.facebook.com/alex.milchov/" target="_blank">
+                      <a
+                        href="https://www.facebook.com/alex.milchov/"
+                        target="_blank"
+                      >
                         <i class="fab fa-facebook-f"></i>
                       </a>
                     </button>
@@ -273,6 +278,7 @@
             <div class="w-full md:w-6/12 lg:w-6/12 lg:mb-0 mb-12 px-2">
               <div class="px-6">
                 <img
+                  v-img
                   alt="..."
                   :src="team2"
                   class="shadow-lg rounded-full mx-auto max-w-120-px"
@@ -280,26 +286,39 @@
                 <div class="pt-6 text-center">
                   <h5 class="text-xl font-bold">David Ivanov</h5>
                   <p class="mt-1 text-sm text-gray-500 uppercase font-semibold">
-                    Backend Developer
+                    Backend Web Developer
                   </p>
                   <div class="mt-6">
                     <button
                       class="bg-black text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
                     >
-                      <i class="fab fa-github"></i>
+                      <a
+                        href="https://github.com/DavidIvanov02"
+                        target="_blank"
+                      >
+                        <i class="fab fa-github"></i>
+                      </a>
                     </button>
                     <button
                       class="bg-blue-600 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
                     >
-                      <i class="fab fa-facebook-f"></i>
+                      <a
+                        href="https://www.facebook.com/undefined.service"
+                        target="_blank"
+                      >
+                        <i class="fab fa-facebook-f"></i>
+                      </a>
                     </button>
                     <button
                       class="bg-pink-500 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                       type="button"
                     >
-                      <a href="https://www.instagram.com/david_ivanovv" target="_blank">
+                      <a
+                        href="https://www.instagram.com/david_ivanovv"
+                        target="_blank"
+                      >
                         <i class="fab fa-instagram"></i>
                       </a>
                     </button>

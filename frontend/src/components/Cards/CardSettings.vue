@@ -6,7 +6,7 @@
       <div class="text-center flex justify-between">
         <h6 class="text-gray-800 text-xl font-bold">My account</h6>
         <button
-          class="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
+          class="bg-blue-500 text-white active:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
           type="button"
         >
           Update
@@ -24,6 +24,7 @@
               <FormulateInput
                 type="text"
                 name="first name"
+                readonly
                 v-model="currentUser.first_name"
                 label="First name"
                 validation="^required|min:5|max:50|matches:/^[a-zA-Z\s]+$/"
@@ -45,6 +46,7 @@
                 name="middle name"
                 v-model="currentUser.middle_name"
                 label="Middle name"
+                readonly
                 validation="^required|min:5|max:50|matches:/^[a-zA-Z\s]+$/"
                 outer-class="mb-4"
                 :validation-messages="{
@@ -63,6 +65,7 @@
               <FormulateInput
                 type="text"
                 name="last name"
+                readonly
                 v-model="currentUser.last_name"
                 label="Last name"
                 validation="^required|min:5|max:50|matches:/^[a-zA-Z\s]+$/"
@@ -83,6 +86,7 @@
               <FormulateInput
                 type="email"
                 name="email"
+                readonly
                 v-model="currentUser.email"
                 label="Email address"
                 validation="email"
@@ -109,6 +113,7 @@
                 name="city"
                 v-model="currentUser.city"
                 label="City"
+                readonly
                 validation="max:50|matches:/^[a-zA-Z\s]+$/"
                 outer-class="mb-4"
                 input-class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
@@ -123,6 +128,7 @@
               <FormulateInput
                 type="text"
                 name="country"
+                readonly
                 v-model="currentUser.country"
                 label="Country"
                 validation="max:50|matches:/^[a-zA-Z\s]+$/"
@@ -151,6 +157,7 @@
                 v-if="currentUser.description == null"
                 v-model="description"
                 label="About me"
+                readonly
                 validation="min:|matches:/^[a-zA-Z\s]+$/"
                 outer-class="mb-4"
                 input-class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
@@ -163,6 +170,7 @@
                 type="text"
                 name="About me"
                 v-else
+                readonly
                 v-model="currentUser.description"
                 label="About me"
                 validation="min:|matches:/^[a-zA-Z\s]+$/"
@@ -181,9 +189,9 @@
 </template>
 <script>
 export default {
-   data () {
+  data () {
     return {
-      description: 'Honda'
+      description: ''
     }
   },
 
@@ -194,7 +202,7 @@ export default {
   },
 
   mounted() {
-    console.log(this.currentUser);
+    console.log(this.currentUser.roles[0].name);
     if (!this.currentUser) {
       this.$router.push("/login");
     }

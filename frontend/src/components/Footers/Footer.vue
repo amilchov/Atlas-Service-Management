@@ -81,5 +81,8 @@ export default {
       date: new Date().getFullYear(),
     };
   },
+  props: {
+    data: null
+  }
 };
 </script>

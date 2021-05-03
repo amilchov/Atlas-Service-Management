@@ -1,0 +1,128 @@
+[
+  {
+    "name": "Slots by Processing",
+    "description": "The number of running computing slots used by the ATLAS for the last 7 days grouped by Processing type.",
+    "tag": "resourcesreporting",
+    "data_link": "https://bigpanda.cern.ch/api/grafana?table=running&groupby=time,resourcesreporting&field=wavg_actualcorecount&resource_type=GRID|hpc|cloud",
+    "grafana_link": "https://monit-grafana.cern.ch/d/000000696/job-accounting-historical-data?from=now-7d-1h%2Fh&orgId=17&to=now-1h%2Fh&var-groupby=resourcesreporting&var-resources=GRID&var-resources=cloud&var-resources=hpc&viewPanel=6&kiosk",
+    "image_link": "https://atlasdistributedcomputing-live.web.cern.ch/ATLASDistributedComputing-live/images/BigPanda_BigPandaNormal__image__Slots_by_Processing__6816c18beb187a1e8081ca33e1d0fe3a.png",
+    "value_type" : "wavg_actualcorecount"
+  },
+  {
+    "name": "Slots by ADC activity",
+    "description": "The number of running computing slots used by the ATLAS for the last 7 days grouped by ADC activity. Significant drops of the total should be reported by the CRC shifter. Distribution of the number of slots between different activities depends of the current values of the global shares and the existing loads by activity.",
+    "tag": "adcactivity",
+    "data_link": "https://bigpanda.cern.ch/api/grafana?table=running&groupby=time,adcactivity&field=wavg_actualcorecount&resource_type=GRID|hpc|cloud",
+    "grafana_link": "https://monit-grafana.cern.ch/d/000000696/job-accounting-historical-data?from=now-7d-1h%2Fh&orgId=17&to=now-1h%2Fh&var-groupby=adcactivity&var-resources=GRID&var-resources=cloud&var-resources=hpc&viewPanel=6&kiosk",
+    "image_link": "https://atlasdistributedcomputing-live.web.cern.ch/ATLASDistributedComputing-live/images/BigPanda_BigPandaNormal__image__Slots_by_ADC_activity__926fa879f65a6027d39bceb37dc93972.png",
+    "value_type" : "wavg_actualcorecount"
+  },
+  {
+    "name": "Slots by Job Type",
+    "description": "The number of running computing slots used by the ATLAS for the last 7 days grouped by Job type. Each job type has similar behavior with respect of the resources it uses - CPU load, IO intensity, RSS requitrements, etc.",
+    "tag": "processingtype",
+    "data_link": "https://bigpanda.cern.ch/api/grafana?table=running&groupby=time,processingtype&field=wavg_actualcorecount&resource_type=GRID|hpc|cloud",
+    "grafana_link": "https://monit-grafana.cern.ch/d/000000696/job-accounting-historical-data?from=now-7d-1h%2Fh&orgId=17&to=now-1h%2Fh&var-groupby=processingtype&var-resources=GRID&var-resources=cloud&var-resources=hpc&viewPanel=6&kiosk",
+    "image_link": "https://atlasdistributedcomputing-live.web.cern.ch/ATLASDistributedComputing-live/images/BigPanda_BigPandaNormal__image__Slots_by_Job_Type__03feab7573a3261a4f517bde0ca8ed4a.png",
+    "value_type" : "wavg_actualcorecount"
+  },
+  {
+    "name": "Slots vs n-cores",
+    "description": "The number of running computing slots used by the ATLAS for the last 7 days grouped by number of cores. The standard ATLAS requirement for a GRID site is single and 8-core slots which means that most of the entries in this plot for GRID resources should be 8 or 1-core. All the rest are special cases which exist due to external limitations.",
+    "tag": "actualcorecount",
+    "data_link": "https://bigpanda.cern.ch/api/grafana?table=running&groupby=time,actualcorecount&field=wavg_actualcorecount&resource_type=GRID|hpc|cloud",
+    "grafana_link": "https://monit-grafana.cern.ch/d/000000696/job-accounting-historical-data?from=now-7d-1h%2Fh&orgId=17&to=now-1h%2Fh&var-groupby=actualcorecount&var-resources=GRID&var-resources=cloud&var-resources=hpc&viewPanel=6&kiosk",
+    "image_link": "https://atlasdistributedcomputing-live.web.cern.ch/ATLASDistributedComputing-live/images/BigPanda_BigPandaNormal__image__Slots_vs_n-cores__ebea42c6d29edebd1499a8416ac14ba9.png",
+    "value_type" : "wavg_actualcorecount"
+  },
+  {
+    "name": "Slots by processing clouds",
+    "description": "The number of running computing slots used by the ATLAS for the last 7 days grouped by ATLAS Cloud. The computing sites in different ATLAS clouds are grouped either by geographical closeness or by funding source or both.",
+    "tag": "dst_cloud",
+    "data_link": "https://bigpanda.cern.ch/api/grafana?table=running&groupby=time,dst_cloud&field=wavg_actualcorecount&resource_type=GRID|hpc|cloud",
+    "grafana_link": "https://monit-grafana.cern.ch/d/000000696/job-accounting-historical-data?from=now-7d-1h%2Fh&orgId=17&to=now-1h%2Fh&var-groupby=dst_cloud&var-resources=GRID&var-resources=cloud&var-resources=hpc&viewPanel=6&kiosk",
+    "image_link": "https://atlasdistributedcomputing-live.web.cern.ch/ATLASDistributedComputing-live/images/BigPanda_BigPandaNormal__image__Slots_by_processing_clouds__c3e192464160cd51f0ff92d499b70b0d.png",
+    "value_type" : "wavg_actualcorecount"
+  },
+  {
+    "name": "Slots by panda resources",
+    "description": "The number of running computing slots used by the ATLAS for the last 7 days grouped by Panda Resources. Panda is the core of the the workflow management system of ATLAS. A resource in Panda is generally the same as a computing site.",
+    "tag": "dst_official_site",
+    "data_link": "https://bigpanda.cern.ch/api/grafana?table=running&groupby=time,dst_official_site&field=wavg_actualcorecount&resource_type=GRID|hpc|cloud",
+    "grafana_link": "https://monit-grafana.cern.ch/d/000000696/job-accounting-historical-data?from=now-7d-1h%2Fh&orgId=17&to=now-1h%2Fh&var-groupby=dst_official_site&var-resources=GRID&var-resources=cloud&var-resources=hpc&viewPanel=6&kiosk",
+    "image_link": "https://atlasdistributedcomputing-live.web.cern.ch/ATLASDistributedComputing-live/images/BigPanda_BigPandaNormal__image__Slots_by_panda_resources__af5252abbd77f4e5817b4d4d74876f31.png",
+    "value_type" : "wavg_actualcorecount"
+  },
+  {
+    "name": "Slots of running jobs HS06",
+    "description": "The amount of resources used by ATLAS for different ADC activities for the last 7 days in units of HS06. HS06 is a benchmarking suit which is currently used to evaluate the performance of the hardware utilized on the GRID. This is plot represens the actual resources used for a given ADC Activity unbiased with respect of the different hardware utilized by the different computing sites.",
+    "tag": "resourcesreporting",
+    "data_link": "https://bigpanda.cern.ch/api/grafana?table=running&groupby=time,resourcesreporting&field=wavg_hs06&resource_type=GRID|hpc|cloud",
+    "grafana_link": "https://monit-grafana.cern.ch/d/000000696/job-accounting-historical-data?from=now-7d-1h%2Fh&orgId=17&to=now-1h%2Fh&var-groupby=resourcesreporting&var-resources=GRID&var-resources=cloud&var-resources=hpc&viewPanel=139&kiosk",
+    "image_link": "https://atlasdistributedcomputing-live.web.cern.ch/ATLASDistributedComputing-live/images/BigPanda_BigPandaNormal__image__Slots_of_running_jobs_HS06__66355792b81e9b9e3491a55836819536.png",
+    "value_type" : "wavg_hs06"
+  },
+  {
+    "name": "Bytes processed",
+    "description": "Size of the input data processed by ATLAS for the last 7 days grouped by the type of processing.",
+    "tag": "resourcesreporting",
+    "data_link": "https://bigpanda.cern.ch/api/grafana?table=completed&groupby=time,resourcesreporting&field=sum_inputfilebytes&resource_type=GRID|hpc|cloud",
+    "grafana_link": "https://monit-grafana.cern.ch/goto/O9jzp_rMk",
+    "image_link": "https://atlasdistributedcomputing-live.web.cern.ch/ATLASDistributedComputing-live/images/BigPanda_BigPandaNormal__image__Bytes_processed__15d9f6dd3853f02a9186ccb30ee5b6e8.png",
+    "value_type" : "sum_inputfilebytes"
+  },
+  {
+    "name": "Files processed",
+    "description": "The number of input data processed by ATLAS for the last 7 days grouped by the type of processing.",
+    "tag": "resourcesreporting",
+    "data_link": "https://bigpanda.cern.ch/api/grafana?table=completed&groupby=time,resourcesreporting&field=sum_ninputdatafiles&resource_type=GRID|hpc|cloud",
+    "grafana_link": "https://monit-grafana.cern.ch/goto/lwK7p_rGz",
+    "image_link": "https://atlasdistributedcomputing-live.web.cern.ch/ATLASDistributedComputing-live/images/BigPanda_BigPandaNormal__image__Files_processed__53fd920fe7223632716c4a43b2799a51.png",
+    "value_type" : "sum_ninputdatafiles"
+  },
+  {
+    "name": "Events processed",
+    "description": "The number of proton-proton collisions processed by ATLAS for the last 7 days grouped by the type of processing.",
+    "tag": "resourcesreporting",
+    "data_link": "https://bigpanda.cern.ch/api/grafana?table=completed&groupby=time,resourcesreporting&field=sum_nevents&resource_type=GRID|hpc|cloud",
+    "grafana_link": "https://monit-grafana.cern.ch/goto/9AMVpl9Gz",
+    "image_link": "https://atlasdistributedcomputing-live.web.cern.ch/ATLASDistributedComputing-live/images/BigPanda_BigPandaNormal__image__Events_processed__18920f1522674de2df198fc0c83916bd.png",
+    "value_type" : "sum_nevents"
+  },
+  {
+    "name": "Events simul+pile",
+    "description": "The number of simulated and reconstructed Monte Carlo proton-proton collisions in the last 7 days.",
+    "tag": "resourcesreporting",
+    "data_link": "https://bigpanda.cern.ch/api/grafana?table=completed&groupby=time,resourcesreporting&field=sum_nevents&resource_type=GRID|hpc|cloud&processingtype=pile|simul",
+    "grafana_link": "https://monit-grafana.cern.ch/goto/_Nj4tl9Gz",
+    "image_link": "https://atlasdistributedcomputing-live.web.cern.ch/ATLASDistributedComputing-live/images/BigPanda_BigPandaNormal__image__Events_simul_pile__95bdeeeda93f407d7e9684db92da12fe.png",
+    "value_type" : "sum_nevents"
+  },
+  {
+    "name": "Events merge+pmerge",
+    "description": "The number of events processed in file merging jobs in the last 7 days.",
+    "tag": "resourcesreporting",
+    "data_link": "https://bigpanda.cern.ch/api/grafana?table=completed&groupby=time,resourcesreporting&field=sum_nevents&resource_type=GRID|hpc|cloud&processingtype=merge|pmerge",
+    "grafana_link": "https://monit-grafana.cern.ch/goto/1X1IplrMk",
+    "image_link": "https://atlasdistributedcomputing-live.web.cern.ch/ATLASDistributedComputing-live/images/BigPanda_BigPandaNormal__image__Events_merge_pmerge__286b12bf11ea5205115735b4b7cb7b8e.png",
+    "value_type" : "sum_nevents"
+  },
+  {
+    "name": "WallClock Consumption",
+    "description": "The wallclock time spent in the last seven days produced by all ATLAS distributed computing jobs grouped by the final status of the corresponding job.",
+    "tag": "jobstatus",
+    "data_link": "https://bigpanda.cern.ch/api/grafana?table=completed&groupby=time,jobstatus&field=sum_walltime&resource_type=GRID|hpc|cloud",
+    "grafana_link": "https://monit-grafana.cern.ch/goto/H3SNplrMz",
+    "image_link": "https://atlasdistributedcomputing-live.web.cern.ch/ATLASDistributedComputing-live/images/BigPanda_BigPandaNormal__image__WallClock_Consumption__41f5d83426cf2e984c63fd1dee0a8dbc.png",
+    "value_type" : "sum_walltime"
+  },
+  {
+    "name": "WallClock Consumption w/o analysis",
+    "description": "The wallclock time spent in the last seven days produced by ATLAS central production jobs grouped by the final status of the corresponding job.",
+    "tag": "jobstatus",
+    "data_link": "https://bigpanda.cern.ch/api/grafana?table=completed&groupby=time,jobstatus&field=sum_walltime&resource_type=GRID|hpc|cloud&resourcesreporting=Data+Processing|Group+Production|MC+Reconstruction|MC+Simulation|Others",
+    "grafana_link": "https://monit-grafana.cern.ch/goto/9t6Nt_rGz",
+    "image_link": "https://atlasdistributedcomputing-live.web.cern.ch/ATLASDistributedComputing-live/images/BigPanda_BigPandaNormal__image__WallClock_Consumption_w_o_analysis__7665121f2dd6f0c96bfc4e0ee2dd3fa3.png",
+    "value_type" : "sum_walltime"
+  }
+]

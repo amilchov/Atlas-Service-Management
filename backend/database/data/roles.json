@@ -1,0 +1,162 @@
+[
+    {
+        "name": "admin",
+        "description": "Admin is a role, which is set on the main user. He has all permissions and can manage anything.",
+        "guard_name": "web"
+    },
+    {
+        "name": "ess",
+        "description": "Employee Self Service is a role, which is set on the default user.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_chart",
+        "description": "Manager Chart is a role, which is set on the general manager of the table, charts. He can manage anything about charts.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_chart_slots_by_processing",
+        "description": "Manager Chart Slots by Processing is a role, which is set on the manager of the table, also he can manage anything about slots by processing chart.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_chart_slots_by_adc_activity",
+        "description": "Manager Chart Slots By ADC activity is a role, which is set on the manager of the table, also he can manage anything about slots by adc activity chart.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_chart_slots_by_job_type",
+        "description": "Manager Chart Slots by Job Type is a role, which is set on the manager of the table, also he can manage anything about slots by job type chart.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_chart_slots_vs_n-cores",
+        "description": "Manager Chart Slots vs n-cores, which is set on the manager of the table, also he can manage anything about slots by n-cores chart.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_chart_slots_by_processing_clouds",
+        "description": "Manager Chart Slots by processing clouds is a role, which is set on the manager of the table, also he can manage anything about slots by processing clouds chart.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_chart_slots_by_panda_resources",
+        "description": "Manager Chart Slots by panda resources is a role, which is set on the manager of the table, also he can manage anything about slots by panda resources chart.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_chart_slots_of_running_jobs_hs06",
+        "description": "Manager Chart Slots of running jobs HS06 is a role, which is set on the manager of the table, also he can manage anything about slots of running jobs HS06 chart.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_chart_bytes_processed",
+        "description": "Manager Chart Bytes processed is a role, which is set on the manager of the table, also he can manage anything about bytes processed chart.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_chart_files_processed",
+        "description": "Manager Chart Files processed is a role, which is set on the manager of the table, also he can manage anything about files processed chart.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_chart_events_processed",
+        "description": "Manager Chart Events processed is a role, which is set on the manager of the table, also he can manage anything about events processed chart.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_chart_events_simul+pile",
+        "description": "Manager Chart Events simul+pile is a role, which is set on the manager of the table, also he can manage anything about events simul+pile chart.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_chart_events_merge+pmerge",
+        "description": "Manager Chart Events merge+pmerge is a role, which is set on the manager of the table, also he can manage anything about events merge+pmerge chart.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_chart_wallclock_consumption",
+        "description": "Manager Chart WallClock Consumption is a role, which is set on the manager of the table, also he can manage anything about wallclock consumption chart.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_chart_wallclock_consumption_w/o_analysis",
+        "description": "Manager Chart WallClock Consumption w/o analysis is a role, which is set on the manager of the table, also he can manage anything about wallclock consumption w/o analysis chart.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_table",
+        "description": "Manager Table is a role, which is set on the general manager of the table, tables. He can manage anything about tables.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_table_slots_by_processing",
+        "description": "Manager Table Slots by Processing is a role, which is set on the manager of the table, also he can manage anything about slots by processing table.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_table_slots_by_adc_activity",
+        "description": "Manager Table Slots By ADC activity is a role, which is set on the manager of the table, also he can manage anything about slots by adc activity table.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_table_slots_by_job_type",
+        "description": "Manager Table Slots by Job Type is a role, which is set on the manager of the table, also he can manage anything about slots by job type table.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_table_slots_vs_n-cores",
+        "description": "Manager Table Slots vs n-cores, which is set on the manager of the table, also he can manage anything about slots by n-cores table.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_table_slots_by_processing_clouds",
+        "description": "Manager Table Slots by processing clouds is a role, which is set on the manager of the table, also he can manage anything about slots by processing clouds table.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_table_slots_by_panda_resources",
+        "description": "Manager Table Slots by panda resources is a role, which is set on the manager of the table, also he can manage anything about slots by panda resources table.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_table_slots_of_running_jobs_hs06",
+        "description": "Manager Table Slots of running jobs HS06 is a role, which is set on the manager of the table, also he can manage anything about slots of running jobs HS06 table.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_table_bytes_processed",
+        "description": "Manager Table Bytes processed is a role, which is set on the manager of the table, also he can manage anything about bytes processed table.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_table_files_processed",
+        "description": "Manager Table Files processed is a role, which is set on the manager of the table, also he can manage anything about files processed table.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_table_events_processed",
+        "description": "Manager Table Events processed is a role, which is set on the manager of the table, also he can manage anything about events processed table.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_table_events_simul+pile",
+        "description": "Manager Table Events simul+pile is a role, which is set on the manager of the table, also he can manage anything about events simul+pile table.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_table_events_merge+pmerge",
+        "description": "Manager Table Events merge+pmerge is a role, which is set on the manager of the table, also he can manage anything about events merge+pmerge table.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_table_wallclock_consumption",
+        "description": "Manager Table WallClock Consumption is a role, which is set on the manager of the table, also he can manage anything about wallclock consumption table.",
+        "guard_name": "web"
+    },
+    {
+        "name": "manager_table_wallclock_consumption_w/o_analysis",
+        "description": "Manager Table WallClock Consumption w/o analysis is a role, which is set on the manager of the table, also he can manage anything about wallclock consumption w/o analysis table.",
+        "guard_name": "web"
+    }
+]

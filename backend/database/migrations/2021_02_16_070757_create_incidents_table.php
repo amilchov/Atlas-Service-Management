@@ -21,7 +21,7 @@ class CreateIncidentsTable extends Migration
             $table->string('impact');
             $table->string('urgency');
             $table->string('priority');
-            $table->string('short_description', 50);
+            $table->string('short_description');
             $table->text('description')->nullable();
             $table->timestamps();
         });

@@ -3,8 +3,8 @@
 namespace App\Http\Api\Authentication\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Api\Authentication\Requests\LoginRequest;
-use App\Http\Api\Authentication\Requests\RegisterRequest;
+use App\Http\Api\Authentication\Requests\LoginUserRequest;
+use App\Http\Api\Authentication\Requests\RegisterUserRequest;
 use App\Http\Api\Authentication\Services\AuthenticationService;
 use Illuminate\Http\JsonResponse;
 
@@ -40,10 +40,10 @@ class AuthenticationController extends Controller
     /**
      * Call the method for login from the service class.
      *
-     * @param LoginRequest $request
+     * @param LoginUserRequest $request
      * @return JsonResponse
      */
-    public function login(LoginRequest $request): JsonResponse
+    public function login(LoginUserRequest $request): JsonResponse
     {
         return $this->authenticationService->login($request);
     }
@@ -51,10 +51,10 @@ class AuthenticationController extends Controller
     /**
      * Call the method for register from the service class.
      *
-     * @param RegisterRequest $request
+     * @param RegisterUserRequest $request
      * @return JsonResponse
      */
-    public function register(RegisterRequest $request): JsonResponse
+    public function register(RegisterUserRequest $request): JsonResponse
     {
         return $this->authenticationService->register($request);
     }

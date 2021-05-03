@@ -4,7 +4,7 @@ namespace App\Http\Api\Administrator\Services;
 
 use App\Http\Traits\UserManagement;
 use App\Http\Api\User\Interfaces\UserRepositoryInterface;
-use App\Http\Api\User\Requests\UpdateRequest;
+use App\Http\Api\User\Requests\UpdateUserRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -43,10 +43,10 @@ class AdministratorService
      * Update the user with his credentials.
      *
      * @param int $id
-     * @param UpdateRequest $request
+     * @param UpdateUserRequest $request
      * @return JsonResponse
      */
-    public function updateUser(int $id, UpdateRequest $request): JsonResponse
+    public function updateUser(int $id, UpdateUserRequest $request): JsonResponse
     {
         $this->userRepository->findByToken($request);
 

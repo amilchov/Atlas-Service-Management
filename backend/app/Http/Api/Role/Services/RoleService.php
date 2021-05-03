@@ -6,7 +6,7 @@ use App\Http\Api\Role\Resources\Collections\RoleCollection;
 use App\Http\Api\Role\Resources\RoleResource;
 use App\Http\Api\User\Models\User;
 use App\Http\Api\User\Resources\UserResource;
-use App\Http\Api\Role\Requests\AssignRequest;
+use App\Http\Api\Role\Requests\AssignRoleRequest;
 use App\Http\Api\Role\Interfaces\RoleRepositoryInterface;
 use App\Http\Api\User\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
@@ -68,11 +68,11 @@ class RoleService
     /**
      * Assign role to user with admin authentication.
      *
-     * @param AssignRequest $request
+     * @param AssignRoleRequest $request
      * @param UserRepositoryInterface $userRepository
      * @return JsonResponse
      */
-    public function assignRoleToUser(AssignRequest $request, UserRepositoryInterface $userRepository): JsonResponse
+    public function assignRoleToUser(AssignRoleRequest $request, UserRepositoryInterface $userRepository): JsonResponse
     {
         $validated = $request->validated();
 

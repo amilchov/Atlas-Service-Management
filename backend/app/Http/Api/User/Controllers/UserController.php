@@ -3,7 +3,7 @@
 namespace App\Http\Api\User\Controllers;
 
 use Exception;
-use App\Http\Api\User\Requests\UpdateRequest;
+use App\Http\Api\User\Requests\UpdateUserRequest;
 use App\Http\Api\User\Resources\UserResource;
 use App\Http\Api\User\Services\UserService;
 use App\Http\Api\User\Resources\Collections\UserCollection;
@@ -78,10 +78,10 @@ class UserController extends Controller
     /**
      * Call the method for update from the service class.
      *
-     * @param UpdateRequest $request
+     * @param UpdateUserRequest $request
      * @return JsonResponse
      */
-    public function update(UpdateRequest $request): JsonResponse
+    public function update(UpdateUserRequest $request): JsonResponse
     {
         $user = $this->userRepository->findByToken($request);
 

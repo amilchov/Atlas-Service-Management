@@ -25,7 +25,23 @@ class IncidentCollection extends ResourceCollection
     public function toArray($request) : array
     {
         return [
-            'incidents' => $this->collection
+            'incidents' => $this->collection->transform(function($incident){
+                return [
+                    'id' => $incident->id,
+                    'number' => $incident->number,
+                    'category_id' => $incident->category_id,
+                    'state' => $incident->state,
+                    'impact' => $incident->impact,
+                    'urgency' => $incident->urgency,
+                    'priority' => $incident->priority,
+                    'short_description' => $incident->short_description,
+                    'description' => $incident->description,
+                    'caller' => $incident->caller,
+                    'executor' => $incident->executor,
+                    'created_at' => $incident->created_at,
+                    'updated_at' => $incident->updated_at
+                ];
+            })
         ];
     }
 }

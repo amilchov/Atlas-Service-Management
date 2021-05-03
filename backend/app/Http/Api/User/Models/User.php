@@ -67,7 +67,9 @@ class User extends Authenticatable
         'token',
         'description',
         'city',
-        'country'
+        'country',
+        'last_login_ip',
+        'last_login_at'
     ];
 
     /**
@@ -161,6 +163,14 @@ class User extends Authenticatable
      * @return BelongsToMany
      */
     public function executors(): BelongsToMany
+    {
+        return $this->belongsToMany(Incident::class, 'incident_user', 'executor_id', 'incident_id');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function incidents(): BelongsToMany
     {
         return $this->belongsToMany(Incident::class, 'incident_user', 'executor_id', 'incident_id');
     }

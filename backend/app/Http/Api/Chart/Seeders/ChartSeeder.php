@@ -36,7 +36,9 @@ class ChartSeeder extends Seeder
                 'description' => $chart->description,
                 'tag' => $chart->tag,
                 'data_link' => $chart->data_link,
-                'image_link' => $chart->image_link
+                'grafana_link' => $chart->grafana_link,
+                'image_link' => $chart->image_link,
+                'value_type' => $chart->value_type
             ]);
         }
     }

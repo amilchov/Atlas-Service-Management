@@ -3,7 +3,7 @@
 namespace App\Http\Api\User\Services;
 
 use App\Http\Traits\UserManagement;
-use App\Http\Api\User\Requests\UpdateRequest;
+use App\Http\Api\User\Requests\UpdateUserRequest;
 use Illuminate\Http\JsonResponse;
 use Exception;
 
@@ -25,10 +25,10 @@ class UserService
      * Update the user with new credentials.
      *
      * @param $user
-     * @param UpdateRequest $request
+     * @param UpdateUserRequest $request
      * @return JsonResponse
      */
-    public function update($user, UpdateRequest $request): JsonResponse
+    public function update($user, UpdateUserRequest $request): JsonResponse
     {
         return $this->changeUser($user, $request);
     }

@@ -2,9 +2,9 @@
 
 namespace App\Http\Api\Incident\Controllers;
 
-use App\Http\Api\Incident\Requests\UpdateRequest;
 use App\Http\Api\Incident\Services\IncidentService;
-use App\Http\Api\Incident\Requests\StoreRequest;
+use App\Http\Api\Incident\Requests\StoreIncidentRequest;
+use App\Http\Api\Incident\Requests\UpdateIncidentRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -62,10 +62,10 @@ class IncidentController extends Controller
     /**
      * Call the method for create an incident from the service class.
      *
-     * @param StoreRequest $request
+     * @param StoreIncidentRequest $request
      * @return JsonResponse
      */
-    public function store(StoreRequest $request): JsonResponse
+    public function store(StoreIncidentRequest $request): JsonResponse
     {
         return $this->incidentService->create($request);
     }
@@ -85,10 +85,10 @@ class IncidentController extends Controller
      * Call the method for update an incident from the service class.
      *
      * @param int $id
-     * @param UpdateRequest $request
+     * @param UpdateIncidentRequest $request
      * @return JsonResponse
      */
-    public function update(int $id, UpdateRequest $request): JsonResponse
+    public function update(int $id, UpdateIncidentRequest $request): JsonResponse
     {
         return $this->incidentService->update($id, $request);
     }

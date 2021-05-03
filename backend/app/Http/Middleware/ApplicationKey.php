@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 | access to different urls or different data.
 |
 | @author David Ivanov <david4obgg1@gmail.com>
-*/
+ */
 class ApplicationKey
 {
     /**
@@ -25,7 +25,7 @@ class ApplicationKey
      * @param Closure $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next) : Response
+    public function handle(Request $request, Closure $next): Response
     {
         $token = $request->header('Application');
 

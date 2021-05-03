@@ -38,14 +38,6 @@ interface TeamRepositoryInterface
     public function findAllRoles(int $id): mixed;
 
     /**
-     * Get all team incidents.
-     *
-     * @param int $id
-     * @return mixed
-     */
-    public function findIncidents(int $id): mixed;
-
-    /**
      * Get all team members.
      *
      * @param int $id

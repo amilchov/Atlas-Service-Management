@@ -4,7 +4,6 @@ use App\Http\Api\Administrator\Controllers\AdministratorController;
 use App\Http\Api\Authentication\Controllers\AuthenticationController;
 use App\Http\Api\Chart\Controllers\ChartController;
 use App\Http\Api\Incident\Controllers\IncidentController;
-use App\Http\Api\Permission\Controllers\PermissionController;
 use App\Http\Api\Role\Controllers\RoleController;
 use App\Http\Api\User\Controllers\UserController;
 use App\Http\Api\Team\Controllers\TeamController;
@@ -28,11 +27,6 @@ Route::group(['namespace' => 'App\Http\Api'], function() {
         // Roles Routes
         Route::group(['prefix' => 'roles'], function() {
             Route::post('assign', [RoleController::class, 'assign']);
-        });
-
-        // Permissions Routes
-        Route::group(['prefix' => 'permissions'], function() {
-            Route::post('assign', [PermissionController::class, 'assign']);
         });
     });
 
@@ -63,27 +57,24 @@ Route::group(['namespace' => 'App\Http\Api'], function() {
         Route::get('{id}', [RoleController::class, 'show']);
     });
 
-    // Permissions Routes
-    Route::group(['prefix' => 'permissions', 'middleware' => 'auth.token'], function() {
-        Route::get('/', [PermissionController::class, 'index']);
-    });
-
     // Teams Routes
-    Route::group(['prefix' => 'teams', 'middleware' => 'auth.admin'], function() {
-        Route::get('/', [TeamController::class, 'index']);
-        Route::post('create', [TeamController::class, 'store']);
+    Route::group(['prefix' => 'teams'], function() {
+        Route::get('user', [TeamController::class, 'user'])->middleware('auth.token');
 
-        Route::group(['prefix' => '{team_id}'], function() {
-            Route::get('/', [TeamController::class, 'show']);
-            Route::post('update', [TeamController::class, 'update']);
-            Route::post('invite', [TeamController::class, 'inviteMember']);
-            Route::post('remove', [TeamController::class, 'removeMember']);
-            Route::post('roles', [TeamController::class, 'assignRoles']);
-            Route::delete('delete', [TeamController::class, 'destroy']);
+        Route::group(['middleware' => 'auth.admin'], function() {
+            Route::get('/', [TeamController::class, 'index']);
+            Route::post('create', [TeamController::class, 'store']);
 
-            Route::group(['prefix' => 'incidents'], function() {
-                Route::get('/', [TeamController::class, 'incidents']);
-                Route::post('assign', [TeamController::class, 'assignIncidents']);
+            Route::group(['prefix' => '{team_id}'], function() {
+                Route::get('/', [TeamController::class, 'show']);
+                Route::post('update', [TeamController::class, 'update']);
+                Route::post('invite', [TeamController::class, 'inviteMember']);
+                Route::post('remove', [TeamController::class, 'removeMember']);
+                Route::post('incidents', [TeamController::class, 'assignIncidents']);
+                Route::post('incidents/remove', [TeamController::class, 'removeIncidents']);
+                Route::post('roles', [TeamController::class, 'assignRoles']);
+                Route::post('roles/remove', [TeamController::class, 'removeRoles']);
+                Route::delete('delete', [TeamController::class, 'destroy']);
             });
         });
     });

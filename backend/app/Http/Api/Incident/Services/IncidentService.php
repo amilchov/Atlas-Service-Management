@@ -6,6 +6,7 @@ use App\Http\Api\Incident\Models\Incident;
 use App\Http\Api\Incident\Requests\StoreIncidentRequest;
 use App\Http\Api\Incident\Requests\UpdateIncidentRequest;
 use App\Http\Api\Incident\Resources\Collections\IncidentCollection;
+use App\Http\Api\Incident\Resources\Collections\MyIncidentCollection;
 use App\Http\Api\Incident\Resources\IncidentResource;
 use App\Http\Api\User\Interfaces\UserRepositoryInterface;
 use App\Http\Api\Incident\Interfaces\IncidentRepositoryInterface;
@@ -74,7 +75,7 @@ class IncidentService
 
         $incidents = $user->executors()->get();
 
-        return response()->json(['incidents' => IncidentResource::collection($incidents)]);
+        return response()->json(new MyIncidentCollection($incidents));
     }
 
     /**
@@ -104,6 +105,7 @@ class IncidentService
             'incident_id' => $incident->id,
             'caller_id' => $validated['caller_id'],
             'executor_id' => $validated['executor_id'],
+            'model_type' => 'personal',
             'model_from' => Incident::class
         ]);
 

@@ -7,6 +7,7 @@ use App\Http\Api\Incident\Models\Executing;
 use App\Http\Api\Role\Models\ModelHasRoles;
 use App\Http\Api\Team\Models\Team;
 use App\Http\Traits\HasPicture;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -172,7 +173,7 @@ class User extends Authenticatable
      */
     public function incidents(): BelongsToMany
     {
-        return $this->belongsToMany(Incident::class, 'incident_user', 'executor_id', 'incident_id');
+        return $this->belongsToMany(Incident::class, 'incident_user', 'executor_id', 'incident_id')->withPivot('model_type');
     }
 
     /**

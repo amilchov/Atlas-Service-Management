@@ -118,9 +118,19 @@ class Incident extends Model
      *
      * @return BelongsToMany
      */
-    public function executor(): BelongsToMany
+    public function executor()
     {
-        return $this->belongsToMany(User::class, 'incident_user', 'incident_id', 'executor_id');
+        return  $this->belongsToMany(User::class, 'incident_user', 'incident_id', 'executor_id');
+    }
+
+    /**
+     * The executors that belong to the incident.
+     *
+     * @return BelongsToMany
+     */
+    public function executors($executor_id)
+    {
+        return  $this->belongsToMany(User::class, 'incident_user', 'incident_id', 'executor_id')->wherePivot('executor_id', $executor_id);
     }
 
     /**

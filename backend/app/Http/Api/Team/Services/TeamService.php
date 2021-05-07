@@ -334,6 +334,7 @@ class TeamService
                     'incident_id' => $incident,
                     'caller_id' => $caller,
                     'executor_id' => $member,
+                    'model_type' => 'team',
                     'model_from' => Team::modelTypePath($id)
                 ]);
             }

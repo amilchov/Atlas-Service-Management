@@ -4,6 +4,7 @@ use App\Http\Api\Administrator\Controllers\AdministratorController;
 use App\Http\Api\Authentication\Controllers\AuthenticationController;
 use App\Http\Api\Chart\Controllers\ChartController;
 use App\Http\Api\Incident\Controllers\IncidentController;
+use App\Http\Api\Permission\Controllers\PermissionController;
 use App\Http\Api\Role\Controllers\RoleController;
 use App\Http\Api\User\Controllers\UserController;
 use App\Http\Api\Team\Controllers\TeamController;
@@ -27,6 +28,11 @@ Route::group(['namespace' => 'App\Http\Api'], function() {
         // Roles Routes
         Route::group(['prefix' => 'roles'], function() {
             Route::post('assign', [RoleController::class, 'assign']);
+        });
+
+        // Permissions Routes
+        Route::group(['prefix' => 'permissions'], function() {
+            Route::post('assign', [PermissionController::class, 'assign']);
         });
     });
 
@@ -55,6 +61,11 @@ Route::group(['namespace' => 'App\Http\Api'], function() {
     Route::group(['prefix' => 'roles'], function() {
         Route::get('/', [RoleController::class, 'index']);
         Route::get('{id}', [RoleController::class, 'show']);
+    });
+
+    // Permissions Routes
+    Route::group(['prefix' => 'permissions', 'middleware' => 'auth.token'], function() {
+        Route::get('/', [PermissionController::class, 'index']);
     });
 
     // Teams Routes

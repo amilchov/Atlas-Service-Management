@@ -27,9 +27,7 @@ namespace App\Http\Api\Chart\Models{
  * @property string $description
  * @property string $tag
  * @property string $data_link
- * @property string $grafana_link
  * @property string $image_link
- * @property string $value_type
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[] $roles
  * @property-read int|null $roles_count
  * @method static \Illuminate\Database\Eloquent\Builder|Chart newModelQuery()
@@ -37,12 +35,10 @@ namespace App\Http\Api\Chart\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Chart query()
  * @method static \Illuminate\Database\Eloquent\Builder|Chart whereDataLink($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Chart whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chart whereGrafanaLink($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Chart whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Chart whereImageLink($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Chart whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Chart whereTag($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chart whereValueType($value)
  */
 	class Chart extends \Eloquent {}
 }
@@ -161,35 +157,6 @@ namespace App\Http\Api\Role\Models{
 namespace App\Http\Api\Team\Models{
 /**
  * |--------------------------------------------------------------------------
- * | Incidentship Model
- * |--------------------------------------------------------------------------
- * |
- * | This class is a type of model, in which we have
- * | the team model and incident model which are used to interact with the corresponding table "team_incident".
- * 
- * |
- * | @author David Ivanov <david4obgg1@gmail.com>
- *
- * @property int $id
- * @property int $team_id
- * @property int $incident_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|Incidentship newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Incidentship newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Incidentship query()
- * @method static \Illuminate\Database\Eloquent\Builder|Incidentship whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Incidentship whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Incidentship whereIncidentId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Incidentship whereTeamId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Incidentship whereUpdatedAt($value)
- */
-	class Incidentship extends \Eloquent {}
-}
-
-namespace App\Http\Api\Team\Models{
-/**
- * |--------------------------------------------------------------------------
  * | Membership Model
  * |--------------------------------------------------------------------------
  * |
@@ -214,35 +181,6 @@ namespace App\Http\Api\Team\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Membership whereUserId($value)
  */
 	class Membership extends \Eloquent {}
-}
-
-namespace App\Http\Api\Team\Models{
-/**
- * |--------------------------------------------------------------------------
- * | Roleship Model
- * |--------------------------------------------------------------------------
- * |
- * | This class is a type of model, in which we have
- * | the team model and role model which are used to interact with the corresponding table "team_role".
- * 
- * |
- * | @author David Ivanov <david4obgg1@gmail.com>
- *
- * @property int $id
- * @property int $team_id
- * @property int $role_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|Roleship newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Roleship newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Roleship query()
- * @method static \Illuminate\Database\Eloquent\Builder|Roleship whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Roleship whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Roleship whereRoleId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Roleship whereTeamId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Roleship whereUpdatedAt($value)
- */
-	class Roleship extends \Eloquent {}
 }
 
 namespace App\Http\Api\Team\Models{
@@ -309,8 +247,6 @@ namespace App\Http\Api\User\Models{
  * @property string|null $description
  * @property string|null $city
  * @property string|null $country
- * @property string|null $last_login_ip
- * @property string|null $last_login_at
  * @property string $created_at
  * @property string $updated_at
  * @property-read \App\Http\Api\Role\Models\ModelHasRoles $assignRole
@@ -320,8 +256,6 @@ namespace App\Http\Api\User\Models{
  * @property-read int|null $execute_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Http\Api\Incident\Models\Incident[] $executors
  * @property-read int|null $executors_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Http\Api\Incident\Models\Incident[] $incidents
- * @property-read int|null $incidents_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
@@ -343,8 +277,6 @@ namespace App\Http\Api\User\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereFirstName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereLastLoginAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereLastLoginIp($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereLastName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereMiddleName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)

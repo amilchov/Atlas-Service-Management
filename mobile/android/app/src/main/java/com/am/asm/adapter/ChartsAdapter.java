@@ -1,15 +1,19 @@
-package com.am.asm;
+package com.am.asm.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.am.asm.holder.ChartsHolder;
+import com.am.asm.R;
+import com.am.asm.model.Charts;
+import com.am.asm.ui.activity.ChartActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,6 +25,7 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsHolder>{
 
     private List<Charts> chartsList;
     private Context context;
+    private Bundle bundle;
 
     public ChartsAdapter(List<Charts> charts, Context context) {
         this.chartsList = charts;
@@ -39,11 +44,13 @@ public class ChartsAdapter extends RecyclerView.Adapter<ChartsHolder>{
         Charts entry = chartsList.get(position);
         holder.textViewCard.setText(entry.getName());
         Picasso.get().load(entry.getImageLink()).into(holder.imageView);
-        System.out.println(entry.getImageLink());
 
         holder.linearLayout.setOnClickListener(v -> {
-            Toast.makeText(v.getContext(), entry.getTag(), Toast.LENGTH_SHORT).show();
-            v.getContext().startActivity(new Intent(context, ChartActivity.class));
+            Intent intent = new Intent(context, ChartActivity.class);
+            bundle = new Bundle();
+            bundle.putString("grafana_link", entry.getGrafanaLink());
+            intent.putExtras(bundle);
+            v.getContext().startActivity(intent);
         });
 
     }

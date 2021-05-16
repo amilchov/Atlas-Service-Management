@@ -1,13 +1,18 @@
-package com.am.asm;
+package com.am.asm.ui.activity;
+
+import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.util.Log;
-
-import com.github.mikephil.charting.charts.Chart;
+import com.am.asm.adapter.ChartsAdapter;
+import com.am.asm.R;
+import com.am.asm.model.BigPanda;
+import com.am.asm.model.Charts;
+import com.am.asm.retrofit.ApiService;
+import com.am.asm.retrofit.ApiUtils;
 
 import java.util.List;
 
@@ -43,9 +48,10 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-    private void handleChartsDataResponse(Response<List<Charts>> listResponse) {
+    private void handleChartsDataResponse(Response<BigPanda> listResponse) {
         if(listResponse.isSuccessful()) {
-            List<Charts> charts = listResponse.body();
+            List<Charts> charts = listResponse.body().getCharts();
+            Log.i("chartsss", listResponse.body().toString());
             initRecyclerView(charts);
         }
     }

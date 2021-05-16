@@ -1,4 +1,4 @@
-package com.am.asm;
+package com.am.asm.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -34,6 +34,10 @@ public class Charts {
     @SerializedName("value_type")
     @Expose
     String valueType;
+
+    @SerializedName("grafana_link")
+    @Expose
+    String grafanaLink;
 
     public int getId() {
         return id;
@@ -89,5 +93,13 @@ public class Charts {
 
     public void setValueType(String valueType) {
         this.valueType = valueType;
+    }
+
+    public String getGrafanaLink() {
+        return grafanaLink;
+    }
+
+    public void setGrafanaLink(String grafanaLink) {
+        this.grafanaLink = grafanaLink;
     }
 }

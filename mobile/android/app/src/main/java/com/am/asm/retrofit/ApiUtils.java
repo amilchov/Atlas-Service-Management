@@ -1,4 +1,4 @@
-package com.am.asm;
+package com.am.asm.retrofit;
 
 /**
  * @author Created by Aleks Vasilev Milchov

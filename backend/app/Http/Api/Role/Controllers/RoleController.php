@@ -2,7 +2,7 @@
 
 namespace App\Http\Api\Role\Controllers;
 
-use App\Http\Api\Role\Requests\AssignRequest;
+use App\Http\Api\Role\Requests\AssignRoleRequest;
 use App\Http\Api\User\Repositories\UserRepository;
 use App\Http\Controllers\Controller;
 use App\Http\Api\Role\Services\RoleService;
@@ -61,11 +61,11 @@ class RoleController extends Controller
     /**
      * Call the method for assign role to user from the service class.
      *
-     * @param AssignRequest $request
+     * @param AssignRoleRequest $request
      * @param UserRepository $userRepository
      * @return JsonResponse
      */
-    public function assign(AssignRequest $request, UserRepository $userRepository): JsonResponse
+    public function assign(AssignRoleRequest $request, UserRepository $userRepository): JsonResponse
     {
         return $this->roleService->assignRoleToUser($request, $userRepository);
     }

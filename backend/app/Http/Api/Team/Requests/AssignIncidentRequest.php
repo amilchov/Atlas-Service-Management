@@ -6,15 +6,15 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
 |--------------------------------------------------------------------------
-| Invite Request
+| Assign Incident Request
 |--------------------------------------------------------------------------
 |
 | This class is a type of form request, in which we check
-| and validate the invitations team data from the external source (request).
+| and validate the assigned incidents to the team from the external source (request).
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
-class InviteRequest extends FormRequest
+class AssignIncidentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,7 +34,7 @@ class InviteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'users' => 'required|array|exists:users,id'
+            'incidents' => 'required|array|exists:incidents,id'
         ];
     }
 }

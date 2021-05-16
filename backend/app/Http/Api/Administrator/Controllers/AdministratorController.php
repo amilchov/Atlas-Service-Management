@@ -3,7 +3,7 @@
 namespace App\Http\Api\Administrator\Controllers;
 
 use App\Http\Api\Administrator\Services\AdministratorService;
-use App\Http\Api\User\Requests\UpdateRequest;
+use App\Http\Api\User\Requests\UpdateUserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -41,10 +41,10 @@ class AdministratorController extends Controller
      * Update the user with the specific id.
      *
      * @param int $id
-     * @param UpdateRequest $request
+     * @param UpdateUserRequest $request
      * @return JsonResponse
      */
-    public function updateUser(int $id, UpdateRequest $request): JsonResponse
+    public function updateUser(int $id, UpdateUserRequest $request): JsonResponse
     {
         return $this->administratorService->updateUser($id, $request);
     }

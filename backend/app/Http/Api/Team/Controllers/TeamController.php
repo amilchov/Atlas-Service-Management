@@ -2,16 +2,19 @@
 
 namespace App\Http\Api\Team\Controllers;
 
-use App\Http\Api\Team\Requests\AssignRequest;
-use App\Http\Api\Team\Requests\IncidentRequest;
-use App\Http\Api\Team\Requests\InviteRequest;
-use App\Http\Api\Team\Requests\RemoveRequest;
-use App\Http\Api\Team\Requests\StoreRequest;
-use App\Http\Api\Team\Requests\UpdateRequest;
+use App\Http\Api\Team\Requests\StoreTeamRequest;
+use App\Http\Api\Team\Requests\UpdateTeamRequest;
+use App\Http\Api\Team\Requests\InviteMemberRequest;
+use App\Http\Api\Team\Requests\RemoveMemberRequest;
+use App\Http\Api\Team\Requests\AssignIncidentRequest;
+use App\Http\Api\Team\Requests\RemoveIncidentRequest;
+use App\Http\Api\Team\Requests\AssignRoleRequest;
+use App\Http\Api\Team\Requests\RemoveRoleRequest;
 use App\Http\Api\Team\Services\TeamService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Exception;
+use Illuminate\Http\Request;
 
 /**
 |--------------------------------------------------------------------------
@@ -53,23 +56,23 @@ class TeamController extends Controller
     }
 
     /**
-     * Call the method to obtain all incidents for that team from the repository class.
+     * Call the method for user's teams from the service class.
      *
-     * @param int $id
+     * @param Request $request
      * @return JsonResponse
      */
-    public function incidents(int $id): JsonResponse
+    public function user(Request $request): JsonResponse
     {
-        return $this->teamService->incidents($id);
+        return $this->teamService->userTeams($request);
     }
 
     /**
      * Call the method for create a team from the service class.
      *
-     * @param StoreRequest $request
+     * @param StoreTeamRequest $request
      * @return JsonResponse
      */
-    public function store(StoreRequest $request): JsonResponse
+    public function store(StoreTeamRequest $request): JsonResponse
     {
         return $this->teamService->create($request);
     }
@@ -89,10 +92,10 @@ class TeamController extends Controller
      * Call the method to update a team from the service class.
      *
      * @param int $id
-     * @param UpdateRequest $request
+     * @param UpdateTeamRequest $request
      * @return JsonResponse
      */
-    public function update(int $id, UpdateRequest $request): JsonResponse
+    public function update(int $id, UpdateTeamRequest $request): JsonResponse
     {
         return $this->teamService->update($id, $request);
     }
@@ -113,10 +116,10 @@ class TeamController extends Controller
      * Call the method for invite member into team from the service class.
      *
      * @param int $id
-     * @param InviteRequest $request
+     * @param InviteMemberRequest $request
      * @return JsonResponse
      */
-    public function inviteMember(int $id, InviteRequest $request): JsonResponse
+    public function inviteMember(int $id, InviteMemberRequest $request): JsonResponse
     {
         return $this->teamService->inviteMember($id, $request);
     }
@@ -125,36 +128,62 @@ class TeamController extends Controller
      * Call the method for remove member from team from the service class.
      *
      * @param int $id
-     * @param RemoveRequest $request
+     * @param RemoveMemberRequest $request
      * @return JsonResponse
      * @throws Exception
      */
-    public function removeMember(int $id, RemoveRequest $request): JsonResponse
+    public function removeMember(int $id, RemoveMemberRequest $request): JsonResponse
     {
         return $this->teamService->removeMember($id, $request);
-    }
-
-    /**
-     * Call the method for assign roles into team from the service class.
-     *
-     * @param int $id
-     * @param AssignRequest $request
-     * @return JsonResponse
-     */
-    public function assignRoles(int $id, AssignRequest $request): JsonResponse
-    {
-        return $this->teamService->assignRoles($id, $request);
     }
 
     /**
      * Call the method for assign an incident to the team from the service class.
      *
      * @param int $id
-     * @param IncidentRequest $request
+     * @param AssignIncidentRequest $request
      * @return JsonResponse
      */
-    public function assignIncidents(int $id, IncidentRequest $request): JsonResponse
+    public function assignIncidents(int $id, AssignIncidentRequest $request): JsonResponse
     {
         return $this->teamService->assignIncidents($id, $request);
+    }
+
+    /**
+     * Call the method for remove incident from team from the service class.
+     *
+     * @param int $id
+     * @param RemoveIncidentRequest $request
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function removeIncidents(int $id, RemoveIncidentRequest $request): JsonResponse
+    {
+        return $this->teamService->removeIncidents($id, $request);
+    }
+
+    /**
+     * Call the method for assign roles into team from the service class.
+     *
+     * @param int $id
+     * @param AssignRoleRequest $request
+     * @return JsonResponse
+     */
+    public function assignRoles(int $id, AssignRoleRequest $request): JsonResponse
+    {
+        return $this->teamService->assignRoles($id, $request);
+    }
+
+    /**
+     * Call the method for remove role from team from the service class.
+     *
+     * @param int $id
+     * @param RemoveRoleRequest $request
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function removeRoles(int $id, RemoveRoleRequest $request): JsonResponse
+    {
+        return $this->teamService->removeRoles($id, $request);
     }
 }

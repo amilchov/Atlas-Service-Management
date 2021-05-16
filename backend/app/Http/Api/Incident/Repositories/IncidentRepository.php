@@ -35,6 +35,6 @@ class IncidentRepository implements IncidentRepositoryInterface
     /** @inheritDoc */
     public function findLatestNumber(): mixed
     {
-        return Incident::latest()->value('number');
+        return Incident::latest('id')->value('number');
     }
 }

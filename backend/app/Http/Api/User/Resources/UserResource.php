@@ -37,9 +37,12 @@ class UserResource extends JsonResource
             'description' => $this->description,
             'city' => $this->city,
             'country' => $this->country,
+            'last_login_ip' => $this->last_login_ip,
+            'last_login_at' => $this->last_login_at,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'roles' => $this->roles
+            'roles' => $this->roles,
+            'incidents' => $this->incidents
         ];
     }
 }

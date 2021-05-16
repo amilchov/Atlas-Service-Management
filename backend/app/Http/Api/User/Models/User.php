@@ -7,6 +7,7 @@ use App\Http\Api\Incident\Models\Executing;
 use App\Http\Api\Role\Models\ModelHasRoles;
 use App\Http\Api\Team\Models\Team;
 use App\Http\Traits\HasPicture;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -67,7 +68,9 @@ class User extends Authenticatable
         'token',
         'description',
         'city',
-        'country'
+        'country',
+        'last_login_ip',
+        'last_login_at'
     ];
 
     /**
@@ -163,6 +166,14 @@ class User extends Authenticatable
     public function executors(): BelongsToMany
     {
         return $this->belongsToMany(Incident::class, 'incident_user', 'executor_id', 'incident_id');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function incidents(): BelongsToMany
+    {
+        return $this->belongsToMany(Incident::class, 'incident_user', 'executor_id', 'incident_id')->withPivot('model_type');
     }
 
     /**

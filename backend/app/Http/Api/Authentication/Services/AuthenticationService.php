@@ -2,13 +2,14 @@
 
 namespace App\Http\Api\Authentication\Services;
 
-use App\Http\Api\Authentication\Requests\LoginRequest;
-use App\Http\Api\Authentication\Requests\RegisterRequest;
+use App\Http\Api\Authentication\Requests\LoginUserRequest;
+use App\Http\Api\Authentication\Requests\RegisterUserRequest;
 use App\Http\Api\Role\Constants\Roles;
 use App\Http\Api\User\Resources\UserResource;
 use App\Http\Api\User\Models\User;
 use App\Http\Api\User\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 /**
@@ -43,10 +44,10 @@ class AuthenticationService
     /**
      * Login the user with his credentials.
      *
-     * @param LoginRequest $request
+     * @param LoginUserRequest $request
      * @return JsonResponse
      */
-    public function login(LoginRequest $request) : JsonResponse
+    public function login(LoginUserRequest $request) : JsonResponse
     {
         $validated = $request->validated();
 
@@ -57,16 +58,21 @@ class AuthenticationService
 
         $user = $this->userRepository->findById(auth()->user()->id);
 
+        $user->update([
+            'last_login_ip' => $request->getClientIp(),
+            'last_login_at' => Carbon::now()->toDateTimeString()
+        ]);
+
         return response()->json(new UserResource($user));
     }
 
     /**
      * Register the user with his credentials.
      *
-     * @param RegisterRequest $request
+     * @param RegisterUserRequest $request
      * @return JsonResponse
      */
-    public function register(RegisterRequest $request): JsonResponse
+    public function register(RegisterUserRequest $request): JsonResponse
     {
         $validated = $request->validated();
 

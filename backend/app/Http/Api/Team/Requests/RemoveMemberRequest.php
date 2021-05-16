@@ -6,15 +6,15 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
 |--------------------------------------------------------------------------
-| Remove Request
+| Remove Member Request
 |--------------------------------------------------------------------------
 |
 | This class is a type of form request, in which we check
-| and validate the invitations team data from the external source (request).
+| and validate the user data from the external source (request).
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
-class RemoveRequest extends FormRequest
+class RemoveMemberRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,7 +34,7 @@ class RemoveRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'users' => 'required|array|exists:users,id'
+            'members' => 'required|array|exists:users,id'
         ];
     }
 }

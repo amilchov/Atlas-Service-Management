@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Api\Team\Requests;
+namespace App\Http\Api\Role\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
 |--------------------------------------------------------------------------
-| Incident Request
+| Assign Role Request
 |--------------------------------------------------------------------------
 |
 | This class is a type of form request, in which we check
-| and validate the assigned incidents to the team from the external source (request).
+| and validate the assigned role data from the external source (request).
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
-class IncidentRequest extends FormRequest
+class AssignRoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,7 +34,8 @@ class IncidentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'incidents' => 'required|array|exists:incidents,id'
+            'user_id' => 'required|integer|exists:users,id',
+            'roles' => 'required|array|exists:roles,id'
         ];
     }
 }

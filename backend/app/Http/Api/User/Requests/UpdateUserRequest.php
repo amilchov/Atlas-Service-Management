@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Api\Authentication\Requests;
+namespace App\Http\Api\User\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
 |--------------------------------------------------------------------------
-| Login Request
+| Update Request
 |--------------------------------------------------------------------------
 |
 | This class is a type of form request, in which we check
-| and validate the login auth data from the external source (request).
+| and validate the updated auth data from the external source (request).
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
-class LoginRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,8 +34,15 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email',
-            'password' => 'required'
+            'first_name' => 'sometimes|alpha|max:50',
+            'middle_name' => 'sometimes|alpha|max:50',
+            'last_name' => 'sometimes|alpha|max:50',
+            'email' => 'sometimes|email|unique:users',
+            'password' => 'sometimes',
+            'avatar' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'description' => 'sometimes|max:255',
+            'city' => 'sometimes|max:255',
+            'country' => 'sometimes|max:255'
         ];
     }
 }

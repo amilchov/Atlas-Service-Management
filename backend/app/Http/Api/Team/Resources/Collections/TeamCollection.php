@@ -3,7 +3,6 @@
 namespace App\Http\Api\Team\Resources\Collections;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Collection;
 
 /**
 |--------------------------------------------------------------------------
@@ -21,10 +20,25 @@ class TeamCollection extends ResourceCollection
      * Transform the resource collection into an array.
      *
      * @param $request
-     * @return Collection
+     * @return array
      */
-    public function toArray($request): Collection
+    public function toArray($request): array
     {
-        return $this->collection;
+        return [
+            'teams' => $this->collection->transform(function($team){
+                return [
+                    'id' => $team->id,
+                    'owner' => [$team->owner],
+                    'name' => $team->name,
+                    'description' => $team->description,
+                    'image' => $team->image,
+                    'created_at' => $team->created_at,
+                    'updated_at' => $team->updated_at,
+                    'users' => $team->users,
+                    'roles' => $team->roles,
+                    'incidents' => $team->incidents
+                ];
+            }),
+        ];
     }
 }

@@ -22,9 +22,9 @@ use Illuminate\Database\Eloquent\Model;
 class TeamRepository implements TeamRepositoryInterface
 {
     /** @inheritDoc */
-    public function all(): array|Collection
+    public function all(): array|Collection|Builder
     {
-        return Team::with(['users', 'roles'])->get();
+        return Team::with(['users', 'roles', 'incidents'])->get();
     }
 
     /** @inheritDoc */
@@ -37,12 +37,6 @@ class TeamRepository implements TeamRepositoryInterface
     public function findAllRoles(int $id): array|null|Collection|Model|Builder
     {
         return Team::with(['users', 'roles'])->findOrFail($id);
-    }
-
-    /** @inheritDoc */
-    public function findIncidents(int $id): array|Collection
-    {
-        return Team::with('incidents')->where('id', $id)->get();
     }
 
     /** @inheritDoc */

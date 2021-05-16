@@ -28,7 +28,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IncidentRepositoryInterface::class, IncidentRepository::class);
         $this->app->bind(RoleRepositoryInterface::class, RoleRepository::class);
         $this->app->bind(TeamRepositoryInterface::class, TeamRepository::class);
-   }
+    }
 
     /**
      * Bootstrap services.

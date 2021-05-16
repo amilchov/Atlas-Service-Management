@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Api\Team\Requests;
+namespace App\Http\Api\Permission\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
 |--------------------------------------------------------------------------
-| Assign Request
+| Assign Permission Request
 |--------------------------------------------------------------------------
 |
 | This class is a type of form request, in which we check
-| and validate the added roles to the team from the external source (request).
+| and validate the assigned permission data from the external source (request).
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
-class AssignRequest extends FormRequest
+class AssignPermissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,7 +34,8 @@ class AssignRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'roles' => 'required|array|exists:roles,id'
+            'role_id' => 'required|integer',
+            'permissions' => 'required|exists:permissions,id'
         ];
     }
 }

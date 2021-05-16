@@ -2,6 +2,7 @@
 
 namespace App\Http\Api\Permission\Seeders;
 
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
@@ -22,6 +23,7 @@ class PermissionSeeder extends Seeder
      * Run the database seeds.
      *
      * @return void
+     * @throws FileNotFoundException
      */
     public function run(): void
     {

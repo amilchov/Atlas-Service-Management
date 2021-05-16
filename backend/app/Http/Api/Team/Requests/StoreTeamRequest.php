@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Api\Incident\Requests;
+namespace App\Http\Api\Team\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
 |--------------------------------------------------------------------------
-| Store Request
+| Store Team Request
 |--------------------------------------------------------------------------
 |
 | This class is a type of form request, in which we check
-| and validate the incident data from the external source (request).
+| and validate the assigned team data from the external source (request).
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
-class StoreRequest extends FormRequest
+class StoreTeamRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,15 +34,10 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => 'required|integer|max:50|exists:charts,id',
-            'state' => 'required|string|max:50',
-            'impact' => 'required|string|max:50',
-            'urgency' => 'required|string|max:50',
-            'priority' => 'required|string|max:50',
-            'short_description' => 'required',
-            'description' => 'sometimes|string',
-            'caller_id' => 'required|integer|exists:users,id',
-            'executor_id' => 'required|integer|exists:users,id'
+            'name' => 'required|string|max:50|unique:teams',
+            'description' => 'required',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'roles' => 'sometimes|array|exists:roles,id'
         ];
     }
 }

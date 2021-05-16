@@ -2,7 +2,9 @@
 
 namespace App\Http\Api\Team\Models;
 
+use App\Http\Api\Incident\Models\Executing;
 use App\Http\Api\Incident\Models\Incident;
+use App\Http\Api\Role\Models\ModelHasRoles;
 use App\Http\Api\User\Models\User;
 use App\Http\Traits\HasPicture;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
+use Exception;
 
 /**
 |--------------------------------------------------------------------------
@@ -141,5 +144,17 @@ class Team extends Model
     public function incidents(): BelongsToMany
     {
         return $this->belongsToMany(Incident::class, 'team_incident', 'team_id', 'incident_id')->withTimestamps();
+    }
+
+    /**
+     * Remove related records in 'incident_user' and 'model_has_roles' tables.
+     *
+     * @param int $id
+     * @throws Exception
+     */
+    public function removeRelations(int $id) : void
+    {
+        Executing::where('model_from', self::modelTypePath($id))->delete();
+        ModelHasRoles::where('model_from', self::modelTypePath($id))->delete();
     }
 }

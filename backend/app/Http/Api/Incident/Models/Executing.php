@@ -32,6 +32,7 @@ class Executing extends Model
         'incident_id',
         'caller_id',
         'executor_id',
+        'model_type',
         'model_from'
     ];
 }

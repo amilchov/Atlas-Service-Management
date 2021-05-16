@@ -19,7 +19,9 @@ class CreateChartsTable extends Migration
             $table->string('description', 500);
             $table->string('tag', 50);
             $table->string('data_link', 500);
+            $table->string('grafana_link', 500);
             $table->string('image_link', 500);
+            $table->string('value_type');
         });
     }
 

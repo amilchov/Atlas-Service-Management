@@ -25,6 +25,8 @@ class CreateUsersTable extends Migration
             $table->string('description')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
+            $table->string('last_login_ip')->nullable();
+            $table->datetime('last_login_at')->nullable();
             $table->timestamps();
         });
     }

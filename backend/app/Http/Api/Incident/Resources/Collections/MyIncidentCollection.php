@@ -14,7 +14,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 |
 | @author David Ivanov <david4obgg1@gmail.com>
  */
-class IncidentCollection extends ResourceCollection
+class MyIncidentCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -26,6 +26,8 @@ class IncidentCollection extends ResourceCollection
     {
         return [
             'incidents' => $this->collection->transform(function($incident){
+                $executor_id = $incident->pivot->executor_id;
+
                 return [
                     'id' => $incident->id,
                     'number' => $incident->number,
@@ -36,10 +38,11 @@ class IncidentCollection extends ResourceCollection
                     'priority' => $incident->priority,
                     'short_description' => $incident->short_description,
                     'description' => $incident->description,
-                    'caller' => $incident->caller,
-                    'executor' => $incident->executor,
                     'created_at' => $incident->created_at,
-                    'updated_at' => $incident->updated_at
+                    'updated_at' => $incident->updated_at,
+                    'caller' => $incident->caller->unique(),
+                    'executor' => $incident->executors($executor_id)->get()->unique(),
+                    'model_type' => $incident->pivot->model_type
                 ];
             })
         ];

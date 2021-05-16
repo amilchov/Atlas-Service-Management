@@ -4,6 +4,7 @@ namespace App\Http\Api\Team\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Api\Incident\Resources\IncidentResource;
 
 /**
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ class TeamResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'owner_id' => $this->owner_id,
+            'owner' => [$this->owner],
             'name' => $this->name,
             'description' => $this->description,
             'image' => $this->image,
@@ -35,6 +36,7 @@ class TeamResource extends JsonResource
             'updated_at' => $this->updated_at,
             'users' => $this->users,
             'roles' => $this->roles,
+            'incidents' => IncidentResource::collection($this->incidents)
         ];
     }
 }

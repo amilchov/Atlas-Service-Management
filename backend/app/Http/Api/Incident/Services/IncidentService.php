@@ -3,9 +3,10 @@
 namespace App\Http\Api\Incident\Services;
 
 use App\Http\Api\Incident\Models\Incident;
-use App\Http\Api\Incident\Requests\StoreRequest;
-use App\Http\Api\Incident\Requests\UpdateRequest;
+use App\Http\Api\Incident\Requests\StoreIncidentRequest;
+use App\Http\Api\Incident\Requests\UpdateIncidentRequest;
 use App\Http\Api\Incident\Resources\Collections\IncidentCollection;
+use App\Http\Api\Incident\Resources\Collections\MyIncidentCollection;
 use App\Http\Api\Incident\Resources\IncidentResource;
 use App\Http\Api\User\Interfaces\UserRepositoryInterface;
 use App\Http\Api\Incident\Interfaces\IncidentRepositoryInterface;
@@ -74,16 +75,16 @@ class IncidentService
 
         $incidents = $user->executors()->get();
 
-        return response()->json(new IncidentCollection($incidents));
+        return response()->json(new MyIncidentCollection($incidents));
     }
 
     /**
      * Create the incident with the desired data.
      *
-     * @param StoreRequest $request
+     * @param StoreIncidentRequest $request
      * @return JsonResponse
      */
-    public function create(StoreRequest $request): JsonResponse
+    public function create(StoreIncidentRequest $request): JsonResponse
     {
         $validated = $request->validated();
 
@@ -104,6 +105,7 @@ class IncidentService
             'incident_id' => $incident->id,
             'caller_id' => $validated['caller_id'],
             'executor_id' => $validated['executor_id'],
+            'model_type' => 'personal',
             'model_from' => Incident::class
         ]);
 
@@ -127,10 +129,10 @@ class IncidentService
      * Update the incident with the specific id.
      *
      * @param int $id
-     * @param UpdateRequest $request
+     * @param UpdateIncidentRequest $request
      * @return JsonResponse
      */
-    public function update(int $id, UpdateRequest $request): JsonResponse
+    public function update(int $id, UpdateIncidentRequest $request): JsonResponse
     {
         $user = $this->userRepository->findByToken($request);
         $incident = $this->incidentRepository->findById($id);
@@ -152,7 +154,21 @@ class IncidentService
         {
             $incident->update($request->validated());
 
-            return response()->json(new IncidentResource($incident));
+            if ($request->has('caller_id'))
+            {
+                $incident->execute()->where(['incident_id' => $incident->id])->update([
+                    'caller_id' => $request->input('caller_id')
+                ]);
+            }
+
+            if ($request->has('executor_id'))
+            {
+                $incident->execute()->where(['incident_id' => $incident->id])->update([
+                    'executor_id' => $request->input('executor_id')
+                ]);
+            }
+
+            return response()->json(new IncidentResource($this->incidentRepository->findById($incident->id)));
         }
 
         return response()->json(['message' => 'User token is not same as incident caller token or executor token.']);

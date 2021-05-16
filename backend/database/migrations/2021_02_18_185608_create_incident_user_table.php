@@ -18,8 +18,9 @@ class CreateIncidentUserTable extends Migration
             $table->foreignId('incident_id')->constrained()->cascadeOnDelete();
             $table->foreignId('caller_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('executor_id')->constrained('users')->cascadeOnDelete();
+            $table->string('model_type');
             $table->string('model_from');
-            $table->unique(['incident_id', 'caller_id', 'executor_id', 'model_from'], 'incident_caller_executor_model_unique');
+            $table->unique(['incident_id', 'caller_id', 'executor_id', 'model_type', 'model_from'], 'incident_caller_executor_type_model_unique');
             $table->timestamps();
         });
     }

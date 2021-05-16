@@ -27,7 +27,7 @@ class AuthenticateAdmin
      * @param Closure $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         $user = User::role(Roles::ADMIN_ROLE)->firstOrFail();
 

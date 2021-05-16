@@ -24,7 +24,7 @@ class UserRepository implements UserRepositoryInterface
     /** @inheritDoc */
     public function all(): array|Collection
     {
-        return User::with('roles')->get();
+        return User::with(['roles', 'incidents'])->get();
     }
 
     /** @inheritDoc */

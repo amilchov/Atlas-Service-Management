@@ -69,21 +69,23 @@ Route::group(['namespace' => 'App\Http\Api'], function() {
     });
 
     // Teams Routes
-    Route::group(['prefix' => 'teams', 'middleware' => 'auth.admin'], function() {
-        Route::get('/', [TeamController::class, 'index']);
-        Route::post('create', [TeamController::class, 'store']);
+    Route::group(['prefix' => 'teams'], function() {
+        Route::get('user', [TeamController::class, 'user'])->middleware('auth.token');
 
-        Route::group(['prefix' => '{team_id}'], function() {
-            Route::get('/', [TeamController::class, 'show']);
-            Route::post('update', [TeamController::class, 'update']);
-            Route::post('invite', [TeamController::class, 'inviteMember']);
-            Route::post('remove', [TeamController::class, 'removeMember']);
-            Route::post('roles', [TeamController::class, 'assignRoles']);
-            Route::delete('delete', [TeamController::class, 'destroy']);
+        Route::group(['middleware' => 'auth.admin'], function() {
+            Route::get('/', [TeamController::class, 'index']);
+            Route::post('create', [TeamController::class, 'store']);
 
-            Route::group(['prefix' => 'incidents'], function() {
-                Route::get('/', [TeamController::class, 'incidents']);
-                Route::post('assign', [TeamController::class, 'assignIncidents']);
+            Route::group(['prefix' => '{team_id}'], function() {
+                Route::get('/', [TeamController::class, 'show']);
+                Route::post('update', [TeamController::class, 'update']);
+                Route::post('invite', [TeamController::class, 'inviteMember']);
+                Route::post('remove', [TeamController::class, 'removeMember']);
+                Route::post('incidents', [TeamController::class, 'assignIncidents']);
+                Route::post('incidents/remove', [TeamController::class, 'removeIncidents']);
+                Route::post('roles', [TeamController::class, 'assignRoles']);
+                Route::post('roles/remove', [TeamController::class, 'removeRoles']);
+                Route::delete('delete', [TeamController::class, 'destroy']);
             });
         });
     });

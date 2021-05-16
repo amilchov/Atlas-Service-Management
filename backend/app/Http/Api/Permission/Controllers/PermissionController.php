@@ -4,7 +4,7 @@ namespace App\Http\Api\Permission\Controllers;
 
 use App\Http\Api\Role\Repositories\RoleRepository;
 use App\Http\Api\User\Repositories\UserRepository;
-use App\Http\Api\Permission\Requests\AssignRequest;
+use App\Http\Api\Permission\Requests\AssignPermissionRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Api\Permission\Services\PermissionService;
 use Illuminate\Http\JsonResponse;
@@ -54,11 +54,11 @@ class PermissionController extends Controller
     /**
      * Call the method for assign permission to user from the service class.
      *
-     * @param AssignRequest $request
+     * @param AssignPermissionRequest $request
      * @param RoleRepository $roleRepository
      * @return JsonResponse
      */
-    public function assign(AssignRequest $request, RoleRepository $roleRepository): JsonResponse
+    public function assign(AssignPermissionRequest $request, RoleRepository $roleRepository): JsonResponse
     {
         return $this->permissionService->assignPermissionToUser($request, $roleRepository);
     }

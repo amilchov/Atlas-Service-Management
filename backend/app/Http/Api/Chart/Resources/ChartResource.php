@@ -26,13 +26,17 @@ class ChartResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'description' => $this->description,
-            'tag' => $this->tag,
-            'data_link' => $this->data_link,
-            'image_link' => $this->image_link,
-            'roles' => $this->roles
+            'chart' => [
+                'id' => $this->id,
+                'name' => $this->name,
+                'description' => $this->description,
+                'tag' => $this->tag,
+                'data_link' => $this->data_link,
+                'grafana_link' => $this->grafana_link,
+                'image_link' => $this->image_link,
+                'value_type' => $this->value_type,
+                'roles' => $this->roles
+            ]
         ];
     }
 }

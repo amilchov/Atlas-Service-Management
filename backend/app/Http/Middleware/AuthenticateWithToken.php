@@ -25,7 +25,7 @@ class AuthenticateWithToken
      * @param Closure $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         if (!$request->header('Authorization'))
         {
